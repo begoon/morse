@@ -3,17 +3,27 @@
 A browser-based Morse code trainer. Key Morse with an iambic paddle or a
 straight key, hear audio sidetone, and watch the decoded letters appear.
 
-## Run
+## Build & run
+
+The app is a static site. Bundle it into `docs/` (served by GitHub Pages),
+then serve that folder:
 
 ```bash
-bun install
-bun --hot index.ts   # http://localhost:3000
+just install        # bun install
+just build          # bundle index.html -> docs/
+just serve          # build, then python -m http.server -d docs 3000
 ```
+
+`docs/` is committed so GitHub Pages can serve it. You can also just open
+`docs/index.html` with the VS Code **Live Server** extension after `just build`.
+
+`index.ts` (a `Bun.serve()` dev server with HMR) is kept for convenience —
+`bun --hot index.ts` still works — but is no longer the primary way to run.
 
 ## Test
 
 ```bash
-bun test
+just test           # bun test
 ```
 
 ## Keys
