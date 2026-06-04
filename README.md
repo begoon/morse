@@ -22,9 +22,22 @@ bun test
   both for di-dah alternation (Curtis Mode B).
 - **Straight key**: hold `Space` — short press = dit, long press = dah.
 
+## Keyer mode
+
+The iambic keyer supports both **Curtis Mode A** (default) and **Mode B**,
+switchable in the settings panel. They differ only when you release both
+paddles mid-element while squeezing:
+
+- **Mode A**: finishes the current element and stops.
+- **Mode B**: finishes the current element, then sends one extra opposite
+  element.
+
+Mode A is the more forgiving, original Curtis behaviour; Mode B can save a
+paddle movement on some characters but has a tighter release window.
+
 ## Features
 
-- True iambic (Mode B) paddle keyer and straight-key keyer
+- Switchable iambic (Curtis Mode A/B) paddle keyer and straight-key keyer
 - Web Audio sidetone with adjustable tone (400–1000 Hz) and volume
 - Live decode to text, showing the last 10 characters
 - English and Russian Morse tables

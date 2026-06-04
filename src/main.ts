@@ -24,6 +24,7 @@ const outputEl = $("output");
 const patternEl = $("pattern");
 const schematicEl = $("schematic");
 const keyTypeEl = $<HTMLSelectElement>("keyType");
+const iambicModeEl = $<HTMLSelectElement>("iambicMode");
 const languageEl = $<HTMLSelectElement>("language");
 const wpmEl = $<HTMLInputElement>("wpm");
 const wpmValEl = $("wpmVal");
@@ -60,6 +61,7 @@ const iambic = new IambicKeyer({
   onElement: (t) => decoder.element(t),
   setActive: onActive,
 });
+iambic.setMode(settings.iambicMode);
 
 const straight = new StraightKeyer({
   wpm: () => settings.wpm,
@@ -139,6 +141,7 @@ function persist() {
 }
 
 keyTypeEl.value = settings.keyType;
+iambicModeEl.value = settings.iambicMode;
 languageEl.value = settings.language;
 wpmEl.value = String(settings.wpm);
 wpmValEl.textContent = String(settings.wpm);
@@ -151,6 +154,12 @@ toneValEl.textContent = String(settings.toneHz);
 keyTypeEl.addEventListener("change", () => {
   settings.keyType = keyTypeEl.value as Settings.KeyType;
   refreshKeyMode();
+  persist();
+});
+
+iambicModeEl.addEventListener("change", () => {
+  settings.iambicMode = iambicModeEl.value as Settings.Settings["iambicMode"];
+  iambic.setMode(settings.iambicMode);
   persist();
 });
 

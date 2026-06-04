@@ -1,14 +1,22 @@
-// Iambic paddle keyer (Curtis Mode B).
+// Iambic paddle keyer (Curtis Mode A / Mode B, switchable).
 //
 // Two paddles: dit and dah. The keyer emits perfectly-timed elements at the
 // configured WPM:
 //   - hold dit  -> repeating dits
 //   - hold dah  -> repeating dahs
-//   - squeeze both -> alternating di-dah-di-dah, with the Mode-B "extra"
-//     trailing element after both are released.
+//   - squeeze both -> alternating di-dah-di-dah
 //
 // Tapping the opposite paddle during an element latches that paddle into a
 // one-shot memory, so it is sent next (insertion / alternation).
+//
+// Mode A vs Mode B differ only when you release BOTH paddles mid-element while
+// squeezing:
+//   - Mode A: finish the current element and stop.
+//   - Mode B: finish the current element, then send one extra opposite element.
+// The difference is whether the opposite paddle is sampled live at the end of
+// the element (A) or remembered if it was held at any point during it (B).
+
+export type IambicMode = "A" | "B";
 
 export type KeyerHooks = {
   /** Current dit duration in ms (re-read each element so WPM changes apply). */
@@ -31,15 +39,25 @@ export class IambicKeyer {
   private last: "." | "-" | null = null;
   private running = false;
   private timer: ReturnType<typeof setTimeout> | null = null;
+  private mode: IambicMode = "A";
+  /** Element currently being sent (null between elements). */
+  private currentEl: "." | "-" | null = null;
+  /** Mode B: was the opposite paddle held at any point during currentEl? */
+  private oppositeSeen = false;
 
   constructor(hooks: KeyerHooks) {
     this.hooks = hooks;
+  }
+
+  setMode(mode: IambicMode) {
+    this.mode = mode;
   }
 
   setDit(down: boolean) {
     this.paddle.dit = down;
     if (down) {
       this.ditMemory = true;
+      if (this.currentEl === "-") this.oppositeSeen = true;
       this.start();
     }
   }
@@ -48,6 +66,7 @@ export class IambicKeyer {
     this.paddle.dah = down;
     if (down) {
       this.dahMemory = true;
+      if (this.currentEl === ".") this.oppositeSeen = true;
       this.start();
     }
   }
@@ -60,6 +79,8 @@ export class IambicKeyer {
     this.paddle.dit = this.paddle.dah = false;
     this.ditMemory = this.dahMemory = false;
     this.last = null;
+    this.currentEl = null;
+    this.oppositeSeen = false;
     this.hooks.toneOff();
     this.hooks.setActive?.(null);
   }
@@ -99,6 +120,9 @@ export class IambicKeyer {
   private sendElement(el: "." | "-") {
     const dit = this.hooks.ditMs();
     const dur = (el === "." ? 1 : 3) * dit;
+    this.currentEl = el;
+    // The opposite paddle already being held counts as "seen" for this element.
+    this.oppositeSeen = el === "." ? this.paddle.dah : this.paddle.dit;
     this.hooks.onElementStart?.();
     this.hooks.toneOn();
     this.hooks.setActive?.(el);
@@ -108,10 +132,16 @@ export class IambicKeyer {
       this.hooks.setActive?.(null);
       this.hooks.onElement(el);
 
-      // Mode B: latch the opposite paddle if it is held during this element,
-      // so it (or the squeeze alternation) is sent next.
-      if (el === "." && this.paddle.dah) this.dahMemory = true;
-      if (el === "-" && this.paddle.dit) this.ditMemory = true;
+      // Latch the opposite paddle so it (or the squeeze alternation) is sent
+      // next. Mode A samples it live; Mode B remembers if it was held during
+      // the element, producing the trailing extra element on a squeeze release.
+      const oppositeDown = el === "." ? this.paddle.dah : this.paddle.dit;
+      const latch = this.mode === "B" ? oppositeDown || this.oppositeSeen : oppositeDown;
+      if (latch) {
+        if (el === ".") this.dahMemory = true;
+        else this.ditMemory = true;
+      }
+      this.currentEl = null;
 
       // Inter-element gap (1 dit), then decide the next element.
       this.timer = setTimeout(() => this.nextElement(), dit);

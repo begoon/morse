@@ -12,7 +12,7 @@ test("straight key classifies short press as dit", () => {
 });
 
 // Drive the iambic keyer with real timers but a fast WPM so tests are quick.
-function makeIambic() {
+function makeIambic(mode: "A" | "B" = "A") {
   const elements: string[] = [];
   const wpm = 60; // dit = 20ms
   const keyer = new IambicKeyer({
@@ -21,6 +21,7 @@ function makeIambic() {
     toneOff: () => {},
     onElement: (t) => elements.push(t),
   });
+  keyer.setMode(mode);
   return { keyer, elements, dit: ditMs(wpm) };
 }
 
@@ -58,4 +59,32 @@ test("squeezing both paddles alternates di-dah", async () => {
   for (let i = 0; i < elements.length; i++) {
     expect(elements[i]).toBe(i % 2 === 0 ? "." : "-");
   }
+});
+
+// Squeeze both and release both midway through the second element (the dah,
+// 40–100ms at this WPM — a wide, jitter-tolerant window). By then the initial
+// paddle-press memories are spent and alternation is driven purely by the
+// per-element latch, which is where Mode A and Mode B diverge.
+//   Mode A: finish the dah and stop      -> di-dah
+//   Mode B: append one trailing dit      -> di-dah-dit
+test("Mode A sends no extra element on squeeze release", async () => {
+  const { keyer, elements, dit } = makeIambic("A");
+  keyer.setDit(true);
+  keyer.setDah(true);
+  await sleep(dit * 3.5); // inside the dah (40–100ms)
+  keyer.setDit(false);
+  keyer.setDah(false);
+  await sleep(dit * 8);
+  expect(elements).toEqual([".", "-"]);
+});
+
+test("Mode B sends one extra opposite element on squeeze release", async () => {
+  const { keyer, elements, dit } = makeIambic("B");
+  keyer.setDit(true);
+  keyer.setDah(true);
+  await sleep(dit * 3.5); // inside the dah (40–100ms)
+  keyer.setDit(false);
+  keyer.setDah(false);
+  await sleep(dit * 8);
+  expect(elements).toEqual([".", "-", "."]);
 });

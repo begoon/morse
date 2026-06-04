@@ -1,11 +1,14 @@
 // Persisted user settings (localStorage).
 
 import type { Language } from "./morse";
+import type { IambicMode } from "./keyer-iambic";
 
 export type KeyType = "paddle" | "straight";
 
 export type Settings = {
   keyType: KeyType;
+  /** Iambic keyer behaviour on squeeze release (Curtis Mode A or B). */
+  iambicMode: IambicMode;
   language: Language;
   wpm: number;
   /** Multiplier widening the decode letter/word gap thresholds (keying speed
@@ -22,6 +25,7 @@ export type Settings = {
 
 export const DEFAULTS: Settings = {
   keyType: "paddle",
+  iambicMode: "A",
   language: "en",
   wpm: 5,
   gapTolerance: 1.5,
