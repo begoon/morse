@@ -111,7 +111,13 @@ function highlightTarget() {
     const isTarget = revealed && (el.dataset.char ?? "") === target;
     el.classList.toggle("target", isTarget);
     el.classList.toggle("reveal", isTarget);
+    if (isTarget) el.scrollIntoView({ block: "nearest", inline: "center" });
   });
+}
+
+function reveal() {
+  revealed = true;
+  renderLetters();
 }
 
 function newLetter() {
@@ -130,14 +136,15 @@ function newLetter() {
 function guess(char: string) {
   if (!target) return;
   if (char.toUpperCase() === target) {
-    outputEl.classList.add("ok");
+    outputEl.classList.add("ok"); // short flash, then advance
     setTimeout(() => {
       outputEl.classList.remove("ok");
       newLetter();
-    }, 250);
+    }, 150);
   } else {
+    sidetone.error();
     outputEl.classList.add("bad");
-    setTimeout(() => outputEl.classList.remove("bad"), 250);
+    setTimeout(() => outputEl.classList.remove("bad"), 150);
   }
 }
 
@@ -150,6 +157,9 @@ function handleLettersKey(e: KeyboardEvent) {
     e.preventDefault();
     showMorse = true;
     renderLetters();
+  } else if (e.key === "?") {
+    e.preventDefault();
+    reveal();
   } else if (e.key.length === 1) {
     e.preventDefault();
     sidetone.ensure(); // first keypress unlocks audio
@@ -158,9 +168,7 @@ function handleLettersKey(e: KeyboardEvent) {
 }
 
 outputEl.addEventListener("click", () => {
-  if (settings.mode !== "letters") return;
-  revealed = true;
-  renderLetters();
+  if (settings.mode === "letters") reveal();
 });
 
 // --- Keyboard routing --------------------------------------------------------

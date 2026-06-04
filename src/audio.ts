@@ -59,4 +59,23 @@ export class Sidetone {
     this.gain.gain.setValueAtTime(this.gain.gain.value, t);
     this.gain.gain.linearRampToValueAtTime(0, t + RAMP);
   }
+
+  /** A short low buzz to signal a wrong answer. */
+  async error() {
+    await this.ensure();
+    if (!this.ctx) return;
+    const t = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const g = this.ctx.createGain();
+    osc.type = "square";
+    osc.frequency.value = 160;
+    osc.connect(g);
+    g.connect(this.ctx.destination);
+    g.gain.setValueAtTime(0, t);
+    g.gain.linearRampToValueAtTime(this.volume, t + RAMP);
+    g.gain.setValueAtTime(this.volume, t + 0.18);
+    g.gain.linearRampToValueAtTime(0, t + 0.2);
+    osc.start(t);
+    osc.stop(t + 0.22);
+  }
 }
