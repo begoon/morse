@@ -10,11 +10,12 @@ then serve that folder:
 
 ```bash
 just install        # bun install
-just build          # bundle index.html -> docs/
+just build          # bundle into a single self-contained docs/index.html
 just serve          # build, then python -m http.server -d docs 3000
 ```
 
-`docs/` is committed so GitHub Pages can serve it. You can also just open
+`just build` inlines all JS and CSS into one `docs/index.html` (no standalone
+assets). `docs/` is committed so GitHub Pages can serve it. You can also just open
 `docs/index.html` with the VS Code **Live Server** extension after `just build`.
 
 `index.ts` (a `Bun.serve()` dev server with HMR) is kept for convenience —
