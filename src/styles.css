@@ -5,6 +5,7 @@
   --muted: #7d8896;
   --accent: #36c5f0;
   --accent-dim: #1f6b85;
+  --ok: #3fb950;
   --line: #3a4654;
 }
 
@@ -70,19 +71,19 @@ h1 {
 #abbr .abbr-key {
   font-family: "SF Mono", ui-monospace, monospace;
   font-weight: 600;
-  color: var(--accent);
+  color: var(--muted);
+  letter-spacing: 0.08em;
+}
+#abbr .abbr-ch.on {
+  color: var(--ok);
 }
 
 .panel {
-  width: min(90vw, 720px);
-  background: var(--panel);
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  padding: 1.25rem 1.5rem;
   display: grid;
   grid-template-columns: max-content 1fr max-content;
   gap: 0.9rem 1rem;
   align-items: center;
+  padding: 0.75rem 0.5rem 0.5rem;
 }
 
 .panel label {
@@ -119,14 +120,16 @@ button#clear:hover {
 }
 
 /* Cheatsheet */
-.cheatsheet {
+.cheatsheet,
+.settings {
   width: 100%;
   background: var(--panel);
   border: 1px solid var(--line);
   border-radius: 12px;
   padding: 0.6rem 1rem 1rem;
 }
-.cheatsheet summary {
+.cheatsheet summary,
+.settings summary {
   cursor: pointer;
   color: var(--muted);
   font-size: 0.95rem;

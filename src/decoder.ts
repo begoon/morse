@@ -30,6 +30,8 @@ export type DecoderOptions = {
   maxChars?: number;
   /** Called whenever output text or the in-progress pattern changes. */
   onChange?: (state: DecoderState) => void;
+  /** Called for each decoded character appended to the output (incl. spaces). */
+  onChar?: (char: string) => void;
   timers?: DecoderTimers;
 };
 
@@ -41,8 +43,8 @@ export type DecoderState = {
 };
 
 export class Decoder {
-  private opts: Required<Omit<DecoderOptions, "onChange" | "timers">> &
-    Pick<DecoderOptions, "onChange">;
+  private opts: Required<Omit<DecoderOptions, "onChange" | "onChar" | "timers">> &
+    Pick<DecoderOptions, "onChange" | "onChar">;
   private timers: DecoderTimers;
   private pattern = "";
   private text = "";
@@ -56,6 +58,7 @@ export class Decoder {
       wordGapMs: options.wordGapMs,
       maxChars: options.maxChars ?? 10,
       onChange: options.onChange,
+      onChar: options.onChar,
     };
     this.timers = options.timers ?? realTimers;
   }
@@ -129,6 +132,7 @@ export class Decoder {
     if (this.text.length > this.opts.maxChars) {
       this.text = this.text.slice(-this.opts.maxChars);
     }
+    this.opts.onChar?.(char);
     this.emit();
   }
 

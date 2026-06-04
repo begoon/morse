@@ -6,18 +6,18 @@
     <title>Morse Trainer</title>
   </head>
   <body>
-    <h1>MORSE TRAINER</h1>
-
     <div id="output"> </div>
     <div id="pattern"> </div>
-    <div id="abbr" title="Click for another"></div>
+    <div id="abbr" title="Key it to advance · click to skip"></div>
 
     <details class="cheatsheet" open>
       <summary>Cheatsheet</summary>
       <div id="cheatsheet"></div>
     </details>
 
-    <div class="panel">
+    <details class="settings">
+      <summary>Settings</summary>
+      <div class="panel">
       <label for="keyType">Key</label>
       <select id="keyType">
         <option value="paddle">Iambic paddle</option>
@@ -56,7 +56,8 @@
       <span class="val"><span id="toneVal">600</span> Hz</span>
 
       <button id="clear">Clear output</button>
-    </div>
+      </div>
+    </details>
 
     <script type="module" src="./src/main.ts"></script>
   </body>

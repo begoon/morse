@@ -42,6 +42,7 @@ const decoder = new Decoder({
   letterGapMs: thresholds(settings.wpm).gapLetter,
   wordGapMs: thresholds(settings.wpm).gapWord,
   maxChars: 40,
+  onChar: (c) => matchAbbr(c),
   onChange: (s) => {
     outputEl.textContent = s.text || " ";
     patternEl.textContent = s.pattern || " ";
@@ -189,23 +190,54 @@ toneEl.addEventListener("input", () => {
 clearEl.addEventListener("click", () => decoder.reset());
 
 // --- Abbreviation hint -------------------------------------------------------
+// The hint is a practice target: key its characters in order. Correct letters
+// are highlighted; a wrong letter resets progress; decoded spaces (word gaps)
+// are ignored. Completing it advances to a new random abbreviation.
 let currentAbbr: Abbr | undefined;
-let abbrTimer: ReturnType<typeof setInterval>;
-function showAbbr() {
-  currentAbbr = randomAbbr(currentAbbr);
+let matched = 0; // count of leading characters keyed correctly so far
+
+function renderAbbr() {
+  const target = currentAbbr!.abbr;
+  const chars = [...target]
+    .map(
+      (c, i) =>
+        `<span class="abbr-ch${i < matched ? " on" : ""}">${c}</span>`,
+    )
+    .join("");
   abbrEl.innerHTML =
-    `<span class="abbr-key">${currentAbbr.abbr}</span>` +
-    `<span class="abbr-meaning">${currentAbbr.meaning}</span>`;
-  // Restart the rotation so a manual click gives a fresh 20s before the
-  // next auto-change.
-  clearInterval(abbrTimer);
-  abbrTimer = setInterval(showAbbr, 20_000);
+    `<span class="abbr-key">${chars}</span>` +
+    `<span class="abbr-meaning">${currentAbbr!.meaning}</span>`;
 }
-abbrEl.addEventListener("click", showAbbr);
+
+function nextAbbr() {
+  currentAbbr = randomAbbr(currentAbbr);
+  matched = 0;
+  renderAbbr();
+}
+
+function matchAbbr(char: string) {
+  if (!currentAbbr) return;
+  if (char === " ") return; // gaps / word breaks are skipped
+  const target = currentAbbr.abbr.toUpperCase();
+  const c = char.toUpperCase();
+  if (c === target[matched]) {
+    matched++;
+    if (matched === target.length) {
+      nextAbbr(); // entered properly -> show the next one
+      return;
+    }
+  } else {
+    // A wrong letter resets matching, but may itself begin a new match.
+    matched = c === target[0] ? 1 : 0;
+  }
+  renderAbbr();
+}
+
+abbrEl.addEventListener("click", nextAbbr);
 
 // --- Init --------------------------------------------------------------------
 applyTiming();
 refreshKeyMode();
 renderCheatsheet(cheatsheetEl, settings.language);
-showAbbr();
+nextAbbr();
 decoder.reset();
