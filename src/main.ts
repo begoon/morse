@@ -190,11 +190,16 @@ clearEl.addEventListener("click", () => decoder.reset());
 
 // --- Abbreviation hint -------------------------------------------------------
 let currentAbbr: Abbr | undefined;
+let abbrTimer: ReturnType<typeof setInterval>;
 function showAbbr() {
   currentAbbr = randomAbbr(currentAbbr);
   abbrEl.innerHTML =
     `<span class="abbr-key">${currentAbbr.abbr}</span>` +
     `<span class="abbr-meaning">${currentAbbr.meaning}</span>`;
+  // Restart the rotation so a manual click gives a fresh 20s before the
+  // next auto-change.
+  clearInterval(abbrTimer);
+  abbrTimer = setInterval(showAbbr, 20_000);
 }
 abbrEl.addEventListener("click", showAbbr);
 
