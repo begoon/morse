@@ -59,23 +59,33 @@ h1 {
   letter-spacing: 0.3em;
 }
 
-#abbr {
-  display: flex;
-  align-items: baseline;
-  gap: 0.5rem;
-  color: var(--muted);
-  font-size: 0.95rem;
+/* Learn-letters challenge shown in #output */
+.challenge {
   cursor: pointer;
-  user-select: none;
+  color: var(--accent);
 }
-#abbr .abbr-key {
+.challenge-morse {
   font-family: "SF Mono", ui-monospace, monospace;
-  font-weight: 600;
   color: var(--muted);
-  letter-spacing: 0.08em;
+  font-size: 0.5em;
+  margin-left: 0.6em;
+  letter-spacing: 0.1em;
 }
-#abbr .abbr-ch.on {
+#output {
+  transition: color 120ms ease-out;
+}
+#output.ok {
   color: var(--ok);
+}
+#output.bad {
+  color: #e5534b;
+}
+
+#hints {
+  color: var(--muted);
+  font-size: 0.9rem;
+  text-align: center;
+  min-height: 1.2em;
 }
 
 .panel {
@@ -167,23 +177,23 @@ button#clear:hover {
 .cheat-key .cheat-char {
   font-size: 0.95rem;
 }
-/* Keys spelling the current abbreviation hint. */
+/* Revealed answer key in learn-letters mode. */
 .cheat-key.target {
   border-color: var(--accent);
-  background: rgba(54, 197, 240, 0.1);
+  background: rgba(54, 197, 240, 0.12);
 }
 .cheat-key.target .cheat-char {
   color: var(--accent);
 }
-.cheat-key.done {
-  border-color: var(--ok);
-  background: rgba(63, 185, 80, 0.16);
-}
-.cheat-key.done .cheat-char {
-  color: var(--ok);
-}
 .cheat-key .cheat-pattern {
   font-size: 0.7rem;
+}
+/* Learn mode hides every pattern; the revealed key shows its own. */
+.hide-morse .cheat-pattern {
+  visibility: hidden;
+}
+.hide-morse .cheat-key.reveal .cheat-pattern {
+  visibility: visible;
 }
 
 /* Punctuation grid (characters not on the keyboard) */

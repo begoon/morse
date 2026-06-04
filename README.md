@@ -27,10 +27,21 @@ assets). `docs/` is committed so GitHub Pages can serve it. You can also just op
 just test           # bun test
 ```
 
-## Keys
+## Modes
+
+Pick a mode in the settings panel.
+
+- **Learn letters** (default): a random character is played as Morse. Type the
+  letter to answer (correct advances to the next). `Space` replays the sound,
+  `/` reveals the code beside the `?`, and clicking the `?` reveals which key it
+  is on the cheatsheet. Playback uses the Speed setting (default 10 wpm).
+- **Keying**: key Morse yourself with the paddle or straight key; it decodes to
+  text live.
+
+## Keys (keying mode)
 
 - **Iambic paddle** (default): `,` = dit, `.` = dah. Hold for repeats, squeeze
-  both for di-dah alternation (Curtis Mode B).
+  both for di-dah alternation.
 - **Straight key**: hold `Space` — short press = dit, long press = dah.
 
 ## Keyer mode
@@ -48,6 +59,7 @@ paddle movement on some characters but has a tighter release window.
 
 ## Features
 
+- Learn-letters listening trainer and a free keying mode
 - Switchable iambic (Curtis Mode A/B) paddle keyer and straight-key keyer
 - Web Audio sidetone with adjustable tone (400–1000 Hz) and volume
 - Live decode to text, showing the last 10 characters

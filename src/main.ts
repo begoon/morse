@@ -1,15 +1,15 @@
-// Wires the DOM, settings, audio, keyers and decoder together.
+// Wires the DOM, settings, audio, keyers, decoder and the learning mode.
 
 import "./styles.css";
 import { Decoder } from "./decoder";
 import { Sidetone } from "./audio";
 import { IambicKeyer } from "./keyer-iambic";
 import { StraightKeyer } from "./keyer-straight";
-import { renderCheatsheet } from "./cheatsheet";
-import { randomAbbr, type Abbr } from "./abbreviations";
+import { renderCheatsheet, glyphs, PUNCT } from "./cheatsheet";
+import { playPattern, type PlayHandle } from "./player";
 import { ditMs, thresholds } from "./timing";
+import { tableFor, type Language } from "./morse";
 import * as Settings from "./settings";
-import type { Language } from "./morse";
 
 const settings = Settings.load();
 const sidetone = new Sidetone();
@@ -22,7 +22,8 @@ const $ = <T extends HTMLElement>(id: string) =>
 
 const outputEl = $("output");
 const patternEl = $("pattern");
-const abbrEl = $("abbr");
+const hintsEl = $("hints");
+const modeEl = $<HTMLSelectElement>("mode");
 const keyTypeEl = $<HTMLSelectElement>("keyType");
 const iambicModeEl = $<HTMLSelectElement>("iambicMode");
 const languageEl = $<HTMLSelectElement>("language");
@@ -36,20 +37,20 @@ const toneValEl = $("toneVal");
 const clearEl = $<HTMLButtonElement>("clear");
 const cheatsheetEl = $("cheatsheet");
 
-// --- Decoder -----------------------------------------------------------------
+// --- Decoder (keying mode) ---------------------------------------------------
 const decoder = new Decoder({
   language: settings.language,
   letterGapMs: thresholds(settings.wpm).gapLetter,
   wordGapMs: thresholds(settings.wpm).gapWord,
   maxChars: 40,
-  onChar: (c) => matchAbbr(c),
   onChange: (s) => {
-    outputEl.textContent = s.text || " ";
-    patternEl.textContent = s.pattern || " ";
+    if (settings.mode !== "keying") return;
+    outputEl.textContent = s.text || " ";
+    patternEl.textContent = s.pattern || " ";
   },
 });
 
-// --- Keyers ------------------------------------------------------------------
+// --- Keyers (keying mode) ----------------------------------------------------
 const iambic = new IambicKeyer({
   ditMs: () => ditMs(settings.wpm),
   toneOn: () => sidetone.keyOn(),
@@ -67,6 +68,101 @@ const straight = new StraightKeyer({
   onElement: (t) => decoder.element(t),
 });
 
+// --- Learn-letters mode ------------------------------------------------------
+// Plays a random character; the user types it to answer. Space replays, "/"
+// reveals the Morse pattern beside the "?", and clicking the "?" reveals which
+// key it is on the cheatsheet (showing that key's pattern).
+let target: string | null = null;
+let showMorse = false; // "/" revealed the pattern
+let revealed = false; // "?" clicked -> answer shown on the keyboard
+let playing: PlayHandle | null = null;
+
+function letterPool(): string[] {
+  return Object.keys(tableFor(settings.language)).filter(
+    (c) => /[\p{L}\p{N}]/u.test(c) || PUNCT.includes(c),
+  );
+}
+
+function playTarget() {
+  if (!target) return;
+  const pattern = tableFor(settings.language)[target];
+  if (!pattern) return;
+  playing?.cancel();
+  sidetone.ensure().then(() => {
+    if (target && settings.mode === "letters") {
+      playing = playPattern(sidetone, pattern, ditMs(settings.wpm));
+    }
+  });
+}
+
+function renderLetters() {
+  const pattern = target ? tableFor(settings.language)[target] : "";
+  const morse =
+    showMorse && pattern
+      ? `<span class="challenge-morse">${glyphs(pattern)}</span>`
+      : "";
+  outputEl.innerHTML = `<span class="challenge" title="Click to reveal">?</span>${morse}`;
+  patternEl.textContent = " ";
+  highlightTarget();
+}
+
+function highlightTarget() {
+  cheatsheetEl.querySelectorAll<HTMLElement>(".cheat-key").forEach((el) => {
+    const isTarget = revealed && (el.dataset.char ?? "") === target;
+    el.classList.toggle("target", isTarget);
+    el.classList.toggle("reveal", isTarget);
+  });
+}
+
+function newLetter() {
+  const pool = letterPool();
+  let next = target;
+  do {
+    next = pool[Math.floor(Math.random() * pool.length)]!;
+  } while (pool.length > 1 && next === target);
+  target = next;
+  showMorse = false;
+  revealed = false;
+  renderLetters();
+  playTarget();
+}
+
+function guess(char: string) {
+  if (!target) return;
+  if (char.toUpperCase() === target) {
+    outputEl.classList.add("ok");
+    setTimeout(() => {
+      outputEl.classList.remove("ok");
+      newLetter();
+    }, 250);
+  } else {
+    outputEl.classList.add("bad");
+    setTimeout(() => outputEl.classList.remove("bad"), 250);
+  }
+}
+
+function handleLettersKey(e: KeyboardEvent) {
+  if (e.repeat || e.ctrlKey || e.metaKey || e.altKey) return;
+  if (e.key === " ") {
+    e.preventDefault();
+    playTarget();
+  } else if (e.key === "/") {
+    e.preventDefault();
+    showMorse = true;
+    renderLetters();
+  } else if (e.key.length === 1) {
+    e.preventDefault();
+    sidetone.ensure(); // first keypress unlocks audio
+    guess(e.key);
+  }
+}
+
+outputEl.addEventListener("click", () => {
+  if (settings.mode !== "letters") return;
+  revealed = true;
+  renderLetters();
+});
+
 // --- Keyboard routing --------------------------------------------------------
 async function unlockAudio() {
   await sidetone.ensure();
@@ -74,7 +170,11 @@ async function unlockAudio() {
 
 window.addEventListener("keydown", (e) => {
   if (isTyping(e)) return;
-  // Any handled key counts as the user gesture that unlocks audio.
+  if (settings.mode === "letters") {
+    handleLettersKey(e);
+    return;
+  }
+  // keying mode — drive the keyer. Any handled key unlocks audio.
   if (settings.keyType === "straight") {
     if (e.code === settings.keys.straight) {
       e.preventDefault();
@@ -95,7 +195,7 @@ window.addEventListener("keydown", (e) => {
 });
 
 window.addEventListener("keyup", (e) => {
-  if (isTyping(e)) return;
+  if (isTyping(e) || settings.mode !== "keying") return;
   if (settings.keyType === "straight") {
     if (e.code === settings.keys.straight) straight.up();
   } else {
@@ -114,6 +214,23 @@ function isTyping(e: KeyboardEvent): boolean {
   );
 }
 
+// --- Mode --------------------------------------------------------------------
+function applyMode() {
+  playing?.cancel();
+  iambic.stop();
+  straight.stop();
+  const letters = settings.mode === "letters";
+  renderCheatsheet(cheatsheetEl, settings.language, { showPatterns: !letters });
+  hintsEl.textContent = letters
+    ? "Listen, then type the letter · Space replays · / shows the code · click ? to reveal"
+    : "Tap , for dit · . for dah · hold/squeeze for iambic";
+  if (letters) {
+    newLetter();
+  } else {
+    decoder.reset();
+  }
+}
+
 // --- Settings controls -------------------------------------------------------
 function applyTiming() {
   const th = thresholds(settings.wpm);
@@ -121,15 +238,11 @@ function applyTiming() {
   decoder.setGaps(th.gapLetter * k, th.gapWord * k);
 }
 
-function refreshKeyMode() {
-  iambic.stop();
-  straight.stop();
-}
-
 function persist() {
   Settings.save(settings);
 }
 
+modeEl.value = settings.mode;
 keyTypeEl.value = settings.keyType;
 iambicModeEl.value = settings.iambicMode;
 languageEl.value = settings.language;
@@ -141,9 +254,16 @@ volumeEl.value = String(settings.volume);
 toneEl.value = String(settings.toneHz);
 toneValEl.textContent = String(settings.toneHz);
 
+modeEl.addEventListener("change", () => {
+  settings.mode = modeEl.value as Settings.Mode;
+  applyMode();
+  persist();
+});
+
 keyTypeEl.addEventListener("change", () => {
   settings.keyType = keyTypeEl.value as Settings.KeyType;
-  refreshKeyMode();
+  iambic.stop();
+  straight.stop();
   persist();
 });
 
@@ -156,8 +276,7 @@ iambicModeEl.addEventListener("change", () => {
 languageEl.addEventListener("change", () => {
   settings.language = languageEl.value as Language;
   decoder.setLanguage(settings.language);
-  renderCheatsheet(cheatsheetEl, settings.language);
-  highlightCheat();
+  applyMode(); // re-render cheatsheet + restart the challenge for the new pool
   persist();
 });
 
@@ -188,71 +307,11 @@ toneEl.addEventListener("input", () => {
   persist();
 });
 
-clearEl.addEventListener("click", () => decoder.reset());
-
-// --- Abbreviation hint -------------------------------------------------------
-// The hint is a practice target: key its characters in order. Correct letters
-// are highlighted; a wrong letter resets progress; decoded spaces (word gaps)
-// are ignored. Completing it advances to a new random abbreviation.
-let currentAbbr: Abbr | undefined;
-let matched = 0; // count of leading characters keyed correctly so far
-
-function renderAbbr() {
-  const target = currentAbbr!.abbr;
-  const chars = [...target]
-    .map(
-      (c, i) =>
-        `<span class="abbr-ch${i < matched ? " on" : ""}">${c}</span>`,
-    )
-    .join("");
-  abbrEl.innerHTML =
-    `<span class="abbr-key">${chars}</span>` +
-    `<span class="abbr-meaning">${currentAbbr!.meaning}</span>`;
-  highlightCheat();
-}
-
-// Highlight the cheatsheet keys that spell the current abbreviation; keys
-// already keyed correctly are marked done.
-function highlightCheat() {
-  const target = currentAbbr ? currentAbbr.abbr.toUpperCase() : "";
-  const keyed = target.slice(0, matched);
-  cheatsheetEl.querySelectorAll<HTMLElement>(".cheat-key").forEach((el) => {
-    const ch = (el.dataset.char ?? "").toUpperCase();
-    const inWord = ch.length > 0 && target.includes(ch);
-    el.classList.toggle("target", inWord);
-    el.classList.toggle("done", inWord && keyed.includes(ch));
-  });
-}
-
-function nextAbbr() {
-  currentAbbr = randomAbbr(currentAbbr);
-  matched = 0;
-  renderAbbr();
-}
-
-function matchAbbr(char: string) {
-  if (!currentAbbr) return;
-  if (char === " ") return; // gaps / word breaks are skipped
-  const target = currentAbbr.abbr.toUpperCase();
-  const c = char.toUpperCase();
-  if (c === target[matched]) {
-    matched++;
-    if (matched === target.length) {
-      nextAbbr(); // entered properly -> show the next one
-      return;
-    }
-  } else {
-    // A wrong letter resets matching, but may itself begin a new match.
-    matched = c === target[0] ? 1 : 0;
-  }
-  renderAbbr();
-}
-
-abbrEl.addEventListener("click", nextAbbr);
+clearEl.addEventListener("click", () => {
+  if (settings.mode === "letters") newLetter();
+  else decoder.reset();
+});
 
 // --- Init --------------------------------------------------------------------
 applyTiming();
-refreshKeyMode();
-renderCheatsheet(cheatsheetEl, settings.language);
-nextAbbr();
-decoder.reset();
+applyMode();

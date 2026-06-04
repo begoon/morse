@@ -8,7 +8,7 @@
   <body>
     <div id="output"> </div>
     <div id="pattern"> </div>
-    <div id="abbr" title="Key it to advance · click to skip"></div>
+    <div id="hints"></div>
 
     <details class="cheatsheet" open>
       <summary>Cheatsheet</summary>
@@ -18,6 +18,13 @@
     <details class="settings">
       <summary>Settings</summary>
       <div class="panel">
+      <label for="mode">Mode</label>
+      <select id="mode">
+        <option value="letters">Learn letters</option>
+        <option value="keying">Keying</option>
+      </select>
+      <span></span>
+
       <label for="keyType">Key</label>
       <select id="keyType">
         <option value="paddle">Iambic paddle</option>

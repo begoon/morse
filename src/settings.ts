@@ -5,7 +5,11 @@ import type { IambicMode } from "./keyer-iambic";
 
 export type KeyType = "paddle" | "straight";
 
+/** Training mode: listen-and-guess letters, or free keying with decode. */
+export type Mode = "letters" | "keying";
+
 export type Settings = {
+  mode: Mode;
   keyType: KeyType;
   /** Iambic keyer behaviour on squeeze release (Curtis Mode A or B). */
   iambicMode: IambicMode;
@@ -24,10 +28,11 @@ export type Settings = {
 };
 
 export const DEFAULTS: Settings = {
+  mode: "letters",
   keyType: "paddle",
   iambicMode: "A",
   language: "en",
-  wpm: 5,
+  wpm: 10,
   gapTolerance: 1.5,
   volume: 0.2,
   toneHz: 600,
