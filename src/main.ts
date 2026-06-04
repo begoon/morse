@@ -157,6 +157,7 @@ languageEl.addEventListener("change", () => {
   settings.language = languageEl.value as Language;
   decoder.setLanguage(settings.language);
   renderCheatsheet(cheatsheetEl, settings.language);
+  highlightCheat();
   persist();
 });
 
@@ -207,6 +208,20 @@ function renderAbbr() {
   abbrEl.innerHTML =
     `<span class="abbr-key">${chars}</span>` +
     `<span class="abbr-meaning">${currentAbbr!.meaning}</span>`;
+  highlightCheat();
+}
+
+// Highlight the cheatsheet keys that spell the current abbreviation; keys
+// already keyed correctly are marked done.
+function highlightCheat() {
+  const target = currentAbbr ? currentAbbr.abbr.toUpperCase() : "";
+  const keyed = target.slice(0, matched);
+  cheatsheetEl.querySelectorAll<HTMLElement>(".cheat-key").forEach((el) => {
+    const ch = (el.dataset.char ?? "").toUpperCase();
+    const inWord = ch.length > 0 && target.includes(ch);
+    el.classList.toggle("target", inWord);
+    el.classList.toggle("done", inWord && keyed.includes(ch));
+  });
 }
 
 function nextAbbr() {

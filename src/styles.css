@@ -167,6 +167,21 @@ button#clear:hover {
 .cheat-key .cheat-char {
   font-size: 0.95rem;
 }
+/* Keys spelling the current abbreviation hint. */
+.cheat-key.target {
+  border-color: var(--accent);
+  background: rgba(54, 197, 240, 0.1);
+}
+.cheat-key.target .cheat-char {
+  color: var(--accent);
+}
+.cheat-key.done {
+  border-color: var(--ok);
+  background: rgba(63, 185, 80, 0.16);
+}
+.cheat-key.done .cheat-char {
+  color: var(--ok);
+}
 .cheat-key .cheat-pattern {
   font-size: 0.7rem;
 }

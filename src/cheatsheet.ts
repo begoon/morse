@@ -34,9 +34,13 @@ function glyphs(pattern: string): string {
     .join(" "); // hair space between symbols
 }
 
+function escAttr(s: string): string {
+  return s.replace(/&/g, "&amp;").replace(/"/g, "&quot;");
+}
+
 function key(char: string, pattern: string): string {
   return `
-    <div class="cheat-key">
+    <div class="cheat-key" data-char="${escAttr(char)}">
       <span class="cheat-char">${char}</span>
       <span class="cheat-pattern">${glyphs(pattern)}</span>
     </div>`;
