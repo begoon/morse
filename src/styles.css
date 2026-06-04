@@ -58,6 +58,21 @@ h1 {
   letter-spacing: 0.3em;
 }
 
+#abbr {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+  cursor: pointer;
+  user-select: none;
+}
+#abbr .abbr-key {
+  font-family: "SF Mono", ui-monospace, monospace;
+  font-weight: 600;
+  color: var(--accent);
+}
+
 .panel {
   width: min(90vw, 720px);
   background: var(--panel);

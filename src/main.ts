@@ -6,6 +6,7 @@ import { Sidetone } from "./audio";
 import { IambicKeyer } from "./keyer-iambic";
 import { StraightKeyer } from "./keyer-straight";
 import { renderCheatsheet } from "./cheatsheet";
+import { randomAbbr, type Abbr } from "./abbreviations";
 import { ditMs, thresholds } from "./timing";
 import * as Settings from "./settings";
 import type { Language } from "./morse";
@@ -21,6 +22,7 @@ const $ = <T extends HTMLElement>(id: string) =>
 
 const outputEl = $("output");
 const patternEl = $("pattern");
+const abbrEl = $("abbr");
 const keyTypeEl = $<HTMLSelectElement>("keyType");
 const iambicModeEl = $<HTMLSelectElement>("iambicMode");
 const languageEl = $<HTMLSelectElement>("language");
@@ -186,8 +188,19 @@ toneEl.addEventListener("input", () => {
 
 clearEl.addEventListener("click", () => decoder.reset());
 
+// --- Abbreviation hint -------------------------------------------------------
+let currentAbbr: Abbr | undefined;
+function showAbbr() {
+  currentAbbr = randomAbbr(currentAbbr);
+  abbrEl.innerHTML =
+    `<span class="abbr-key">${currentAbbr.abbr}</span>` +
+    `<span class="abbr-meaning">${currentAbbr.meaning}</span>`;
+}
+abbrEl.addEventListener("click", showAbbr);
+
 // --- Init --------------------------------------------------------------------
 applyTiming();
 refreshKeyMode();
 renderCheatsheet(cheatsheetEl, settings.language);
+showAbbr();
 decoder.reset();
