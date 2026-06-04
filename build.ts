@@ -6,13 +6,13 @@
 import { $ } from "bun";
 
 const result = await Bun.build({
-  entrypoints: ["./index.html"],
-  minify: true,
+    entrypoints: ["./index.html"],
+    minify: true,
 });
 
 if (!result.success) {
-  for (const log of result.logs) console.error(log);
-  process.exit(1);
+    for (const log of result.logs) console.error(log);
+    process.exit(1);
 }
 
 let html = "";
@@ -20,10 +20,10 @@ const js = new Map<string, string>();
 const css = new Map<string, string>();
 
 for (const out of result.outputs) {
-  const name = out.path.replace(/^\.?\//, "");
-  if (name.endsWith(".html")) html = await out.text();
-  else if (name.endsWith(".js")) js.set(name, await out.text());
-  else if (name.endsWith(".css")) css.set(name, await out.text());
+    const name = out.path.replace(/^\.?\//, "");
+    if (name.endsWith(".html")) html = await out.text();
+    else if (name.endsWith(".js")) js.set(name, await out.text());
+    else if (name.endsWith(".css")) css.set(name, await out.text());
 }
 
 const escapeRe = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -31,18 +31,15 @@ const escapeRe = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 const safeJs = (s: string) => s.replace(/<\/script>/gi, "<\\/script>");
 
 for (const [name, code] of css) {
-  html = html.replace(
-    new RegExp(`<link[^>]*href="\\.?/?${escapeRe(name)}"[^>]*>`),
-    `<style>${code}</style>`,
-  );
+    html = html.replace(new RegExp(`<link[^>]*href="\\.?/?${escapeRe(name)}"[^>]*>`), `<style>${code}</style>`);
 }
 for (const [name, code] of js) {
-  html = html.replace(
-    new RegExp(`<script[^>]*src="\\.?/?${escapeRe(name)}"[^>]*></script>`),
-    `<script type="module">${safeJs(code)}</script>`,
-  );
+    html = html.replace(
+        new RegExp(`<script[^>]*src="\\.?/?${escapeRe(name)}"[^>]*></script>`),
+        `<script type="module">${safeJs(code)}</script>`,
+    );
 }
 
 await $`rm -rf docs`;
 await Bun.write("docs/index.html", html);
-console.log(`Wrote docs/index.html (${(html.length / 1024).toFixed(1)} KB, self-contained)`);
+console.log(`wrote docs/index.html (${(html.length / 1024).toFixed(1)} KB, self-contained)`);
