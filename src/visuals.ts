@@ -9,7 +9,7 @@ import type { KeyType } from "./settings";
  */
 function straightKeySvg(): string {
   return `
-<svg class="schematic straight" viewBox="0 0 240 140" role="img"
+<svg class="schematic straight" viewBox="0 34 240 92" role="img"
      aria-label="Straight key schematic">
   <line class="base" x1="20" y1="120" x2="220" y2="120" />
   <rect class="pivot" x="150" y="78" width="10" height="42" />
@@ -28,7 +28,7 @@ function straightKeySvg(): string {
  */
 function paddleSvg(): string {
   return `
-<svg class="schematic paddle" viewBox="0 0 240 140" role="img"
+<svg class="schematic paddle" viewBox="0 34 240 92" role="img"
      aria-label="Iambic paddle schematic">
   <line class="base" x1="20" y1="120" x2="220" y2="120" />
   <rect class="post" x="116" y="50" width="8" height="70" />
