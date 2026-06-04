@@ -66,14 +66,17 @@ export function renderCheatsheet(
     })
     .join("");
 
-  // Short punctuation row — only . , ? (when present in the language).
-  const extras = PUNCT.filter((char) => char in table)
+  // Short punctuation set — only . , ? (when present in the language) — shown
+  // as a column to the right of the main keyboard.
+  const punct = PUNCT.filter((char) => char in table)
     .map((char) => key(char, table[char]!))
     .join("");
 
   // hide-morse hides every pattern; learning mode reveals one via .reveal.
   container.classList.toggle("hide-morse", opts.showPatterns === false);
   container.innerHTML =
+    `<div class="cheat-board">` +
     `<div class="cheat-keyboard">${rows}</div>` +
-    (extras ? `<div class="cheat-grid">${extras}</div>` : "");
+    (punct ? `<div class="cheat-punct">${punct}</div>` : "") +
+    `</div>`;
 }

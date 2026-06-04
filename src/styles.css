@@ -148,14 +148,24 @@ button#clear:hover {
   user-select: none;
 }
 /* Keyboard layout */
+.cheat-board {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-top: 0.5rem;
+}
 .cheat-keyboard {
-  width: fit-content;
-  max-width: 100%;
-  margin: 0.5rem auto 0;
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
-  overflow-x: auto;
+}
+/* Special keys (. , ?) stacked to the right of the keyboard. */
+.cheat-punct {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
 }
 .cheat-row {
   display: flex;
@@ -188,27 +198,15 @@ button#clear:hover {
 .cheat-key .cheat-pattern {
   font-size: 0.7rem;
 }
-/* Learn mode hides every pattern; the revealed key shows its own. */
+/* Learn mode hides every pattern (keys collapse to just the character); the
+   revealed key shows its own. */
 .hide-morse .cheat-pattern {
-  visibility: hidden;
+  display: none;
 }
 .hide-morse .cheat-key.reveal .cheat-pattern {
-  visibility: visible;
+  display: block;
 }
 
-/* Punctuation grid (characters not on the keyboard) */
-.cheat-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(56px, 1fr));
-  gap: 0.3rem;
-  margin-top: 0.6rem;
-}
-.cheat-grid .cheat-key {
-  flex-direction: row;
-  align-items: baseline;
-  gap: 0.35rem;
-  min-width: 0;
-}
 .cheat-char {
   font-weight: 600;
   min-width: 1.1em;
