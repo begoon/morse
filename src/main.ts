@@ -1,11 +1,10 @@
-// Wires the DOM, settings, audio, keyers, decoder and visuals together.
+// Wires the DOM, settings, audio, keyers and decoder together.
 
 import "./styles.css";
 import { Decoder } from "./decoder";
 import { Sidetone } from "./audio";
 import { IambicKeyer } from "./keyer-iambic";
 import { StraightKeyer } from "./keyer-straight";
-import { renderSchematic, setActive } from "./visuals";
 import { renderCheatsheet } from "./cheatsheet";
 import { ditMs, thresholds } from "./timing";
 import * as Settings from "./settings";
@@ -22,7 +21,6 @@ const $ = <T extends HTMLElement>(id: string) =>
 
 const outputEl = $("output");
 const patternEl = $("pattern");
-const schematicEl = $("schematic");
 const keyTypeEl = $<HTMLSelectElement>("keyType");
 const iambicModeEl = $<HTMLSelectElement>("iambicMode");
 const languageEl = $<HTMLSelectElement>("language");
@@ -33,7 +31,6 @@ const gapValEl = $("gapVal");
 const volumeEl = $<HTMLInputElement>("volume");
 const toneEl = $<HTMLInputElement>("tone");
 const toneValEl = $("toneVal");
-const legendEl = $("legend");
 const clearEl = $<HTMLButtonElement>("clear");
 const cheatsheetEl = $("cheatsheet");
 
@@ -50,16 +47,12 @@ const decoder = new Decoder({
 });
 
 // --- Keyers ------------------------------------------------------------------
-const onActive = (el: "." | "-" | null) =>
-  setActive(schematicEl, settings.keyType, el);
-
 const iambic = new IambicKeyer({
   ditMs: () => ditMs(settings.wpm),
   toneOn: () => sidetone.keyOn(),
   toneOff: () => sidetone.keyOff(),
   onElementStart: () => decoder.elementStart(),
   onElement: (t) => decoder.element(t),
-  setActive: onActive,
 });
 iambic.setMode(settings.iambicMode);
 
@@ -69,7 +62,6 @@ const straight = new StraightKeyer({
   toneOff: () => sidetone.keyOff(),
   onElementStart: () => decoder.elementStart(),
   onElement: (t) => decoder.element(t),
-  setActive: onActive,
 });
 
 // --- Keyboard routing --------------------------------------------------------
@@ -129,11 +121,6 @@ function applyTiming() {
 function refreshKeyMode() {
   iambic.stop();
   straight.stop();
-  renderSchematic(schematicEl, settings.keyType);
-  legendEl.textContent =
-    settings.keyType === "straight"
-      ? "Hold Space — short = dit, long = dah"
-      : "Tap , for dit · Tap . for dah · hold or squeeze for iambic";
 }
 
 function persist() {
