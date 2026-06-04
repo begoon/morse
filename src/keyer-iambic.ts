@@ -6,8 +6,11 @@
 //   - hold dah  -> repeating dahs
 //   - squeeze both -> alternating di-dah-di-dah
 //
-// Tapping the opposite paddle during an element latches that paddle into a
-// one-shot memory, so it is sent next (insertion / alternation).
+// Paddle state is sampled at element boundaries, not buffered: a stroke that is
+// pressed and released while a tone is playing is ignored. To chain elements
+// you hold the paddle until the current tone ends — that is when its state is
+// read. (A real keyer reads the paddles when the current sound finishes rather
+// than queueing presses made during it.)
 //
 // Mode A vs Mode B differ only when you release BOTH paddles mid-element while
 // squeezing:
@@ -56,7 +59,6 @@ export class IambicKeyer {
   setDit(down: boolean) {
     this.paddle.dit = down;
     if (down) {
-      this.ditMemory = true;
       if (this.currentEl === "-") this.oppositeSeen = true;
       this.start();
     }
@@ -65,7 +67,6 @@ export class IambicKeyer {
   setDah(down: boolean) {
     this.paddle.dah = down;
     if (down) {
-      this.dahMemory = true;
       if (this.currentEl === ".") this.oppositeSeen = true;
       this.start();
     }

@@ -88,3 +88,17 @@ test("Mode B sends one extra opposite element on squeeze release", async () => {
   await sleep(dit * 8);
   expect(elements).toEqual([".", "-", "."]);
 });
+
+// Paddle state is read at element boundaries, not buffered mid-tone: a stroke
+// pressed and released while a tone plays is dropped (you must hold it past the
+// boundary to register).
+test("a stroke tapped while a tone plays is not buffered", async () => {
+  const { keyer, elements, dit } = makeIambic("A");
+  keyer.setDah(true); // begin one dah (60ms tone)
+  keyer.setDah(false);
+  await sleep(dit); // now inside the dah tone
+  keyer.setDit(true); // tap the other paddle mid-tone...
+  keyer.setDit(false); // ...releasing before the tone ends
+  await sleep(dit * 8);
+  expect(elements).toEqual(["-"]);
+});
