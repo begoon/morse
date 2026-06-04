@@ -133,14 +133,21 @@ function newLetter() {
   playTarget();
 }
 
+function splashKey(char: string) {
+  cheatsheetEl.querySelectorAll<HTMLElement>(".cheat-key").forEach((el) => {
+    if ((el.dataset.char ?? "") !== char) return;
+    el.classList.remove("splash");
+    void el.offsetWidth; // restart the animation if already playing
+    el.classList.add("splash");
+    setTimeout(() => el.classList.remove("splash"), 350);
+  });
+}
+
 function guess(char: string) {
   if (!target) return;
   if (char.toUpperCase() === target) {
-    outputEl.classList.add("ok"); // short flash, then advance
-    setTimeout(() => {
-      outputEl.classList.remove("ok");
-      newLetter();
-    }, 150);
+    splashKey(target); // short splash on the correct key
+    setTimeout(newLetter, 150);
   } else {
     sidetone.error();
     outputEl.classList.add("bad");

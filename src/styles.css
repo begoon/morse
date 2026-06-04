@@ -198,6 +198,22 @@ button#clear:hover {
 .cheat-key .cheat-pattern {
   font-size: 0.7rem;
 }
+/* Short splash when the correct key is answered. */
+@keyframes key-splash {
+  0% {
+    background: var(--ok);
+    border-color: var(--ok);
+    transform: scale(1.18);
+  }
+  100% {
+    background: var(--bg);
+    border-color: var(--line);
+    transform: scale(1);
+  }
+}
+.cheat-key.splash {
+  animation: key-splash 350ms ease-out;
+}
 /* Learn mode hides every pattern (keys collapse to just the character); the
    revealed key shows its own. */
 .hide-morse .cheat-pattern {
