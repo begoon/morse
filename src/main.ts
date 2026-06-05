@@ -162,11 +162,13 @@ function handleLettersKey(e: KeyboardEvent) {
     playTarget();
   } else if (e.key === "/") {
     e.preventDefault();
-    showMorse = true;
-    renderLetters();
-  } else if (e.key === "?") {
-    e.preventDefault();
-    reveal();
+    // First "/" shows the code; a second "/" reveals the letter.
+    if (!showMorse) {
+      showMorse = true;
+      renderLetters();
+    } else {
+      reveal();
+    }
   } else if (e.key.length === 1) {
     e.preventDefault();
     sidetone.ensure(); // first keypress unlocks audio
@@ -237,7 +239,7 @@ function applyMode() {
   const letters = settings.mode === "letters";
   renderCheatsheet(cheatsheetEl, settings.language, { showPatterns: !letters });
   hintsEl.textContent = letters
-    ? "Listen, then type the letter · Space replays · / shows the code · click ? to reveal"
+    ? "Listen, then type the letter · Space replays · / shows the code, / again reveals"
     : "Tap , for dit · . for dah · hold/squeeze for iambic";
   if (letters) {
     newLetter();
