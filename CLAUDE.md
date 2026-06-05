@@ -1,106 +1,52 @@
+# Morse Trainer
 
-Default to using Bun instead of Node.js.
+A browser-based Morse trainer. Two modes, selected in the settings panel:
 
-- Use `bun <file>` instead of `node <file>` or `ts-node <file>`
-- Use `bun test` instead of `jest` or `vitest`
-- Use `bun build <file.html|file.ts|file.css>` instead of `webpack` or `esbuild`
-- Use `bun install` instead of `npm install` or `yarn install` or `pnpm install`
-- Use `bun run <script>` instead of `npm run <script>` or `yarn run <script>` or `pnpm run <script>`
-- Use `bunx <package> <command>` instead of `npx <package> <command>`
-- Bun automatically loads .env, so don't use dotenv.
+- **Learn letters** (default): plays a random character; the user types it to
+  answer (correct → splash on the key + advance; wrong → error buzz). `Space`
+  replays, `/` shows the code and a second `/` reveals the key on the cheatsheet
+  (clicking the `?` also reveals). Playback uses the Speed setting (default
+  10 wpm).
+- **Keying**: iambic paddle (Curtis Mode A/B) or straight key → live decode.
 
-## APIs
+## Build & run
 
-- `Bun.serve()` supports WebSockets, HTTPS, and routes. Don't use `express`.
-- `bun:sqlite` for SQLite. Don't use `better-sqlite3`.
-- `Bun.redis` for Redis. Don't use `ioredis`.
-- `Bun.sql` for Postgres. Don't use `pg` or `postgres.js`.
-- `WebSocket` is built-in. Don't use `ws`.
-- Prefer `Bun.file` over `node:fs`'s readFile/writeFile
-- Bun.$`ls` instead of execa.
+Ships as a single self-contained `docs/index.html` for GitHub Pages.
 
-## Testing
+- `just build` — runs `build.ts`, which bundles via `Bun.build` and inlines all
+  JS/CSS into one `docs/index.html`. **Rebuild after any `src/` change** and
+  commit `docs/` (GitHub Pages serves it from `main` / `docs`).
+- `just serve` — build, then `python3 -m http.server -d docs 3000`.
+- `just test` — `bun test`. Typecheck with `bunx tsc --noEmit`.
+- `index.ts` is an optional `bun --hot` dev server (HMR); not the primary path.
 
-Use `bun test` to run tests.
+## Layout
 
-```ts#index.test.ts
-import { test, expect } from "bun:test";
+- `src/main.ts` — wires DOM, settings, audio, keyers, decoder and both modes.
+- `src/morse.ts` — EN/RU tables, `tableFor`, encode/lookup.
+- `src/keyer-iambic.ts` / `keyer-straight.ts` — keyers. The iambic keyer samples
+  paddle state at element boundaries (no press buffering); Mode A/B differ only
+  on squeeze release.
+- `src/decoder.ts` — silence-timed decode. `src/timing.ts` — PARIS timing from
+  wpm.
+- `src/cheatsheet.ts` — QWERTY/ЙЦУКЕН keyboard; `. , ?` shown to its right;
+  patterns hidden in learn mode and revealed per key.
+- `src/player.ts` — plays a pattern as audio. `src/audio.ts` — Web Audio
+  sidetone + `error()` buzz. `src/settings.ts` — persisted settings
+  (localStorage).
+- Tests: `*.test.ts` at the repo root.
 
-test("hello world", () => {
-  expect(1).toBe(1);
-});
-```
+## Conventions
 
-## Frontend
+- After UI changes, verify the **built** page by driving it headless (Chrome
+  `--remote-debugging-port` + CDP `Runtime.evaluate`), not just screenshots.
+- Editing tool note: a couple of source lines contain non-breaking spaces; match
+  on neighbouring lines if an exact-string edit fails.
 
-Use HTML imports with `Bun.serve()`. Don't use `vite`. HTML imports fully support React, CSS, Tailwind.
+## Bun
 
-Server:
+Default to Bun over Node.
 
-```ts#index.ts
-import index from "./index.html"
-
-Bun.serve({
-  routes: {
-    "/": index,
-    "/api/users/:id": {
-      GET: (req) => {
-        return new Response(JSON.stringify({ id: req.params.id }));
-      },
-    },
-  },
-  // optional websocket support
-  websocket: {
-    open: (ws) => {
-      ws.send("Hello, world!");
-    },
-    message: (ws, message) => {
-      ws.send(message);
-    },
-    close: (ws) => {
-      // handle close
-    }
-  },
-  development: {
-    hmr: true,
-    console: true,
-  }
-})
-```
-
-HTML files can import .tsx, .jsx or .js files directly and Bun's bundler will transpile & bundle automatically. `<link>` tags can point to stylesheets and Bun's CSS bundler will bundle.
-
-```html#index.html
-<html>
-  <body>
-    <h1>Hello, world!</h1>
-    <script type="module" src="./frontend.tsx"></script>
-  </body>
-</html>
-```
-
-With the following `frontend.tsx`:
-
-```tsx#frontend.tsx
-import React from "react";
-import { createRoot } from "react-dom/client";
-
-// import .css files directly and it works
-import './index.css';
-
-const root = createRoot(document.body);
-
-export default function Frontend() {
-  return <h1>Hello, world!</h1>;
-}
-
-root.render(<Frontend />);
-```
-
-Then, run index.ts
-
-```sh
-bun --hot ./index.ts
-```
-
-For more information, read the Bun API docs in `node_modules/bun-types/docs/**.mdx`.
+- `bun <file>` / `bun test` / `bun install` / `bunx <pkg>`; `Bun.serve()` (not
+  express), `bun:sqlite`, built-in `WebSocket`, `Bun.file`, `Bun.$`.
+- Bun auto-loads `.env` (no dotenv). HTML imports bundle TS/JSX/CSS directly.
