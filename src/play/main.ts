@@ -20,8 +20,12 @@ sidetone.setTone(settings.toneHz);
 sidetone.setVolume(settings.volume);
 
 const outputEl = document.getElementById("output")!;
+const historyEl = document.getElementById("history")!;
 const hintsEl = document.getElementById("hints")!;
 const cheatsheetEl = document.getElementById("cheatsheet")!;
+
+const HISTORY_MAX = 40; // like keying's decoder maxChars
+let history = ""; // running line of guessed letters, targets separated by spaces
 
 let target = ""; // the word (or single character) being played
 let pos = 0; // next expected letter index
@@ -101,6 +105,10 @@ function guess(char: string) {
     splashKey(expected); // short splash on the correct key
     pos++;
     revealed = false; // each letter must be revealed anew
+    history += expected;
+    if (pos >= target.length) history += " ";
+    if (history.length > HISTORY_MAX) history = history.slice(-HISTORY_MAX);
+    historyEl.textContent = history;
     render();
     if (pos >= target.length) setTimeout(newTarget, 150);
   } else {

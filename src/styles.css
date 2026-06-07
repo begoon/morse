@@ -148,6 +148,18 @@ h1 {
   color: #cf222e;
 }
 
+/* Play-mode running line of guessed letters (mirrors keying's decoded output) */
+#history {
+  font-family: "SF Mono", ui-monospace, "Cascadia Code", monospace;
+  font-size: 1.1rem;
+  color: var(--muted);
+  letter-spacing: 0.15em;
+  min-height: 1.4em;
+  white-space: pre;
+  overflow: hidden;
+  max-width: 100%;
+}
+
 #hints {
   color: var(--muted);
   font-size: 0.9rem;
