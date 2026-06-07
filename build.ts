@@ -15,6 +15,21 @@ async function buildPage(entrypoint: string, outPath: string): Promise<void> {
     const result = await Bun.build({
         entrypoints: [entrypoint],
         minify: true,
+        // Inline images as data URIs so the page stays a single file.
+        plugins: [
+            {
+                name: "png-dataurl",
+                setup(build) {
+                    build.onLoad({ filter: /\.png$/ }, async (args) => {
+                        const base64 = Buffer.from(await Bun.file(args.path).arrayBuffer()).toString("base64");
+                        return {
+                            contents: `export default "data:image/png;base64,${base64}"`,
+                            loader: "js",
+                        };
+                    });
+                },
+            },
+        ],
     });
 
     if (!result.success) {

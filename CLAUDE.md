@@ -65,6 +65,9 @@ scaled by percentage for the 78-question run.
   `questions.json` — the committed question bank.
 - `tools/extract-questions.ts` regenerates `questions.json` from the PDFs
   (macOS-only: uses PDFKit via `osascript`). Only re-run if the PDFs change.
+- Question diagrams live in `foundation/mock_<paper>_q<n>.png`, mapped in
+  `src/test/images.ts` and inlined as data URIs by the `png-dataurl` plugin in
+  `build.ts` (shown on the quiz screen and in the results review).
 
 ## Conventions
 

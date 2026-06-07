@@ -2,6 +2,7 @@
 
 import questionsJson from "./questions.json";
 import "./styles.css";
+import { imageFor } from "./images";
 import {
     DEFAULTS,
     buildRun,
@@ -142,6 +143,12 @@ function origin(q: RunQuestion): string {
     return `Mock ${q.source.paper} · Q${q.source.n}`;
 }
 
+/** The question's illustration (block diagram etc.), if it has one. */
+function questionImage(q: RunQuestion): HTMLElement[] {
+    const src = imageFor(q.source.paper, q.source.n);
+    return src ? [el("img", { class: "question-image", src, alt: "Question illustration" })] : [];
+}
+
 function renderQuiz(): void {
     const q = run[idx]!;
     const pick = picks[idx] ?? null;
@@ -193,6 +200,7 @@ function renderQuiz(): void {
                 el("span", { id: "counter" }, `Question ${idx + 1} / ${run.length}`),
                 settings.paper === "combined" ? el("span", { class: "origin" }, origin(q)) : ""),
             el("div", { class: "question", id: "question" }, q.source.question),
+            ...questionImage(q),
             options,
             nav,
         ),
@@ -213,6 +221,7 @@ function renderResults(): void {
                 el("span", { class: "mark" }, ok ? "✓" : "✗"),
                 el("span", {}, `${i + 1}. ${q.source.question}`),
                 el("span", { class: "origin" }, origin(q))),
+            ...questionImage(q),
         );
         if (!ok)
             item.append(el("div", { class: "review-answer" },
