@@ -1,0 +1,2193 @@
+[
+  {
+    "tag": "hamtrain",
+    "paper": 1,
+    "n": 1,
+    "question": "What are the three UK Amateur Radio licence levels?",
+    "options": [
+      "Beginner, Intermediate, Advanced",
+      "Foundation, Advanced, Full",
+      "Foundation, Intermediate, Full",
+      "Technical, General, Extra"
+    ],
+    "answer": 2,
+    "explanation": "The three UK Amateur Radio licence levels are Foundation, Intermediate and Full."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 1,
+    "n": 2,
+    "question": "The recommended guidance for giving your callsign on-air is as follows: 1. When calling CQ, 2. As frequently as practicable, and...",
+    "options": [
+      "When moving to a new frequency",
+      "When requested by another amateur",
+      "After each transmission",
+      "When increasing power"
+    ],
+    "answer": 0,
+    "explanation": "You are required to give your callsign when you start transmitting on a new frequency - people monitoring/using that new frequency need to know who you are, and you must be clearly identifiable."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 1,
+    "n": 3,
+    "question": "What is the correct term for a conversation with 3 or more amateurs with whom communication and identification have been established?",
+    "options": [
+      "A 'Net'",
+      "A 'Sked'",
+      "A 'CQ'",
+      "A 'Group'"
+    ],
+    "answer": 0,
+    "explanation": "A 'Net' or 'Network' refers to transmissions to three or more amateurs with whom communication and identification have been established."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 1,
+    "n": 4,
+    "question": "Who has the right to require you to modify your station?",
+    "options": [
+      "The RSGB",
+      "Anyone authorised by Ofcom",
+      "Local Council Planning Officer",
+      "Any Category 1 User Service (including the Police)"
+    ],
+    "answer": 1,
+    "explanation": "The licence states: \"A person authorised by Ofcom may require the Radio Equipment, or any part thereof, to be modified or restricted in use, or temporarily or permanently closed down immediately\""
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 1,
+    "n": 5,
+    "question": "Which is TRUE for a frequency of 10.1MHz at Foundation?",
+    "options": [
+      "It can be used on a primary basis at 1 Watt",
+      "It can be used on a primary basis at 25 Watts",
+      "It can be used on a secondary basis at 1 Watt",
+      "It can be used on a secondary basis at 25 Watts"
+    ],
+    "answer": 3,
+    "explanation": "Refer to the 'Foundation Licence Parameters' table in the 4-page exam booklet. Look for the entry \"10100-10150kHz\" on page 2 (8 lines down). You will see that this is 'Secondary' and limited to 25 Watts."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 1,
+    "n": 6,
+    "question": "Restrictions apply for signals radiated at 10 Watts EIRP and above (6.1 Watts ERP). Why is this?",
+    "options": [
+      "To ensure that members of the public are not exposed to EMF fields beyond set limits",
+      "To prevent interference with other spectrum users",
+      "To reduce interference with other countries",
+      "To protect the transmitter from damage"
+    ],
+    "answer": 0,
+    "explanation": "Restrictions apply for signals radiated at 10 Watts EIRP and above (6.1 Watts ERP) to ensure that members of the public are not exposed to high Electromagnetic field (EMF) limits."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 1,
+    "n": 7,
+    "question": "Which of the following is **not** an insulator?",
+    "options": [
+      "Rubber",
+      "Ceramic",
+      "Brass",
+      "Glass"
+    ],
+    "answer": 2,
+    "explanation": "A conductor allows electrons to flow easily, and an insulator does not. Copper and brass are good conductors, as is carbon. Insulators include plastics, rubber, glass and ceramics."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 1,
+    "n": 8,
+    "question": "Which of the following frequencies would you find on the HF bands?",
+    "options": [
+      "909kHz",
+      "14.070MHz",
+      "145.5MHz",
+      "432.6MHz"
+    ],
+    "answer": 1,
+    "explanation": "HF bands are defined as being between 3MHz and 30MHz, so 14.070MHz is the only one in the HF range."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 1,
+    "n": 9,
+    "question": "What device is used to sample an analogue signal and produce a digital representation of it?",
+    "options": [
+      "ACD",
+      "DAV",
+      "DAC",
+      "ADC"
+    ],
+    "answer": 3,
+    "explanation": "An Analogue to Digital Converter (ADC) is a device used to sample an analogue signal and produce a digital representation of it."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 1,
+    "n": 10,
+    "question": "The process of \"Modulation\" is what?",
+    "options": [
+      "Ensuring that the transmitter is on the same frequency as the distant receiver",
+      "Adding the data or voice to be transmitted to the radio frequency carrier",
+      "Extracting the transmitted data or voice from the radio frequency carrier",
+      "Ensuring that the transmitter is on the same frequency as the local receiver"
+    ],
+    "answer": 1,
+    "explanation": "Modulation is defined as the process of adding information to a radio frequency carrier. It may help to remember this as the process of mixing audio and RF into a radio signal."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 1,
+    "n": 11,
+    "question": "What would be the impact of excessive frequency deviation?",
+    "options": [
+      "Risk of damage to the transmitter",
+      "Interference to adjacent channels",
+      "Instability of Frequency Generator",
+      "Poor SWR"
+    ],
+    "answer": 1,
+    "explanation": "Too strong an audio signal can cause a signal to overdeviate and interfere with neighbouring channels."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 1,
+    "n": 12,
+    "question": "In an analogue receiver, what does a detector do?",
+    "options": [
+      "Tunes in to the required signal",
+      "Amplifies a weak signal",
+      "Removes the carrier",
+      "Detects the frequency to generate"
+    ],
+    "answer": 2,
+    "explanation": "A detector removes the carrier, leaving the audio signal"
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 1,
+    "n": 13,
+    "question": "What does a balun do?",
+    "options": [
+      "Connects the two legs of a dipole",
+      "Reflects signals from the long part of a Yagi (beam) antenna",
+      "Allows connection between a coaxial cable and a dipole",
+      "Balances the SWR in a long-wire antenna"
+    ],
+    "answer": 2,
+    "explanation": "A balun connects a BALanced antenna (dipole) to UNbalanced coaxial feeder."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 1,
+    "n": 14,
+    "question": "What converts electrical signals into radio waves?",
+    "options": [
+      "An Antenna",
+      "An Oscillator",
+      "A Transmitter",
+      "A Modulator"
+    ],
+    "answer": 0,
+    "explanation": "An antenna (when transmitting) converts electrical signals created by the transmitter into radio waves sent out by the antenna.\n\nWhen receiving, an antenna converts radio waves captured by the antenna, and converts them to electrical signals that can be accessed by a radio receiver."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 1,
+    "n": 15,
+    "question": "What type of connector is this?",
+    "options": [
+      "BNC",
+      "SMA",
+      "PL-259",
+      "N-Type"
+    ],
+    "answer": 2,
+    "explanation": "The PL-259 plug is a common RF connector, usually associated with HF operation. Compared to the 'N'-type plug, this has a protruding centre pin.",
+    "image": "mock1-q15.png"
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 1,
+    "n": 16,
+    "question": "The layers of conductive gases that are between 70 and 400km above the Earth are known as the",
+    "options": [
+      "troposphere",
+      "ionosphere",
+      "mesosphere",
+      "coronasphere"
+    ],
+    "answer": 1,
+    "explanation": "Layers of conductive gases that are between 70 and 400km above the Earth are known as the ionosphere."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 1,
+    "n": 17,
+    "question": "How far will a signal on 145.500MHz typically travel?",
+    "options": [
+      "1-5 km",
+      "Around the world",
+      "Just beyond line of sight",
+      "UK-wide"
+    ],
+    "answer": 2,
+    "explanation": "VHF signals typically travel just beyond the line of sight, hence the need for high transmitter sites for broadcast radio stations."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 1,
+    "n": 18,
+    "question": "Someone watching live TV in your house complains that the picture keeps cutting out, and they are blaming your amateur radio equipment - but you're not transmitting. What is the most likely reason?",
+    "options": [
+      "Your radio equipment is generating mains interference",
+      "The interference is coming from a different source",
+      "You have not installed a filter on your transmitter",
+      "Your amateur radio antenna is too close to your TV's aerial"
+    ],
+    "answer": 1,
+    "explanation": "If you're not transmitting, that's a clear sign that something else is causing interference to the TV."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 1,
+    "n": 19,
+    "question": "Which antenna would typically be the most problematic in terms of causing interference?",
+    "options": [
+      "Dipole",
+      "Yagi (beam) antenna",
+      "End-fed wire",
+      "1/4 wave groundplane"
+    ],
+    "answer": 2,
+    "explanation": "End-fed long wire antennas are unbalanced and often of a random length, so they are most likely to cause EMC problems."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 1,
+    "n": 20,
+    "question": "Where can you go to get advice on not causing interference?",
+    "options": [
+      "RSGB EMC Committee Website",
+      "Ofcom Interference Department",
+      "Your District Network Operator",
+      "The latest ICNIRP Guidelines"
+    ],
+    "answer": 0,
+    "explanation": "To get advice on not causing undue interference from the RSGB EMC Committee website."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 1,
+    "n": 21,
+    "question": "What should you **not** do on a frequency of 145.500MHz",
+    "options": [
+      "Call CQ",
+      "Give your callsign when you start transmitting",
+      "Call for a specific amateur",
+      "Talk about the weather"
+    ],
+    "answer": 3,
+    "explanation": "You should use the FM Calling frequency to establish contact with someone, then move elsewhere to chat, to leave the Calling frequency free for other users. Chatting about the weather on that channel stops other users from being able to put out calls."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 1,
+    "n": 22,
+    "question": "APRS is a data mode that allows amateurs to find each other on online maps. It works by transmitting callsign and location data over amateur radio. Which of the following frequencies is used for APRS?",
+    "options": [
+      "144.300MHz",
+      "144.600MHz",
+      "144.800MHz",
+      "144.950MHz"
+    ],
+    "answer": 2,
+    "explanation": "Refer carefully to the 2m band plan in the 4-page exam booklet on page 3. Check each frequency. Look about halfway down the table for 144.8000MHz \"Unconnected Nets - APRS UIView, etc\""
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 1,
+    "n": 23,
+    "question": "When connecting a computer to your radio to use a data mode, you must check your audio levels, and what else?",
+    "options": [
+      "Correct PTT operation of the transmitter",
+      "That the software is up-to-date",
+      "The data mode software logging is enabled",
+      "The CTCSS tone is enabled"
+    ],
+    "answer": 0,
+    "explanation": "PTT stands for \"Push to talk\" (when you press the transmit key on a microphone). You need to make sure that your computer does not use PTT to enable the transmitter by accident, otherwise your computer may put your radio into \"transmit\" without your knowledge."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 1,
+    "n": 24,
+    "question": "Inside a UK mains plug, what does the blue wire represent?",
+    "options": [
+      "Live",
+      "Neutral",
+      "Earth",
+      "Fuse"
+    ],
+    "answer": 1,
+    "explanation": "The blue wire inside a UK mains plug is the 'neutral'. Brown is 'live', and green/yellow is for the 'earth'."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 1,
+    "n": 25,
+    "question": "What is the correct ratio for positioning a ladder against a wall?",
+    "options": [
+      "4:1 height-to-base",
+      "1:4 height-to-base",
+      "4:1 base-to-height",
+      "4:4 base-to-height"
+    ],
+    "answer": 0,
+    "explanation": "With ladders, for every 4 units up, you need to have 1 unit along. For example, a ladder 4 metres up a wall should have its base 1 metre from the wall."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 1,
+    "n": 26,
+    "question": "What is the main reason why you should never touch an antenna that is transmitting?",
+    "options": [
+      "Risk of electrocution",
+      "May reduce SWR",
+      "Risk of RF burns",
+      "Damage to transmitter"
+    ],
+    "answer": 2,
+    "explanation": "Antenna elements and other conductors carrying RF should not be touched whilst transmitting, due to the risk of RF burns to the skin."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 2,
+    "n": 1,
+    "question": "Ofcom requires you to revalidate your licence - How often?",
+    "options": [
+      "At least once every 5 years",
+      "From time to time",
+      "When changing your Main Station Address",
+      "Annually"
+    ],
+    "answer": 0,
+    "explanation": "Ofcom requires that you must confirm that the details shown on the licence remain valid at least once every five years."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 2,
+    "n": 2,
+    "question": "Your licence requires you to ensure that your station is clearly identifiable. Which of the following is the recommended practice for giving your callsign?",
+    "options": [
+      "At least once every 15 minutes",
+      "When first transmitting on a frequency and as frequently as practicable",
+      "At least once per transmission",
+      "When transmitting on a new frequency and when leaving a frequency"
+    ],
+    "answer": 1,
+    "explanation": "You are required to identify yourself by giving your callsign when you start transmitting on a frequency, and to give your callsign as frequently as is practicable during transmissions."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 2,
+    "n": 3,
+    "question": "You hold a Foundation callsign M7QQQ. You are visited by M0ABC, who wants to use your radio with their callsign at 25 Watts. You're happy for them to use your radio, but what is the licence position?",
+    "options": [
+      "They can use the callsign M0ABC under the terms of their licence",
+      "They can use the callsign M0ABC at 25 Watts, but only under your direct supervision",
+      "They can't use M0ABC, but can use M7QQQ at 25 Watts",
+      "The amateur radio licence does not allow this"
+    ],
+    "answer": 0,
+    "explanation": "In this question, a Full licence holder (M0ABC) visits you, a Foundation licence holder. If you are happy for them to use your radio equipment, then they can operate using their callsign under their own licence terms. Commonly, they'd append the suffix /A (\"M0ABC slash A\") to let people know they were at an address other than their own home address."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 2,
+    "n": 4,
+    "question": "When are you required to keep a log of transmissions?",
+    "options": [
+      "If requested by a neighbour",
+      "If requested by anyone from Ofcom",
+      "After testing or modifying your station equipment",
+      "When operating at a /P Temporary location"
+    ],
+    "answer": 1,
+    "explanation": "The licence states: \"If required by a person authorised by Ofcom, the Licensee shall keep a permanent record (a \"log\") of such matters concerning the operation of the Radio Equipment, over such period, and in such form, as the authorised person may require.\""
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 2,
+    "n": 5,
+    "question": "When can a Foundation licence holder **not** use 14.275MHz?",
+    "options": [
+      "To communicate with an amateur satellite",
+      "To communicate with an amateur overseas",
+      "Within 100km of Charing Cross in London",
+      "Only when adjacent frequencies are not in use by the Primary user"
+    ],
+    "answer": 0,
+    "explanation": "Refer to the \"Foundation Licence Parameters\" table in the 4-page exam booklet. Look for the entry \"14275-14350kHz\" on page 2 (10 lines down). The \"Status of Amateur Radio Satellite\" column for this range says \"Not allocated\" for satellite use."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 2,
+    "n": 6,
+    "question": "The amateur radio licence includes a section on EMF. To what does this relate?",
+    "options": [
+      "Ensuring that signals do not cause interference to nearby electrical devices",
+      "Connecting amateur radio equipment to a suitable RF earthing system",
+      "Not exposing members of the public to electromagnetic fields that exceed set limits",
+      "Making contact on internationally-agreed frequencies"
+    ],
+    "answer": 2,
+    "explanation": "EMF (electromagnetic fields) have to be within International limits regarding exposure to the general public.\n\nIf you answered \"Ensuring that signals do not cause interference to nearby electrical devices\", that's EMC (electromagnetic compatibility), not EMF (electromagnetic fields)"
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 2,
+    "n": 7,
+    "question": "What is the formula for calculating power?",
+    "options": [
+      "V x I",
+      "I x R",
+      "I / V",
+      "I / R"
+    ],
+    "answer": 0,
+    "explanation": "The formula for calculating power (in Watts) is as follows: Volts x Current (P = V x I)\n\nThe triangle can help you remember this."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 2,
+    "n": 8,
+    "question": "What is the relationship between frequency and wavelength?",
+    "options": [
+      "Frequency and wavelength are equal",
+      "As the frequency increases, the wavelength increases",
+      "As the frequency increases, the wavelength decreases",
+      "The wavelength reduces at lower frequencies"
+    ],
+    "answer": 2,
+    "explanation": "As the frequency increases, the wavelength decreases."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 2,
+    "n": 9,
+    "question": "What best defines analogue signals?",
+    "options": [
+      "Signals resulting from an ADC conversion",
+      "A stream of signals of finite values at a specific sampling interval",
+      "Signals changing in amplitude and/or frequency",
+      "Signals produced by a computing device"
+    ],
+    "answer": 2,
+    "explanation": "Analogue signals are constantly changing in amplitude, frequency or both.\n\nBy comparison, digital signals are a stream of finite values at a specific sampling interval."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 2,
+    "n": 10,
+    "question": "What does the following diagram represent?",
+    "options": [
+      "Demodulated AM signal",
+      "Demodulated FM signal",
+      "Voice and carrier modulated by frequency",
+      "Voice and carrier modulated by amplitude"
+    ],
+    "answer": 3,
+    "explanation": "The diagram represents an AM signal - Voice and carrier signals modulated by amplitude.",
+    "image": "mock2-q10.png"
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 2,
+    "n": 11,
+    "question": "A transmitter's RF power amplifier should be",
+    "options": [
+      "Connected to the output of the demodulator",
+      "Tuned to the precise transmit frequency",
+      "Connected to a correctly matched antenna",
+      "Adjusted using the squelch control"
+    ],
+    "answer": 2,
+    "explanation": "Take a look at the transmitter block diagram in the training material. The Power Amplifier is connected to the antenna. (It has nothing to do with tuning, and if you selected 'demodulator', that is in a receiver, not a transmitter)"
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 2,
+    "n": 12,
+    "question": "What is the name given to a device designed to recover information sent from one place to another using electromagnetic radiation?",
+    "options": [
+      "A radio receiver",
+      "A modulator",
+      "A DAC",
+      "An RF power amplifier"
+    ],
+    "answer": 0,
+    "explanation": "The definition of a radio receiver in the exam syllabus is a device designed \"to recover information sent from one place to another using electromagnetic radiation\"."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 2,
+    "n": 13,
+    "question": "What type of feeder is unbalanced with the signal on the centre conductor surrounded by a screen?",
+    "options": [
+      "Coaxial cable",
+      "Twin-feeder",
+      "Waveguide",
+      "SMA"
+    ],
+    "answer": 0,
+    "explanation": "Coaxial cable is the common type of feeder used between the transmitter and antenna. It is unbalanced and has a single inner core, with an outer screen (usually made of braided copper, to keep the signal inside the cable)"
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 2,
+    "n": 14,
+    "question": "What type of antenna is this?",
+    "options": [
+      "Vertical dipole",
+      "5/8 wavelength vertical",
+      "1/4 wavelength ground plane vertical",
+      "Vertically-polarised Yagi"
+    ],
+    "answer": 2,
+    "explanation": "This is a quarter-wave vertical antenna, commonly used for VHF/UHF. Note the 4 radials at the base, and the lack of a coil (found on 5/8 wave antennas).",
+    "image": "mock2-q14.png"
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 2,
+    "n": 15,
+    "question": "After tuning your radio to a new frequency, you check the SWR of your end-fed long wire antenna. You see an SWR of 4:1. What is the most appropriate action?",
+    "options": [
+      "The antenna should not be used",
+      "You should replace the balun",
+      "An AMU should be used to match the antenna",
+      "The antenna should only be used at low power to prevent damage to the transmitter"
+    ],
+    "answer": 2,
+    "explanation": "An SWR of 4:1 is undesirable and should be corrected, as prolonged use at high SWR may damage your transmitter. You should reduce the SWR using an AMU (Antenna Matching Unit) to prevent the risk of damage."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 2,
+    "n": 16,
+    "question": "Which is most critical when trying to make a contact outside of Europe from the UK?",
+    "options": [
+      "Time of day",
+      "Day of week",
+      "Transmitter power",
+      "Good local weather conditions"
+    ],
+    "answer": 0,
+    "explanation": "Bands \"open\" and \"close\" depending on the time of day. Long-distance communication, known as DX (distant), is all to do with solar radiation acting on the ionosphere.\n\nIt also helps to try to work a country when they are awake."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 2,
+    "n": 17,
+    "question": "What is \"Atmospheric Ducting\"?",
+    "options": [
+      "A type of feeder used at microwave frequencies that is dangerous to look down",
+      "A layer of gas that helps HF to propagate around the world",
+      "A condition that may extend the range of VHF and UHF signals",
+      "A method of contacting amateur satellites on lower HF frequencies"
+    ],
+    "answer": 2,
+    "explanation": "Certain atmospheric conditions, such as 'sporadic E' and 'atmospheric ducting', can extend the range of VHF and/or UHF signals, allowing communication over longer distances than normal."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 2,
+    "n": 18,
+    "question": "Which item is most likely to be affected by signals from a nearby radio transmitter?",
+    "options": [
+      "A wired home doorbell",
+      "An electronic calculator",
+      "A cordless drill",
+      "A domestic radio receiver"
+    ],
+    "answer": 3,
+    "explanation": "A domestic radio receiver has an antenna and is capable of receiving radio signals, so it is more likely to be affected by signals from a nearby radio transmitter than the other listed items."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 2,
+    "n": 19,
+    "question": "Which of the following modulation types is least likely to cause EMC issues?",
+    "options": [
+      "AM",
+      "FM",
+      "SSB",
+      "FT8 data mode"
+    ],
+    "answer": 1,
+    "explanation": "FM is less likely to interfere, as the amplitude of the signal is constant. Here's a handy tip for the exam - remember \"FM = Friendly Modulation\""
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 2,
+    "n": 20,
+    "question": "Your neighbour complains that your amateur radio antenna is interfering with his Freeview TV signal. What should you do?",
+    "options": [
+      "Show him a copy of your licence to prove that you are allowed to transmit",
+      "Speak to your council planning officer",
+      "Offer to log your transmissions for comparison",
+      "Ask him to buy you an RF filter"
+    ],
+    "answer": 2,
+    "explanation": "The best option here is to offer to log the times of your transmissions, for comparison with the times that your neighbour is experiencing interference, to confirm whether or not you're the problem."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 2,
+    "n": 21,
+    "question": "Which of the following is correct for the callsign MM7QQQ/P?",
+    "options": [
+      "The station is operating from a temporary location",
+      "This is a UK Full licence holder",
+      "The operator is on the Isle of Man",
+      "The operator is mobile in Scotland"
+    ],
+    "answer": 0,
+    "explanation": "The optional suffix /P being used at the end of the callsign indicates that the station is at a temporary (/Portable) location. MM7 would be a Foundation callsign operating from Scotland."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 2,
+    "n": 22,
+    "question": "Which of the following frequencies is allocated to Land Mobile?",
+    "options": [
+      "136.5MHz",
+      "158.6MHz",
+      "144.5MHz",
+      "150.6MHz"
+    ],
+    "answer": 1,
+    "explanation": "Refer to the \"Frequency Allocation Table\", which is on page 4 of the 4-page exam booklet. 158.525-160.6MHz is assigned to Land Mobile."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 2,
+    "n": 23,
+    "question": "Why can a Foundation licence holder not operate overseas?",
+    "options": [
+      "Ofcom will not know your overseas address to contact you",
+      "Due to radio import/export restrictions",
+      "Administrations in other countries do not routinely recognise the Foundation licence",
+      "The risk of interference to non-UK equipment"
+    ],
+    "answer": 2,
+    "explanation": "Most overseas countries do not recognise the UK Foundation licence. If you want to operate overseas, you might want to work towards getting a UK 'Full' licence, which is recognised by many other countries' administrators."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 2,
+    "n": 24,
+    "question": "For safety reasons, what is recommended for your home amateur radio setup?",
+    "options": [
+      "A non-slip floor or floor mat",
+      "Correctly screened feeder cables",
+      "A clearly-marked 'Off' switch for your equipment",
+      "A powder-based fire extinguisher"
+    ],
+    "answer": 2,
+    "explanation": "A clearly-marked 'Off' switch is recommended so that the power can easily be turned off in an emergency (such as electrocution)"
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 2,
+    "n": 25,
+    "question": "Soldering workstations must be well-ventilated. Why is this?",
+    "options": [
+      "To avoid inhalation of solder fumes, which can cause breathing problems",
+      "To keep the soldering iron cool",
+      "To ensure solder splashes blow away",
+      "To improve visibility"
+    ],
+    "answer": 0,
+    "explanation": "Soldering workstations must be well ventilated to avoid inhalation of solder fumes, which can cause breathing problems, particularly to asthmatics."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 2,
+    "n": 26,
+    "question": "Where should antenna elements and other conductors carrying RF be sited?",
+    "options": [
+      "A quarter of a wavelength above the ground",
+      "As close to the transmitter as possible",
+      "Where they can be easily accessed for maintenance",
+      "Where people will not come into accidental contact with them"
+    ],
+    "answer": 3,
+    "explanation": "This is a safety question. To avoid RF exposure/burns, you want to avoid people accidentally coming into contact with transmitting antennas and other conductors."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 3,
+    "n": 1,
+    "question": "In a UK callsign, where does the regional secondary identifier \"M\" indicate?",
+    "options": [
+      "England",
+      "Wales",
+      "Isle of Man",
+      "Scotland"
+    ],
+    "answer": 3,
+    "explanation": "\"M\" as the second letter of a callsign (e.g. MM0ABC) would indicate that the signal is coming from Scotland"
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 3,
+    "n": 2,
+    "question": "You change modes from FM to SSB and start transmitting. What are you required to do?",
+    "options": [
+      "Note the change in your logbook",
+      "Give your callsign",
+      "Check your SWR",
+      "Transmit a CTCSS tone"
+    ],
+    "answer": 1,
+    "explanation": "You are required to identify yourself by giving your callsign when you change mode."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 3,
+    "n": 3,
+    "question": "Transmitting messages for \"general reception\" is:",
+    "options": [
+      "Not permitted",
+      "Not permitted, except for CQ calls and 'nets",
+      "Permitted within the UK only",
+      "Permitted for Primary users only"
+    ],
+    "answer": 1,
+    "explanation": "\"General reception\" means a message for anyone who might be listening. You can't transmit to listeners (that's broadcasting) - you can only talk to one amateur. The exception is when calling CQ or on an established 'net."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 3,
+    "n": 4,
+    "question": "Under which of these circumstances does Ofcom have the right to close down your amateur radio station?",
+    "options": [
+      "You have not transmitted in over a year",
+      "You operate from a location other than your home address",
+      "You use a mode other than voice",
+      "You are in breach of your licence conditions"
+    ],
+    "answer": 3,
+    "explanation": "The Ofcom licence states: \"A person authorised by Ofcom may require the Radio Equipment, or any part thereof, to be modified or restricted in use, or temporarily or permanently closed down immediately\""
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 3,
+    "n": 5,
+    "question": "Which of the following frequencies can a Foundation licence holder transmit on?",
+    "options": [
+      "7.007MHz",
+      "10.155MHz",
+      "21.475MHz",
+      "24.880MHz"
+    ],
+    "answer": 0,
+    "explanation": "Refer to the \"Foundation Licence Parameters\" table on page 2 of the 4-page exam booklet and look up each frequency.\n\nOnly 7.007MHz is listed (7000-7100kHz). 10.155MHz, 21.475MHz and 24.880MHz do not fit in any of the ranges, and so cannot be used at Foundation."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 3,
+    "n": 6,
+    "question": "Under the EMF section of the licence, at what power level do electromagnetic field restrictions apply?",
+    "options": [
+      "5 Watts ERP",
+      "5 Watts EIRP",
+      "10 Watts ERP",
+      "10 Watts EIRP"
+    ],
+    "answer": 3,
+    "explanation": "The EMF restrictions (relating to public exposure of signals) apply for power 10 Watts EIRP and above, which is equal to 6.1 Watts ERP."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 3,
+    "n": 7,
+    "question": "What does this electrical symbol represent?",
+    "options": [
+      "Resistor",
+      "Switch",
+      "Bulb / Lamp",
+      "Fuse"
+    ],
+    "answer": 3,
+    "explanation": "This is the electrical symbol for a fuse.",
+    "image": "mock3-q7.png"
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 3,
+    "n": 8,
+    "question": "What would best describe a 12-volt car battery?",
+    "options": [
+      "Primary AC",
+      "Primary DC",
+      "Secondary AC",
+      "Secondary DC"
+    ],
+    "answer": 3,
+    "explanation": "Batteries deliver DC, not AC.\n\nA secondary battery is rechargeable - it has a reversible chemical process. Looking for an easy way to remember the difference? A rechargeable battery can be used for a SECOND time."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 3,
+    "n": 9,
+    "question": "What is required to process digital signals?",
+    "options": [
+      "A modulator",
+      "A tuning and audio stage",
+      "A computing device",
+      "A balun"
+    ],
+    "answer": 2,
+    "explanation": "Here, we are talking about digital radios, typically using software. Accordingly, remember for the exam that a computing device is required to process digital signals."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 3,
+    "n": 10,
+    "question": "If you were calling at 10 Watts on 14.300MHz, which mode would be the **most** efficient and appropriate?",
+    "options": [
+      "AM",
+      "LSB",
+      "USB",
+      "Any of the above"
+    ],
+    "answer": 2,
+    "explanation": "Single sideband is more efficient than AM (which uses 2 sidebands). From 10MHz upwards, upper sideband is normally used for single sideband operation."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 3,
+    "n": 11,
+    "question": "Another station reports that your signal is distorting. What do you do?",
+    "options": [
+      "Adjust the microphone gain",
+      "Alter the mode of modulation",
+      "Check the antenna connection",
+      "Increase the frequency deviation"
+    ],
+    "answer": 0,
+    "explanation": "If you are distorting, you may be over-modulating or over-deviating. Reducing the transmitted audio level by adjusting the microphone gain is recommended."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 3,
+    "n": 12,
+    "question": "In a basic analogue radio receiver, after the signal has been demodulated, what happens next?",
+    "options": [
+      "The RF amplifier boosts the received radio signal, ready for processing",
+      "The audio amplifier stage boosts the signal so that it is loud enough to drive the speaker",
+      "The A-to-D stage converts the audio to digital",
+      "The user tunes to the required frequency of the signal"
+    ],
+    "answer": 1,
+    "explanation": "This is a receiver box diagram question. After the signal has been selected and the RF carrier removed, the weak audio signal is amplified so that it is loud enough for the speakers or headphones."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 3,
+    "n": 13,
+    "question": "Radio amateurs tend to use thicker, low-loss coaxial feeder for VHF and UHF antennas than for HF antennas. Why is this?",
+    "options": [
+      "Feeder loss increases with frequency",
+      "It's generally less expensive",
+      "The antennas are usually horizontal",
+      "Antennas are generally longer than HF"
+    ],
+    "answer": 0,
+    "explanation": "For higher frequencies (such as VHF & UHF), the loss in the feeder is higher than for HF frequencies. To minimise loss, it's important to use a low-loss feeder, especially over a long cable run."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 3,
+    "n": 14,
+    "question": "I have a Yagi with a gain of 3dB. If I transmit 10 Watts into that antenna, what is my ERP?",
+    "options": [
+      "10 Watts",
+      "20 Watts",
+      "30 Watts",
+      "33 Watts"
+    ],
+    "answer": 1,
+    "explanation": "A gain of 3dB doubles the power. See the conversion table on page 4 of the 4-page exam booklet - 3dB has a multiplier of 2, so 10 Watts x 2 is 20 Watts ERP (effective radiated power)"
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 3,
+    "n": 15,
+    "question": "You are operating on the 20-metre band, and you change to the 40-metre band. When you try to transmit on this new band, your transmitter shows a \"high SWR\" warning. What is the likely problem?",
+    "options": [
+      "A fault with your transmitter",
+      "There is an antenna mismatch",
+      "Your transmitter is transmitting too much power",
+      "There is too much loss in your feeder cable"
+    ],
+    "answer": 1,
+    "explanation": "If you get a high SWR reading, then there is a mismatch between the transmitter and antenna that can potentially damage the transmitter. You would typically resolve this using an AMU (Antenna Matching Unit)"
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 3,
+    "n": 16,
+    "question": "Which of the following best describes the function of the Ionosphere for amateur radio?",
+    "options": [
+      "It reflects VHF and UHF signals, helping signals bounce around the Earth",
+      "It amplifies and reflects radio energy",
+      "It refracts HF signals back down to Earth",
+      "It helps to reduce interference to weak AM signals"
+    ],
+    "answer": 2,
+    "explanation": "The Ionosphere is made up of layers of gas that allow HF signals to be 'bent' back to Earth, enabling worldwide propagation, bouncing signals around the planet."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 3,
+    "n": 17,
+    "question": "Which of the following is more likely to attenuate (reduce) the range of UHF signals?",
+    "options": [
+      "Snow and Ice",
+      "The time of day",
+      "Skywave propagation",
+      "Tropospheric ducting"
+    ],
+    "answer": 0,
+    "explanation": "For the exam, remember that snow, ice and heavy rain can attenuate signals at UHF and above.\n\nIf you answered 'tropospheric ducting', that's more likely to increase the range, not to reduce it."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 3,
+    "n": 18,
+    "question": "Amateur radio signals are least likely to interfere with what?",
+    "options": [
+      "A microwave oven",
+      "A CCTV camera",
+      "A wi-fi router",
+      "A computer monitor"
+    ],
+    "answer": 0,
+    "explanation": "Amateur radio signals are least likely to interfere with a microwave oven. Items such as a CCTV camera, wi-fi router and a computer monitor are more susceptible to RF interference"
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 3,
+    "n": 19,
+    "question": "Which of the following would be the best RF earth to connect to?",
+    "options": [
+      "The green/yellow wire in a mains plug",
+      "A copper pipe on the closest radiator to the shack",
+      "A one-meter length of copper pipe hammered into the ground",
+      "A copper wire running horizontally just below the grass, from the feed point of your antenna"
+    ],
+    "answer": 2,
+    "explanation": "Of the available choices, a copper stake hammered into the ground would be the most efficient RF earth. Use of the mains earth or a radiator is not recommended for safety reasons. Horizontal wires below the grass are not deep enough to make an effective RF earth."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 3,
+    "n": 20,
+    "question": "You're in dispute with your neighbour about possible interference. Which of the following are worth considering?",
+    "options": [
+      "Logging times of transmissions to confirm you're the cause",
+      "Making changes to your setup and conducting tests",
+      "Getting EMC advice from the RSGB",
+      "All of the above"
+    ],
+    "answer": 3,
+    "explanation": "All three options (logging, testing and getting advice) are good steps in working to resolve any possible amateur radio interference problem."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 3,
+    "n": 21,
+    "question": "When tuning to a new frequency, you listen, and it seems quiet. Why is it important to ask \"Is this frequency in use?\"",
+    "options": [
+      "Some amateurs have their own private channels reserved for personal use",
+      "It is part of your licence conditions",
+      "The frequency may be in use, with one of the two stations too far away for you to hear",
+      "Someone with a Full licence may have reserved the frequency, and Full licence holders get priority"
+    ],
+    "answer": 2,
+    "explanation": "It is important to ask, \"Is this frequency in use?\" in case there are two stations already using the frequency. One may be transmitting, but too far away for you to hear"
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 3,
+    "n": 22,
+    "question": "On which frequency can a Foundation licence holder transmit voice?",
+    "options": [
+      "14.285MHz",
+      "14.100MHz",
+      "144.500MHz",
+      "145.725MHz"
+    ],
+    "answer": 0,
+    "explanation": "Refer to the 2m and 20m band plans that are printed in the 4-page exam booklet! 144.500MHz is for SSTV (images), 145.725MHz is a repeater output, and 14.100MHz is a beacon. Therefore, only 14.285MHz is usable for voice."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 3,
+    "n": 23,
+    "question": "Regarding Digital Voice (DV), which statement is most accurate?",
+    "options": [
+      "DV uses its own different band plan",
+      "You do not need to transmit a callsign, as transmissions are digital",
+      "You must use the correct CTCSS tone to access a digital repeater",
+      "There are several formats that may not be compatible"
+    ],
+    "answer": 3,
+    "explanation": "There are several digital voice formats that may not be compatible with each other.\n\nIf you chose \"use the correct CTCSS tones\", CTCSS tones are only used on analogue repeaters, not over DV."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 3,
+    "n": 24,
+    "question": "What safety device has a wire designed to melt if an excessive current flows through it?",
+    "options": [
+      "Breaker",
+      "RCBO",
+      "Fuse",
+      "Earth"
+    ],
+    "answer": 2,
+    "explanation": "A fuse is a safety device that contains a wire that is designed to melt if an excessive current passes through it, thus breaking the circuit."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 3,
+    "n": 25,
+    "question": "Eye protection should be worn when drilling in order to",
+    "options": [
+      "Hold your glasses (if worn) in place",
+      "Prevent swarf from entering your eyes",
+      "Allow closer inspection of the work",
+      "Protect your employer's safety record"
+    ],
+    "answer": 1,
+    "explanation": "Eye protection must be worn when using tools such as drills to prevent eye damage from small metal particles (known as swarf)"
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 3,
+    "n": 26,
+    "question": "Antennas or ladders coming into contact with overhead lines can be lethal. A related risk is what?",
+    "options": [
+      "Attracting arcing",
+      "RF radiation exposure",
+      "Swarf",
+      "Exposure to UV energy"
+    ],
+    "answer": 0,
+    "explanation": "A lethal electric shock can result from antennas and ladders touching or attracting arcing from overhead lines."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 4,
+    "n": 1,
+    "question": "Which of the following is not a type of amateur radio licence?",
+    "options": [
+      "Intermediate",
+      "Beginner",
+      "Foundation",
+      "Full"
+    ],
+    "answer": 1,
+    "explanation": "The three UK Amateur Radio licence levels are Foundation, Intermediate and Full."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 4,
+    "n": 2,
+    "question": "You are operating voice-mode on 2m. You change modes and send an SSTV (slow scan TV) image. What are you required to do by your licence?",
+    "options": [
+      "Notify Ofcom",
+      "Change your callsign suffix",
+      "Log the change of mode",
+      "Transmit your callsign"
+    ],
+    "answer": 3,
+    "explanation": "You need to make sure your station is identified when you change mode.\n\nThe wording of the licence says that the callsign must be \"given in voice or other appropriate format consistent with the mode of operation.\"\n\nTypically, your callsign will be embedded in the image that you're sending."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 4,
+    "n": 3,
+    "question": "The operator of a station who contacts you does not give their callsign, even when asked more than once. What action should be taken?",
+    "options": [
+      "Report the incident to Ofcom",
+      "Keep asking for the callsign",
+      "Terminate the contact",
+      "Note the contact in your log"
+    ],
+    "answer": 2,
+    "explanation": "If a station refuses to give a valid amateur radio callsign, this could be an unlicensed operator.\n\nThe amateur radio licence only allows you to communicate with other licence-holders, so in this case, you should terminate the contact."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 4,
+    "n": 4,
+    "question": "As a licensed radio amateur, the licence requires you",
+    "options": [
+      "Not to offend other radio amateurs",
+      "Not to operate on inland waterways",
+      "Not to cause undue interference",
+      "Not to breach local planning laws"
+    ],
+    "answer": 2,
+    "explanation": "The licence issued by Ofcom requires that the Licensee must ensure that the station is not causing Undue Interference to other radio users."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 4,
+    "n": 5,
+    "question": "Ofcom imposes a limit on the effective radiated power of only one of the following frequencies. Which is it?",
+    "options": [
+      "51.99MHz",
+      "10.110MHz",
+      "430.900MHz",
+      "439.300MHz"
+    ],
+    "answer": 2,
+    "explanation": "Refer to the \"Foundation Licence Parameters\" table in the 4 page exam booklet. Look up each value. The range 430 to 431MHz has a limit of 25W ERP (last column)"
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 4,
+    "n": 6,
+    "question": "What do you need to do to comply with the EMF requirements in the amateur radio licence?",
+    "options": [
+      "Keep a record of your EMF assessments",
+      "Notify Ofcom of any change to your station equipment and/or antennas",
+      "Perform emissions tests from time to time",
+      "Never transmit if members of the general public are nearby"
+    ],
+    "answer": 0,
+    "explanation": "The licence requires that you make available to Ofcom records to show that you comply with the requirements relating to electromagnetic field exposure. Keep a copy of your assessments."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 4,
+    "n": 7,
+    "question": "The units used to measure Potential Difference, Current, and Resistance are:",
+    "options": [
+      "Watts, Volts and Amps",
+      "Volts, Amps and Ohms",
+      "Hertz, Volts and Ohms",
+      "Ohms, Volts and Watts"
+    ],
+    "answer": 1,
+    "explanation": "Potential Difference (better known as Voltage) is measured in Volts, Current in Amps and Resistance in Ohms."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 4,
+    "n": 8,
+    "question": "Which of the following most closely matches the normal range of human hearing?",
+    "options": [
+      "20Hz to 15kHz",
+      "300Hz to 3kHz",
+      "3MHz to 30MHz",
+      "30MHz to 300MHz"
+    ],
+    "answer": 0,
+    "explanation": "The range for normal human hearing is 20Hz to 15,000Hz. For some reason, this is a range you're required to remember for the Foundation exam."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 4,
+    "n": 9,
+    "question": "What does a DAC do?",
+    "options": [
+      "It represents a digital signal in an analogue format",
+      "It samples an analogue signal and produces a digital representation of it.",
+      "It converts Direct Current to Alternating Current",
+      "It creates a Digital Audio Carrier Wave"
+    ],
+    "answer": 0,
+    "explanation": "In a digital radio, a DAC is a Digital to Analogue Converter. This is a device used to represent a digital signal in an analogue format."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 4,
+    "n": 10,
+    "question": "Which of the following is not a type of modulation?",
+    "options": [
+      "AM",
+      "FM",
+      "HF",
+      "USB"
+    ],
+    "answer": 2,
+    "explanation": "Amplitude Modulation (AM), Frequency Modulation (FM), and Single Sideband (LSB and USB) are types of modulation. HF is not a type of modulation - it refers to the High Frequency part of the radio spectrum."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 4,
+    "n": 11,
+    "question": "In a basic voice transmitter, the frequency of the transmitted signal is determined by what?",
+    "options": [
+      "The A-to-D converter",
+      "The carrier oscillator",
+      "The modulator",
+      "The power amplifier"
+    ],
+    "answer": 1,
+    "explanation": "The oscillator generates the radio frequency carrier, which defines the transmit frequency. This is then mixed with the audio. See the Transmitter block diagram in the training material for more information."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 4,
+    "n": 12,
+    "question": "In this diagram, what is the purpose of Box 1?",
+    "options": [
+      "Tuning and RF amplification",
+      "Removal of the carrier",
+      "Amplification of the audio",
+      "Digital to Analogue conversion"
+    ],
+    "answer": 0,
+    "explanation": "Box 1 of the receiver block diagram handles tuning into the signal and amplification of the selected signal.\n\nBox 2 is the demodulator\n\nBox 3 is the audio amplifier",
+    "image": "mock4-q12.png"
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 4,
+    "n": 13,
+    "question": "Which statement is FALSE with respect to feeder?",
+    "options": [
+      "Some RF energy is converted to heat",
+      "Feeder loss increases with frequency",
+      "A low-loss feeder should be used at VHF and UHF",
+      "Coaxial cable carries the signal on the feeder's screen"
+    ],
+    "answer": 3,
+    "explanation": "Coaxial cable carries the RF signal on the centre conductor, which is surrounded by an outer screen."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 4,
+    "n": 14,
+    "question": "If the feed point impedance of the antenna does not match that of the feeder, what happens?",
+    "options": [
+      "Energy will be reflected down the feeder",
+      "The SWR at the transmitter may be too low for safe use",
+      "Energy may leak out at the feed point",
+      "The antenna may become damaged"
+    ],
+    "answer": 0,
+    "explanation": "If there is a mismatch between the transmitter and the antenna system impedance, energy (in the form of standing waves) will be reflected back to the transmitter, potentially causing damage to the transmitter. An SWR meter is used to measure a mismatch."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 4,
+    "n": 15,
+    "question": "On a PL-259 plug, the braid should",
+    "options": [
+      "Be connected to the inner pin of the plug",
+      "Be exactly one-quarter of the antenna's wavelength",
+      "Be connected to the chassis (outside part) of the connector",
+      "Be made of a suitable insulator"
+    ],
+    "answer": 2,
+    "explanation": "On a PL-259 plug, the screen of the coaxial feeder should be connected to the chassis (the outside metal part) of the connector."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 4,
+    "n": 16,
+    "question": "What does it mean if an HF band is referred to as being \"open\"?",
+    "options": [
+      "It supports Skywave propagation",
+      "The band is available as no one is using it",
+      "You can expect Sporadic E and tropospheric ducting",
+      "Signals are not refracted by the Ionosphere"
+    ],
+    "answer": 0,
+    "explanation": "An \"open\" band supports Skywave propagation, meaning that signals can be bounced off the ionosphere, supporting contact on that frequency band."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 4,
+    "n": 17,
+    "question": "What would be the most effective way to extend the range for transmitting and receiving VHF or UHF signals?",
+    "options": [
+      "Using UHF rather than VHF",
+      "Using an indoor antenna",
+      "Increasing the transmitter power",
+      "Increasing the height of the antenna"
+    ],
+    "answer": 3,
+    "explanation": "The most effective way to extend the range for transmitting and receiving VHF or UHF signals is to increase the height of the antenna. This extends the line of sight range."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 4,
+    "n": 18,
+    "question": "Your TV's surround sound system is getting interference from local taxis... where could this be coming from?",
+    "options": [
+      "The surround sound amplifier",
+      "The loudspeaker leads",
+      "The cabling from your TV to the sound system",
+      "Any of the above"
+    ],
+    "answer": 3,
+    "explanation": "Interference can come into the TV through various routes, including the surround sound amplifier, speaker leads, and cabling, as well as from the antenna or mains supply."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 4,
+    "n": 19,
+    "question": "What is meant by the phrase 'electromagnetic compatibility'?",
+    "options": [
+      "The avoidance of interference between items of electronic equipment",
+      "Matching transmit and receive frequencies correctly",
+      "The ability of a piece of equipment to withstand interference",
+      "Reducing SWR to prevent transmitter damage"
+    ],
+    "answer": 0,
+    "explanation": "Electromagnetic compatibility (EMC) is the avoidance of interference between various pieces of electronic equipment."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 4,
+    "n": 20,
+    "question": "EMC problems have the potential to cause what?",
+    "options": [
+      "Neighbour disputes",
+      "High SWR",
+      "Voiding of equipment warranty",
+      "Damage to the antenna from high current"
+    ],
+    "answer": 0,
+    "explanation": "EMC (Electromagnetic compatibility) is all about the prevention of interference. There's a risk that your amateur radio station may cause interference to your neighbour's TV and radio, hence the possibility of disputes."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 4,
+    "n": 21,
+    "question": "If you call CQ, and someone responds with inappropriate language, what should you do?",
+    "options": [
+      "Ask the offender to watch their language, as children may be listening",
+      "Advise the offender that you will report them to Ofcom",
+      "Ignore the offender and do not refer to hearing them",
+      "Reply in an equally offensive way"
+    ],
+    "answer": 2,
+    "explanation": "If you hear something offensive on amateur radio, the advice is to ignore it and make no reference to it, as the offender may be looking for a reaction."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 4,
+    "n": 22,
+    "question": "Which of the following best describes the role of a repeater?",
+    "options": [
+      "To amplify received signals",
+      "To forward on messages to other amateurs",
+      "To allow you to repeat messages you've missed",
+      "To increase the range that a mobile station can reach"
+    ],
+    "answer": 3,
+    "explanation": "Transmitting into a repeater will result in your signal being relayed over a wider area. Repeaters are primarily designed to allow mobile stations to make contact over greater distances."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 4,
+    "n": 23,
+    "question": "When giving a signal report, what is the recommended amateur radio format for exchanging reports?",
+    "options": [
+      "Readability, Signal Strength and Tone",
+      "Received Signal Strength, Station and Time",
+      "Received Strength, Sound Quality and Type",
+      "Reception, Smoothness and Text"
+    ],
+    "answer": 0,
+    "explanation": "When giving signal reports, amateurs use \"RST\" - Readability, Signal Strength, and Tone. \"Tone\" is for Morse or Data. A strong signal with very good audio would be \"59\" (voice) or \"599\" (data)"
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 4,
+    "n": 24,
+    "question": "Thinking about amateur radio safety, what is the main risk associated with high current?",
+    "options": [
+      "Electrocution",
+      "Fire",
+      "Earth fault",
+      "RF burns"
+    ],
+    "answer": 1,
+    "explanation": "The answer required for the exam is that high voltages carry a risk of electrocution and high currents carry a risk of overheating and fire.\n\n*Did you answer \"electrocution?\" Yes, high current flowing across the body can cause electrocution, but in terms of risk (and getting a mark in the exam), the answer is overheating.*"
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 4,
+    "n": 25,
+    "question": "When working at height, you should wear...?",
+    "options": [
+      "Ear protectors",
+      "Safety goggles",
+      "A hard hat",
+      "A hi-viz jacket"
+    ],
+    "answer": 2,
+    "explanation": "For safety reasons, when working at height, you should wear a hard hat."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 4,
+    "n": 26,
+    "question": "What is the main health risk resulting from exposure to electromagnetic radiation?",
+    "options": [
+      "Risk of electrocution",
+      "Heating of body tissue",
+      "Breathing problems",
+      "Disorientation"
+    ],
+    "answer": 1,
+    "explanation": "The main health effect of exposure to electromagnetic radiation is heating of body tissue, and the eyes are particularly susceptible to damage."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 5,
+    "n": 1,
+    "question": "Which of the following is **not** permitted by the amateur radio licence?",
+    "options": [
+      "Talking about the weather",
+      "Discussing the makes and models of radios",
+      "Advertising prices of your home-made antennas",
+      "Use of codes"
+    ],
+    "answer": 2,
+    "explanation": "Amateur radio is non-commercial, so you are not allowed to advertise or sell your products over amateur radio or run a business using amateur radio.\n\nCodes (such as Morse code) are allowed, as long as the code is not secret."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 5,
+    "n": 2,
+    "question": "If you are transmitting using a data mode, what are the requirements regarding giving your callsign?",
+    "options": [
+      "You must speak your callsign before starting to send data",
+      "The callsign must be sent before you start transmitting",
+      "The callsign must be sent in the appropriate format",
+      "Your callsign must be given at the end of the data contact"
+    ],
+    "answer": 2,
+    "explanation": "The wording of the licence says that the callsign must be \"given in voice or other appropriate format consistent with the mode of operation.\"\n\nIf you answered A or B, these are invalid, because you cannot transmit your callsign before you start transmitting."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 5,
+    "n": 3,
+    "question": "Driving home, you encounter a traffic jam. To help other amateurs, you want to warn them about the problem. Do you...",
+    "options": [
+      "Announce the problem to amateurs on the local repeater",
+      "Go to a VHF frequency used for local information and announce the problem to amateurs who may be listening",
+      "Call CQ on 145.500MHz and announce the problem to amateurs",
+      "None of the above"
+    ],
+    "answer": 3,
+    "explanation": "The amateur radio licence does not allow you to \"Broadcast\" (send a message to lots of amateurs or listeners). If you were talking to another amateur, you could mention the traffic problem to them, but you can't broadcast announcements."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 5,
+    "n": 4,
+    "question": "A neighbour believes that you are causing interference. What may you be required to do?",
+    "options": [
+      "Keep a log of your transmissions",
+      "Make changes to your station setup",
+      "Restrict how you operate",
+      "Any of the above"
+    ],
+    "answer": 3,
+    "explanation": "Ofcom has the power to require you to keep a log, make changes to reduce interference or restrict how you operate."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 5,
+    "n": 5,
+    "question": "Which of the following statements is **TRUE** for the frequency 3.790MHz?",
+    "options": [
+      "It is shared with other services",
+      "It is a secondary allocation",
+      "It is available for satellite communications use",
+      "It cannot be used within 100km of Charing Cross"
+    ],
+    "answer": 0,
+    "explanation": "Refer to the \"Foundation Licence Parameters\" table in the 4-page exam booklet. Look for the entry \"3500-3800kHz\" on page 2 (5 lines down). This is listed as \"Primary. Shared with other services\""
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 5,
+    "n": 6,
+    "question": "The amateur radio licence requires you to do what in relation to EMF?",
+    "options": [
+      "Not transmit high satts [sic] EIRP",
+      "Not expose members of the public to any electromagnetic fields",
+      "Stay below international EMF limits",
+      "Stay below international EMF limits and keep a record of compliance assessments"
+    ],
+    "answer": 3,
+    "explanation": "You are required not to expose the public to EMF (electromagnetic fields) over agreed limits, and you must keep a record of assessments that prove you aren't exposing the public to EMF over those limits."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 5,
+    "n": 7,
+    "question": "How could 5mΩ also be written?",
+    "options": [
+      "5,000,000 Ohms",
+      "0.005 Ohms",
+      "0.000005 Ohms",
+      "0.00005 Ohms"
+    ],
+    "answer": 1,
+    "explanation": "milli (with a small 'm') is one-thousandth. Move the decimal place 3 times to the left, so 5mΩ (5 milliohms) is 0.005 Ohms."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 5,
+    "n": 8,
+    "question": "Which unit symbol is used to measure wavelength?",
+    "options": [
+      "Hz",
+      "W",
+      "M",
+      "m"
+    ],
+    "answer": 3,
+    "explanation": "Wavelength is measured in meters. It's a lowercase letter \"m\" for \"metres\""
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 5,
+    "n": 9,
+    "question": "What does ADC stand for?",
+    "options": [
+      "Analogue to Digital Conversion",
+      "Amplitude Digital Compression",
+      "Amps and Direct Current",
+      "Antenna Direct Coupling"
+    ],
+    "answer": 0,
+    "explanation": "ADC stands for Analogue to Digital Conversion. For more, see the digital signals section of Technical Basics."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 5,
+    "n": 10,
+    "question": "Which of the following parts of a transmitter defines the frequency at which the transmitter operates?",
+    "options": [
+      "The oscillator",
+      "RF power amplifier",
+      "RF tuning and amplification stage",
+      "RF modulator"
+    ],
+    "answer": 0,
+    "explanation": "The oscillator handles the frequency generation, creating a \"carrier\" on the required radio frequency. The audio signal is then added to the carrier to make the radio signal."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 5,
+    "n": 11,
+    "question": "In the following diagram, what function is performed by Box 3?",
+    "options": [
+      "RF Power Amplifier",
+      "Audio Stage",
+      "Oscillator",
+      "Modulator"
+    ],
+    "answer": 2,
+    "explanation": "Box 1: Audio stage\n\nBox 2: Modulator\n\nBox 3: Oscillator\n\nBox 4: RF Power Amp",
+    "image": "mock5-q11.png"
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 5,
+    "n": 12,
+    "question": "What part of a receiver recovers audio from a modulated signal?",
+    "options": [
+      "The Detector",
+      "The Audio Stage",
+      "The Oscillator",
+      "The Modulator"
+    ],
+    "answer": 0,
+    "explanation": "The detector (also known as the demodulator) stage recovers the original information from the modulated signal."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 5,
+    "n": 13,
+    "question": "Why is coaxial cable widely used as feeder?",
+    "options": [
+      "It is balanced",
+      "It is a good insulator",
+      "It is screened",
+      "It has an impedance of 500 ohms"
+    ],
+    "answer": 2,
+    "explanation": "Coaxial cable is screened, i.e. it has an outer screen that keeps the signal in and interference out."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 5,
+    "n": 14,
+    "question": "What is EIRP?",
+    "options": [
+      "Antenna gain expressed relative to a theoretical antenna",
+      "Antenna gain expressed relative to a half-wave dipole",
+      "Antenna gain expressed relative to an end-fed long-wire",
+      "Antenna gain expressed relative to a dummy load"
+    ],
+    "answer": 0,
+    "explanation": "EIRP, Effective Isotropic Radiated Power, is a way of expressing antenna gain relative to a theoretical antenna that radiates equally in all directions.\n\nAntenna manufacturers typically quote EIRP as it shows a better gain than ERP."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 5,
+    "n": 15,
+    "question": "If your antenna is not a perfect \"match\", some of the power sent from the transmitter will be reflected back to the transmitter. These are known as what?",
+    "options": [
+      "Carrier Waves",
+      "Modulation Waves",
+      "Amplitude Waves",
+      "Standing Waves"
+    ],
+    "answer": 3,
+    "explanation": "If your antenna is not a perfect match, some of the power sent from the transmitter will be reflected back to the transmitter. These are known as Standing Waves, measured by an SWR meter."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 5,
+    "n": 16,
+    "question": "Where is the Ionosphere?",
+    "options": [
+      "40-70km above the surface of the Earth",
+      "400-700km above the surface of the Earth",
+      "70-400km above the surface of the Earth",
+      "70-4000km above the surface of the Earth"
+    ],
+    "answer": 2,
+    "explanation": "For the Foundation exam, remember that the Ionosphere comprises layers of conductive gases at heights between 70 and 400km above the Earth."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 5,
+    "n": 17,
+    "question": "Which layer can help with extending the range of VHF and UHF signals?",
+    "options": [
+      "The Stratosphere",
+      "The Atmosphere",
+      "The Ionosphere",
+      "The Troposphere"
+    ],
+    "answer": 3,
+    "explanation": "It's the Troposphere. Conditions such as \"Sporadic E\" or \"Tropospheric ducting\" can allow VHF/UHF comms over wider-than-expected distances.\n\nIf you answered \"Ionosphere\", that's HF, not VHF/UHF."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 5,
+    "n": 18,
+    "question": "What is meant by a piece of equipment's \"immunity\"?",
+    "options": [
+      "Its ability to work in the presence of strong RF",
+      "Having its metal parts connected to Earth in case of a short",
+      "Its ability to stop radio signals from radiating outwards",
+      "Its ability not to cause unwanted interference to nearby devices"
+    ],
+    "answer": 0,
+    "explanation": "The ability of any piece of electronic or radio equipment to function correctly in the presence of strong RF signals is known as immunity."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 5,
+    "n": 19,
+    "question": "What is the function of the RF earth?",
+    "options": [
+      "To protect against lightning strikes damaging your equipment",
+      "To prevent an electric shock in the event of a fault",
+      "To provide a path to ground and minimise RF getting into the mains earth",
+      "To act as a ground plane for an HF antenna"
+    ],
+    "answer": 2,
+    "explanation": "The function of a good RF earth is to provide a path to ground and minimise the chance of radio signals getting into the mains earth."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 5,
+    "n": 20,
+    "question": "If a neighbour complains that you may be causing interference to his/her TV, which of the following options is recommended?",
+    "options": [
+      "Ask your neighbour to contact Ofcom",
+      "Show your neighbour your current valid Ofcom licence",
+      "Get some advice from the RSGB EMC committee",
+      "Wait until they have finished watching TV before transmitting again"
+    ],
+    "answer": 2,
+    "explanation": "The most appropriate option is to get some advice from the RSGB EMC committee. Here's why other answers aren't the best:\n\nIf Ofcom gets involved, there may be a fee involved, and if you're causing interference, they may require you to modify your station.\n\nWaiting till your neighbour turns off? You're still potentially causing interference to other neighbours, too, so get some advice."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 5,
+    "n": 21,
+    "question": "You want to transmit using a data mode, perhaps to send an image, but you don't know which frequency is the best one to use. What should you look for on the band plan?",
+    "options": [
+      "Any \"all modes\" frequency",
+      "The Centre of Activity for the mode in question",
+      "A beacon frequency",
+      "The 'Random MS' frequency"
+    ],
+    "answer": 1,
+    "explanation": "You should look for the 'centre of activity' for the mode in question, as this indicates where other stations using the same mode will be operating."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 5,
+    "n": 22,
+    "question": "What is CTCSS?",
+    "options": [
+      "A data mode",
+      "A code used by radios when accessing an analogue repeater",
+      "The offset between input and output frequencies on a repeater",
+      "The organisation responsible for band plans"
+    ],
+    "answer": 1,
+    "explanation": "Continuous Tone-Coded Squelch System is a tone transmitted with your audio signal. When you access a repeater using the correct tone, the repeater knows to \"open\" and relay your message."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 5,
+    "n": 23,
+    "question": "It is recommended that you ask an amateur radio friend to comment on your transmitted audio signal when you start using a new microphone. Why is this?",
+    "options": [
+      "The transmit frequency might need adjusting",
+      "The microphone may be tuned to the wrong band",
+      "To prove that it wasn't a waste of money",
+      "The microphone gain on the transmitter may need to be re-adjusted"
+    ],
+    "answer": 3,
+    "explanation": "The microphone gain may need to be adjusted, and having another amateur give you a report on your audio signal helps you to check that your signal is not distorting."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 5,
+    "n": 24,
+    "question": "Special care must be taken with what family of batteries?",
+    "options": [
+      "Nickel-Cadmium",
+      "Alkaline",
+      "Lithium",
+      "Zinc-Carbon"
+    ],
+    "answer": 2,
+    "explanation": "Lithium batteries, in particular, can cause fire and explosion if not properly treated."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 5,
+    "n": 25,
+    "question": "Why is a tool belt important when up a ladder?",
+    "options": [
+      "It will help to prevent falling objects",
+      "It will help with balance and your centre of gravity",
+      "It can be used to tether you to the ladder",
+      "It makes tools easier to find"
+    ],
+    "answer": 0,
+    "explanation": "For safety reasons, when working at height, a tool belt or similar device to carry tools should be used, as it will help prevent falling objects."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 5,
+    "n": 26,
+    "question": "On a field day, what is a possible risk?",
+    "options": [
+      "A member of the public touching an antenna that is transmitting",
+      "Trip hazards relating to coaxial cable routing",
+      "Short-circuiting a 12V battery",
+      "All of the above"
+    ],
+    "answer": 3,
+    "explanation": "Touching a transmitting antenna, cable trip hazards and short-circuiting batteries all present risks at an amateur radio field event, so care is needed."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 6,
+    "n": 1,
+    "question": "Steve MW8QQQ will be visiting a hotel in London and wants to contact M0ABC on 431.500MHz. Which is true?",
+    "options": [
+      "Steve would operate as M8QQQ/A",
+      "Steve would operate as MW8QQQ/P",
+      "Steve would operate as MW8QQQ/A",
+      "This contact is not permitted"
+    ],
+    "answer": 3,
+    "explanation": "Refer to the Schedule in the 4-page exam booklet when you get any questions about specific frequencies.\n\nIn the Schedule on page 2 under 431-432MHz, you'll see that this range cannot be used within 100km of Charing Cross in London."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 6,
+    "n": 2,
+    "question": "You put a call out on 145.500MHz (the FM calling frequency), make contact with someone, and change to a different frequency to have a chat. When are you required to give your callsign?",
+    "options": [
+      "When calling on 145.500MHz and when starting on the new frequency",
+      "When someone responds to you on 145.500MHz and within the first 5 minutes on the new frequency",
+      "When calling on 145.500MHz and before leaving 145.500MHz",
+      "When another amateur asks you for your callsign"
+    ],
+    "answer": 0,
+    "explanation": "You need to give your callsign when you start transmitting on a frequency for the first time, so you would need to give your callsign on 145.500MHz as part of your CQ call, and again when you move to the new frequency."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 6,
+    "n": 3,
+    "question": "What does the amateur radio licence say about the use of codes and abbreviations at Foundation?",
+    "options": [
+      "Not permitted, as they may confuse other radio users",
+      "Permitted, as long as they do not obscure or confuse the meaning of the message",
+      "Only permitted at times of emergency, on request from a member of the user services",
+      "Permitted under the supervision of a full licence-holder only"
+    ],
+    "answer": 1,
+    "explanation": "The use of codes and abbreviations is permitted on amateur radio. Examples include: Morse code, \"CQ\", \"73\" and Q codes (like QTH, QSL, QRT, etc) - as these are all public domain radio codes & abbreviations.\n\nWhat's not permitted are SECRET codes or encryption that make the message unintelligible to other radio users."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 6,
+    "n": 4,
+    "question": "Any individual authorised by Ofcom has the right to do what?",
+    "options": [
+      "Close down your amateur radio station",
+      "Require that you modify your amateur radio equipment",
+      "Restrict the operation of your amateur radio equipment",
+      "All of the above"
+    ],
+    "answer": 3,
+    "explanation": "The licence states: \"The Licensee shall permit any person authorised by Ofcom to inspect the Licence and Radio Equipment, at any and all reasonable times or, when in the opinion of that person an urgent situation exists, at any time to ensure that the Radio Equipment is being used in accordance with the terms of the Licence.\""
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 6,
+    "n": 5,
+    "question": "Which of the following frequencies cannot be used in central London?",
+    "options": [
+      "70.31MHz",
+      "431.990MHz",
+      "439.990MHz",
+      "430.990MHz"
+    ],
+    "answer": 1,
+    "explanation": "Refer to the \"Foundation Licence Parameters\" table in the 4-page exam booklet. The range 431-432MHz has a restriction preventing use within a 100km radius of Charing Cross, London."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 6,
+    "n": 6,
+    "question": "Ofcom requires radio amateurs to keep records of what?",
+    "options": [
+      "EMF assessments",
+      "Contacts outside of the UK",
+      "Changes to your station equipment",
+      "Operations away from your Main Station Address"
+    ],
+    "answer": 0,
+    "explanation": "You need to complete an assessment to demonstrate that the public is not exposed to strong EMF (electromagnetic fields), and keep a record of those assessments."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 6,
+    "n": 7,
+    "question": "This circuit is powered by a 9-volt battery and has a current of 3 amps flowing through it. Assuming that the lamp has no resistance, what is the value of R?",
+    "options": [
+      "0.33 ohms",
+      "3 ohms",
+      "30 ohms",
+      "300 ohms"
+    ],
+    "answer": 1,
+    "explanation": "This is an Ohm's Law question. The formula is V = I x R. From the triangle, you can work out that R = V/I. So, the resistance = 9 volts divided by 3 amps, giving the answer of 3 ohms.",
+    "image": "mock6-q7.png"
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 6,
+    "n": 8,
+    "question": "A radio wave has a length of approximately 4 metres. Which of the following would be a valid 4 metre frequency?",
+    "options": [
+      "40.3MHz",
+      "70.3MHz",
+      "144.3MHz",
+      "288.3MHz"
+    ],
+    "answer": 1,
+    "explanation": "Use the conversion table in the 4-page exam booklet to calculate this. 4 metres on the left (wavelength) axis converts to roughly 70MHz on the bottom axis"
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 6,
+    "n": 9,
+    "question": "What could be described as a stream of finite values at a specific sampling frequency?",
+    "options": [
+      "A parallel circuit",
+      "An alternating current",
+      "A digital signal",
+      "A sine wave"
+    ],
+    "answer": 2,
+    "explanation": "In digital radio terms, digital signals are a stream of finite values at a specific sampling interval.\n\nBy contrast, analogue signals are constantly changing in amplitude, frequency or both."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 6,
+    "n": 10,
+    "question": "Which of the following is **not** true for FM?",
+    "options": [
+      "Excessive Frequency Deviation causes interference with adjacent channels",
+      "Waveform height varies with the volume of the audio",
+      "A carrier needs to be generated by an oscillator",
+      "The modulated signal would have varying numbers of waves per second"
+    ],
+    "answer": 1,
+    "explanation": "Waveform height does not vary with the volume of the audio for Frequency Modulation.\n\nIt is AM signals that vary in amplitude (height). FM signals are of the same height, but vary in frequency."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 6,
+    "n": 11,
+    "question": "A transmitter must be connected to a correctly matched antenna system. Use of a mismatched antenna system (with a very poor SWR) runs the risk of damage to what?",
+    "options": [
+      "The antenna feed point",
+      "The feeder",
+      "The microphone amplifier",
+      "The RF power amplifier"
+    ],
+    "answer": 3,
+    "explanation": "The RF Power Amplifier is connected to the antenna and can be damaged by power being reflected back from a mismatched antenna."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 6,
+    "n": 12,
+    "question": "In a Software Defined Radio receiver, what enables all of the radio signals to be sifted into separate frequency components?",
+    "options": [
+      "The D-to-A converter",
+      "The A-to-D converter",
+      "The demodulator",
+      "A mathematical operation in software"
+    ],
+    "answer": 3,
+    "explanation": "A mathematical operation in the Digital Processor stage sifts the signals into separate frequency components. Refer to the SDR receiver block diagram in the training material."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 6,
+    "n": 13,
+    "question": "A long length of coaxial feeder cable may exhibit what?",
+    "options": [
+      "Gain",
+      "Loss",
+      "Dummy loads",
+      "ERP"
+    ],
+    "answer": 1,
+    "explanation": "A long length of coaxial feeder cable is likely to exhibit 'loss'. Thicker, high-quality cable helps to reduce loss."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 6,
+    "n": 14,
+    "question": "10 Watts EIRP (Effective Isotropic Radiated Power) is equivalent to what value of ERP?",
+    "options": [
+      "1.6W ERP",
+      "6.1W ERP",
+      "16.1W ERP",
+      "11.6W ERP"
+    ],
+    "answer": 1,
+    "explanation": "10 Watts EIRP (gain relative to a theoretical antenna) is equal to 6.1 Watts ERP (gain relative to a dipole).\n\nWhy does this answer matter? Ofcom quotes EMF exposure limits as 10W EIRP in the licence, which is equivalent to 6.1W ERP, and so this is a common value amateurs need to know for antenna assessments. It is also a common exam question!"
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 6,
+    "n": 15,
+    "question": "An antenna correctly connected to a transmitter, but used on the wrong band, could",
+    "options": [
+      "Damage the antenna",
+      "Reduce the SWR on the feeder",
+      "Increase the ERP from the antenna",
+      "Reflect some of the power back down the feeder"
+    ],
+    "answer": 3,
+    "explanation": "An antenna connected to a transmitter, but used on the wrong band, could reflect some of the power back down the feeder, potentially damaging the transmitter. An AMU (Antenna Matching Unit) can be used to match the antenna impedance."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 6,
+    "n": 16,
+    "question": "What effect does ultraviolet radiation normally have on propagation?",
+    "options": [
+      "A negative effect on HF propagation",
+      "A positive effect on HF propagation",
+      "A negative effect on VHF propagation",
+      "A positive effect on VHF propagation"
+    ],
+    "answer": 1,
+    "explanation": "Ionisation of the Ionosphere is caused mainly by ultraviolet radiation from the sun. This has a positive effect on HF propagation."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 6,
+    "n": 17,
+    "question": "The range that your FM signals can reach on VHF/UHF frequencies is mainly dependent on 4 things - antenna height, antenna gain, transmitter power and what else?",
+    "options": [
+      "The amount of UV from the sun reaching the Ionosphere",
+      "Air quality",
+      "Lack of obstructions between the transmit and receive antennas",
+      "The amplitude of the modulated waveform"
+    ],
+    "answer": 2,
+    "explanation": "Obstructions blocking the \"line of sight\", such as buildings, hills, etc, is the other factor affecting the range of VHF/UHF signals.\n\nIf you answered \"amount of UV from the sun reaching the Ionosphere\", that's for HF, not VHF/UHF signals."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 6,
+    "n": 18,
+    "question": "What is the most likely reason that one piece of electrical equipment is more susceptible to interference than another?",
+    "options": [
+      "It has a lower immunity",
+      "It may not have a mains earth connection",
+      "It uses AC, not DC voltage",
+      "It has not been repaired correctly"
+    ],
+    "answer": 0,
+    "explanation": "The ability of any piece of equipment to function correctly in the presence of strong RF signals is known as \"immunity\". A lower immunity means the equipment is more likely to be affected."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 6,
+    "n": 19,
+    "question": "You are contacting someone very close to you. Why might you want to reduce your transmitter power?",
+    "options": [
+      "Less likely to over-modulate",
+      "Less likely to cause interference",
+      "To save on their battery",
+      "Less likely to over-deviate"
+    ],
+    "answer": 1,
+    "explanation": "You should ideally only use the power that you need to make a contact. If you can make contact at 1 Watt, you don't need to use 10 Watts. By using unneeded power, you could be causing interference to other people who want to use that frequency, as well as possibly causing EMC issues."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 6,
+    "n": 20,
+    "question": "From an EMC perspective, why might it be useful to keep a log of transmissions?",
+    "options": [
+      "To prove you are operating within your licence conditions",
+      "To have a list of people who can vouch for your contact",
+      "In case Ofcom asks to see it during an inspection",
+      "To help identify if you may be the cause of interference"
+    ],
+    "answer": 3,
+    "explanation": "In cases of possible interference, it would be useful to keep a log of transmissions to help identify whether or not you may be the cause of any interference."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 6,
+    "n": 21,
+    "question": "When keeping a log, it is recommended that you log the callsign of the station worked, the date of the contact, and what else?",
+    "options": [
+      "Local time, mode, location",
+      "Distance, operator name and frequency",
+      "Mode and UTC",
+      "Operator name, frequency and signal strength"
+    ],
+    "answer": 2,
+    "explanation": "The exam syllabus states that, as a minimum, a log should contain: \"date, time (in UTC), mode, and the call sign of station worked\""
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 6,
+    "n": 22,
+    "question": "On what frequency might you expect to be able to hear signals from the International Space Station?",
+    "options": [
+      "14.099MHz",
+      "144.370MHz",
+      "145.200MHz",
+      "145.800MHz"
+    ],
+    "answer": 3,
+    "explanation": "Refer to the 2m band plan that is printed on page 4 of the 4-page exam booklet. Almost at the bottom of the 2m band plan, you'll see an entry on 145.800MHz for \"FM/DV Space Communications (e.g. ISS) - Space-to-Earth\"\n\nIf you chose 145.200, that is Earth-to-Space, not Space-to-Earth."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 6,
+    "n": 23,
+    "question": "If you borrow a friend's 5-Watt DV radio, what should you check?",
+    "options": [
+      "Whether your licence allows you to borrow equipment",
+      "That someone else's callsign is not embedded in software",
+      "That the radio settings are not in a foreign language",
+      "That the CTCSS tones are correct for your digital repeater"
+    ],
+    "answer": 1,
+    "explanation": "It is common for callsigns to be set up in software on a DV radio, and for these to be automatically transmitted. If you don't change the callsign and transmit with someone else's callsign (not under supervision), you are technically in breach of the licence."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 6,
+    "n": 24,
+    "question": "If making changes to your home earthing arrangements, special care is needed. Who should you consult?",
+    "options": [
+      "Your Council Planning Officer",
+      "Ofcom",
+      "A competent professional",
+      "The ICNIRP"
+    ],
+    "answer": 2,
+    "explanation": "Special care is needed with earthing arrangements, and a competent professional must be consulted prior to making any modifications."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 6,
+    "n": 25,
+    "question": "When is it recommended that eye protection be worn?",
+    "options": [
+      "To prevent solder or flux from splashing into the eyes",
+      "When erecting an antenna",
+      "When up a ladder",
+      "When adjusting the elements of an antenna whilst it is transmitting"
+    ],
+    "answer": 0,
+    "explanation": "For safety reasons, to prevent solder or flux from splashing into the eyes, eye protection should be worn whilst soldering."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 6,
+    "n": 26,
+    "question": "Which of the following statements is FALSE:",
+    "options": [
+      "Antennas and feeders must be sited away from overhead power cables",
+      "Headphones can be dangerous",
+      "You should not touch antennas when they are transmitting",
+      "Equipment should be earthed to copper central heating pipes"
+    ],
+    "answer": 3,
+    "explanation": "This question relates to safety. It is not true that equipment should be earthed to copper central heating pipes. Never use heating pipes as an earth, as this is dangerous."
+  }
+]
