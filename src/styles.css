@@ -173,6 +173,17 @@ h1 {
   width: 100%;
 }
 
+.panel input[type="number"] {
+  justify-self: start;
+  width: 5rem;
+  font: inherit;
+  padding: 0.25rem 0.5rem;
+  background: var(--panel);
+  color: var(--fg);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}
+
 .panel .val {
   font-variant-numeric: tabular-nums;
   color: var(--fg);

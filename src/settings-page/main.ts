@@ -45,9 +45,16 @@ languageEl.addEventListener("change", () => {
 });
 
 wordLengthEl.addEventListener("input", () => {
-  settings.wordLength = Number(wordLengthEl.value);
+  const n = Number(wordLengthEl.value);
+  if (wordLengthEl.value === "" || !Number.isInteger(n)) return; // partial input while typing
+  settings.wordLength = Math.min(8, Math.max(1, n));
   wordLengthValEl.textContent = wordLengthLabel(settings.wordLength);
   persist();
+});
+
+// Snap the field back to the persisted (clamped) value when editing ends.
+wordLengthEl.addEventListener("change", () => {
+  wordLengthEl.value = String(settings.wordLength);
 });
 
 wpmEl.addEventListener("input", () => {
