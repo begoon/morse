@@ -55,20 +55,27 @@ Each route is a single self-contained HTML file for GitHub Pages.
 
 ## Exam runner (`src/test/` → `docs/test/`)
 
-Runs the three RSGB Foundation mock papers from
-`foundation/rsgb.org/*.pdf` (26 single-choice questions each): pick
-Mock 1/2/3 or Combined (26 sampled from
-all 78, or all 78); settings for shuffling questions/answers and immediate vs
-at-the-end feedback (persisted under `morse-exam-settings`). Pass mark 19/26,
-scaled by percentage for the 78-question run.
+Runs nine Foundation mock papers (26 single-choice questions each), tagged by
+source: **rsgb** — Mock 1–3 from `foundation/rsgb.org/*.pdf`; **hamtrain** —
+Mock 1–6 from `foundation/hamtrain.co.uk/mock<N>.md` (+ `-answers.md` with
+per-question explanations; layout documented in that folder's `FORMAT.md`).
+Pick a single paper or Combined (26 sampled from all 234, or all 234);
+settings for shuffling questions/answers and immediate vs at-the-end feedback
+(persisted under `morse-exam-settings`; the old numeric `paper` value is
+migrated). Pass mark 19/26, scaled by percentage for longer runs.
 
-- `src/test/quiz.ts` — pure logic (build run, shuffle, grade); `main.ts` — UI;
-  `questions.json` — the committed question bank.
+- `src/test/quiz.ts` — pure logic (build run, shuffle, grade, `migratePaper`);
+  `main.ts` — UI (explanations shown after answering and in the review;
+  minimal `**bold**`/`*italic*` rendering); `questions.json` (rsgb) and
+  `questions-hamtrain.json` — the committed question banks.
 - `tools/extract-questions.ts` regenerates `questions.json` from the PDFs
-  (macOS-only: uses PDFKit via `osascript`). Only re-run if the PDFs change.
-- Question diagrams live in `foundation/rsgb.org/mock_<paper>_q<n>.png`,
-  mapped in `src/test/images.ts` and inlined as data URIs by the `png-dataurl`
-  plugin in `build.ts` (shown on the quiz screen and in the results review).
+  (macOS-only: uses PDFKit via `osascript`); `tools/extract-hamtrain.ts`
+  regenerates `questions-hamtrain.json` from the markdown. Only re-run if the
+  sources change.
+- Question diagrams live next to their papers in `foundation/*/`; each
+  question's `image` filename is resolved by `src/test/images.ts` and inlined
+  as a data URI by the `png-dataurl` plugin in `build.ts` (shown on the quiz
+  screen and in the results review).
 
 ## Conventions
 

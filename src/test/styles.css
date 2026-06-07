@@ -170,6 +170,23 @@ select {
   line-height: 1.45;
 }
 
+/* Answer explanation (hamtrain papers), shown once the answer is revealed. */
+.explanation {
+  border-top: 1px solid var(--line);
+  padding-top: 0.75rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.45;
+  white-space: pre-line;
+}
+
+.review-item .explanation {
+  border-top: none;
+  padding-top: 0;
+  padding-left: 1.3rem;
+  font-size: 0.9rem;
+}
+
 .question-image {
   align-self: flex-start;
   max-width: 100%;

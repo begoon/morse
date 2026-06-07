@@ -1,26 +1,35 @@
 // Foundation mock exam runner: start screen -> quiz -> results.
 
-import questionsJson from "./questions.json";
+import rsgbJson from "./questions.json";
+import hamtrainJson from "./questions-hamtrain.json";
 import "./styles.css";
 import { imageFor } from "./images";
 import {
     DEFAULTS,
     buildRun,
     grade,
-    type Paper,
+    migratePaper,
     type Question,
     type RunQuestion,
     type Settings,
+    type Tag,
 } from "./quiz";
 
-const POOL = questionsJson as Question[];
+const POOL = [...(rsgbJson as Question[]), ...(hamtrainJson as Question[])];
+/** Mock paper numbers per source tag, in display order. */
+const PAPERS: [Tag, number[]][] = [
+    ["rsgb", [1, 2, 3]],
+    ["hamtrain", [1, 2, 3, 4, 5, 6]],
+];
 const LETTERS = ["A", "B", "C", "D"];
 const STORAGE_KEY = "morse-exam-settings";
 
 function loadSettings(): Settings {
     try {
         const raw = localStorage.getItem(STORAGE_KEY);
-        return raw ? { ...DEFAULTS, ...(JSON.parse(raw) as Partial<Settings>) } : { ...DEFAULTS };
+        const s = raw ? { ...DEFAULTS, ...(JSON.parse(raw) as Partial<Settings>) } : { ...DEFAULTS };
+        s.paper = migratePaper(s.paper);
+        return s;
     } catch {
         return { ...DEFAULTS };
     }
@@ -56,38 +65,39 @@ function el<K extends keyof HTMLElementTagNameMap>(
 // --- Start screen ---------------------------------------------------------
 
 function renderStart(): void {
-    const papers: { value: string; label: string }[] = [
-        { value: "1", label: "Mock 1" },
-        { value: "2", label: "Mock 2" },
-        { value: "3", label: "Mock 3" },
-        { value: "combined", label: "Combined" },
-    ];
+    // One row of Mock buttons per source tag.
+    const paperRows = PAPERS.map(([tag, ns]) => {
+        const row = el("div", { class: "choices", "data-tag": tag });
+        for (const n of ns) {
+            const btn = el("button", { class: "choice", "data-paper": `${tag}-${n}` }, `Mock ${n}`);
+            if (typeof settings.paper === "object" && settings.paper.tag === tag && settings.paper.n === n)
+                btn.classList.add("selected");
+            btn.onclick = () => {
+                settings.paper = { tag, n };
+                saveSettings(settings);
+                renderStart();
+            };
+            row.append(btn);
+        }
+        return el("div", { class: "field" }, el("span", { class: "label" }, tag), row);
+    });
 
-    const paperRow = el("div", { class: "choices", id: "paper" });
-    for (const p of papers) {
-        const btn = el("button", { class: "choice", "data-paper": p.value }, p.label);
-        if (String(settings.paper) === p.value) btn.classList.add("selected");
-        btn.onclick = () => {
-            settings.paper = p.value === "combined" ? "combined" : (Number(p.value) as Paper);
-            saveSettings(settings);
-            renderStart();
-        };
-        paperRow.append(btn);
-    }
-
-    const lengthRow = el("div", { class: "choices", id: "length" });
+    // Combined mode mixes questions from every paper; picking a length
+    // selects it.
+    const combinedRow = el("div", { class: "choices", id: "combined" });
     for (const [all, label] of [
         [false, "26 random questions"],
         [true, `All ${POOL.length} questions`],
     ] as const) {
         const btn = el("button", { class: "choice", "data-all": String(all) }, label);
-        if (settings.combinedAll === all) btn.classList.add("selected");
+        if (settings.paper === "combined" && settings.combinedAll === all) btn.classList.add("selected");
         btn.onclick = () => {
+            settings.paper = "combined";
             settings.combinedAll = all;
             saveSettings(settings);
             renderStart();
         };
-        lengthRow.append(btn);
+        combinedRow.append(btn);
     }
 
     const toggle = (id: "shuffleQuestions" | "shuffleAnswers", label: string) => {
@@ -121,10 +131,8 @@ function renderStart(): void {
 
     app.replaceChildren(
         el("div", { class: "panel start" },
-            el("div", { class: "field" }, el("span", { class: "label" }, "Paper"), paperRow),
-            ...(settings.paper === "combined"
-                ? [el("div", { class: "field" }, el("span", { class: "label" }, "Length"), lengthRow)]
-                : []),
+            ...paperRows,
+            el("div", { class: "field" }, el("span", { class: "label" }, "Combined"), combinedRow),
             el("div", { class: "field" },
                 el("span", { class: "label" }, "Shuffle"),
                 el("div", { class: "choices" },
@@ -140,13 +148,30 @@ function renderStart(): void {
 // --- Quiz screen -----------------------------------------------------------
 
 function origin(q: RunQuestion): string {
-    return `Mock ${q.source.paper} · Q${q.source.n}`;
+    return `${q.source.tag} Mock ${q.source.paper} · Q${q.source.n}`;
 }
 
 /** The question's illustration (block diagram etc.), if it has one. */
 function questionImage(q: RunQuestion): HTMLElement[] {
-    const src = imageFor(q.source.paper, q.source.n);
+    const src = imageFor(q.source.image);
     return src ? [el("img", { class: "question-image", src, alt: "Question illustration" })] : [];
+}
+
+/** Inline markdown emphasis (`**bold**`, `*italic*`) -> DOM nodes; everything
+ * else stays plain text. Paragraph breaks survive via white-space: pre-line. */
+function md(text: string): (Node | string)[] {
+    return text.split(/(\*\*[^*]+\*\*|\*[^*\n]+\*)/).map((part) => {
+        if (part.startsWith("**") && part.endsWith("**")) return el("strong", {}, part.slice(2, -2));
+        if (part.startsWith("*") && part.endsWith("*")) return el("em", {}, part.slice(1, -1));
+        return part;
+    });
+}
+
+/** The answer explanation block (hamtrain papers only). */
+function explanation(q: RunQuestion): HTMLElement[] {
+    return q.source.explanation
+        ? [el("div", { class: "explanation" }, ...md(q.source.explanation))]
+        : [];
 }
 
 function renderQuiz(): void {
@@ -158,7 +183,7 @@ function renderQuiz(): void {
     const options = el("div", { class: "options" });
     q.options.forEach((text, i) => {
         const btn = el("button", { class: "option", "data-i": String(i) },
-            el("span", { class: "letter" }, LETTERS[i]!), text);
+            el("span", { class: "letter" }, LETTERS[i]!), el("span", {}, ...md(text)));
         if (pick === i) btn.classList.add("selected");
         if (locked) {
             if (i === q.answer) btn.classList.add("correct");
@@ -199,9 +224,10 @@ function renderQuiz(): void {
             el("div", { class: "progress" },
                 el("span", { id: "counter" }, `Question ${idx + 1} / ${run.length}`),
                 settings.paper === "combined" ? el("span", { class: "origin" }, origin(q)) : ""),
-            el("div", { class: "question", id: "question" }, q.source.question),
+            el("div", { class: "question", id: "question" }, ...md(q.source.question)),
             ...questionImage(q),
             options,
+            ...(locked ? explanation(q) : []),
             nav,
         ),
     );
@@ -219,17 +245,18 @@ function renderResults(): void {
         const item = el("div", { class: `review-item ${ok ? "ok" : "bad"}` },
             el("div", { class: "review-head" },
                 el("span", { class: "mark" }, ok ? "✓" : "✗"),
-                el("span", {}, `${i + 1}. ${q.source.question}`),
+                el("span", {}, `${i + 1}. `, ...md(q.source.question)),
                 el("span", { class: "origin" }, origin(q))),
             ...questionImage(q),
         );
         if (!ok)
             item.append(el("div", { class: "review-answer" },
-                pick === null
-                    ? "Not answered."
-                    : `Your answer: ${LETTERS[pick]!} — ${q.options[pick]!}`));
+                ...(pick === null
+                    ? ["Not answered."]
+                    : [`Your answer: ${LETTERS[pick]!} — `, ...md(q.options[pick]!)])));
         item.append(el("div", { class: "review-answer correct-answer" },
-            `Correct: ${LETTERS[q.answer]} — ${q.options[q.answer]}`));
+            `Correct: ${LETTERS[q.answer]} — `, ...md(q.options[q.answer]!)));
+        item.append(...explanation(q));
         review.append(item);
     });
 

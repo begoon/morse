@@ -11,12 +11,14 @@
 import { $ } from "bun";
 
 type Question = {
+    tag: "rsgb";
     paper: number;
     n: number;
     ref: string;
     question: string;
     options: string[];
     answer: number; // index into options
+    image?: string;
 };
 
 const PDFS = [
@@ -24,6 +26,15 @@ const PDFS = [
     "foundation/rsgb.org/260430_Foundation_Mock_02_V1.6b.pdf",
     "foundation/rsgb.org/260430_Foundation_Mock_03_V1.6b.pdf",
 ];
+
+// The PDFs' diagrams aren't extractable as text; the question -> PNG mapping
+// (foundation/rsgb.org/mock_<paper>_q<n>.png) is maintained by hand.
+const IMAGES: Record<string, string> = {
+    "1:11": "mock_01_q11.png",
+    "2:12": "mock_02_q12.png",
+    "2:14": "mock_02_q14.png",
+    "3:12": "mock_03_q12.png",
+};
 
 async function pdfText(path: string): Promise<string> {
     const abs = `${import.meta.dir}/../${path}`;
@@ -63,7 +74,7 @@ function parsePaper(text: string, paper: number): Question[] {
     for (const line of body) {
         const start = line.match(/^(\d+)\.\s+(.*)/);
         if (start) {
-            q = { paper, n: Number(start[1]), ref: "", question: start[2]!, options: [], answer: -1 };
+            q = { tag: "rsgb", paper, n: Number(start[1]), ref: "", question: start[2]!, options: [], answer: -1 };
             questions.push(q);
             continue;
         }
@@ -85,6 +96,8 @@ function parsePaper(text: string, paper: number): Question[] {
         const a = answers.get(question.n);
         if (a === undefined) throw new Error(`paper ${paper} Q${question.n}: no answer`);
         question.answer = a;
+        const image = IMAGES[`${paper}:${question.n}`];
+        if (image) question.image = image;
         if (!question.ref) throw new Error(`paper ${paper} Q${question.n}: no syllabus ref`);
         if (question.options.length !== 4)
             throw new Error(`paper ${paper} Q${question.n}: ${question.options.length} options`);
