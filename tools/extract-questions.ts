@@ -1,4 +1,4 @@
-// One-off extractor: foundation/*.pdf -> src/test/questions.json.
+// One-off extractor: foundation/hamtrain.co.uk/*.pdf -> src/test/questions.json.
 //
 // Uses macOS PDFKit (via osascript/JXA) to get plain text, then parses the
 // regular mock-paper layout: "N. question…", a syllabus-ref line
@@ -20,9 +20,9 @@ type Question = {
 };
 
 const PDFS = [
-    "foundation/260430_Foundation_Mock_01_V1.6b.pdf",
-    "foundation/260430_Foundation_Mock_02_V1.6b.pdf",
-    "foundation/260430_Foundation_Mock_03_V1.6b.pdf",
+    "foundation/hamtrain.co.uk/260430_Foundation_Mock_01_V1.6b.pdf",
+    "foundation/hamtrain.co.uk/260430_Foundation_Mock_02_V1.6b.pdf",
+    "foundation/hamtrain.co.uk/260430_Foundation_Mock_03_V1.6b.pdf",
 ];
 
 async function pdfText(path: string): Promise<string> {
