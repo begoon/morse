@@ -1,12 +1,13 @@
 :root {
-  --bg: #0f1419;
-  --panel: #1a212b;
-  --fg: #e6edf3;
-  --muted: #7d8896;
-  --accent: #36c5f0;
-  --accent-dim: #1f6b85;
-  --ok: #3fb950;
-  --line: #3a4654;
+  color-scheme: light;
+  --bg: #f5f7fa;
+  --panel: #ffffff;
+  --fg: #1c2430;
+  --muted: #5d6b7a;
+  --accent: #0e87b6;
+  --accent-dim: #8ccfe8;
+  --ok: #1f883d;
+  --line: #d0d7de;
 }
 
 * {
@@ -144,7 +145,7 @@ h1 {
   color: var(--ok);
 }
 #output.bad {
-  color: #e5534b;
+  color: #cf222e;
 }
 
 #hints {
@@ -263,7 +264,7 @@ button#clear:hover {
 /* Revealed answer key in learn-letters mode. */
 .cheat-key.target {
   border-color: var(--accent);
-  background: rgba(54, 197, 240, 0.12);
+  background: rgba(14, 135, 182, 0.12);
 }
 .cheat-key.target .cheat-char {
   color: var(--accent);
