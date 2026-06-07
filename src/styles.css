@@ -246,11 +246,12 @@ button#clear:hover {
   flex-direction: column;
   gap: 0.3rem;
 }
-/* Special keys (. , ?) stacked to the right of the keyboard. */
+/* Special keys (. , ?) stacked to the right of the keyboard, top-aligned. */
 .cheat-punct {
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
+  align-self: flex-start;
 }
 .cheat-row {
   display: flex;
