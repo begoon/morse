@@ -60,17 +60,25 @@ window.addEventListener("keydown", (e) => {
       e.preventDefault();
       unlockAudio();
       straight.down();
+      return;
     }
   } else {
     if (e.code === settings.keys.dit) {
       e.preventDefault();
       unlockAudio();
       iambic.setDit(true);
+      return;
     } else if (e.code === settings.keys.dah) {
       e.preventDefault();
       unlockAudio();
       iambic.setDah(true);
+      return;
     }
+  }
+  // Space clears the output (unless it's bound as a keying key above).
+  if (e.code === "Space") {
+    e.preventDefault();
+    decoder.reset();
   }
 });
 
@@ -90,5 +98,5 @@ renderCheatsheet(cheatsheetEl, settings.language, { showPatterns: true });
 hintsEl.textContent =
   settings.keyType === "straight"
     ? "Hold Space to key · short press = dit, long press = dah"
-    : "Tap , for dit · . for dah · hold/squeeze for iambic";
+    : "Tap , for dit · . for dah · hold/squeeze for iambic · Space clears";
 decoder.reset();
