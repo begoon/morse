@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Morse Trainer — Keying</title>
+  </head>
+  <body>
+    <nav class="topnav">
+      <a href="../">Morse Trainer</a>
+      <a href="../play/">Play</a>
+      <a href="../keying/" class="current" aria-current="page">Keying</a>
+      <a href="../test/">Test</a>
+      <a href="../settings/">Settings</a>
+    </nav>
+
+    <div id="output"> </div>
+    <div id="pattern"> </div>
+    <div id="hints"></div>
+
+    <details class="cheatsheet" open>
+      <summary>Cheatsheet</summary>
+      <div id="cheatsheet"></div>
+    </details>
+
+    <button id="clear">Clear output</button>
+
+    <script type="module" src="./main.ts"></script>
+  </body>
+</html>

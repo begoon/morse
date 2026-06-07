@@ -145,3 +145,12 @@ export function lookup(pattern: string, lang: Language): string {
 export function encode(char: string, lang: Language): string | undefined {
   return tableFor(lang)[char.toUpperCase()];
 }
+
+/** Encode a word as per-letter patterns joined with " " (a letter gap).
+ * Characters missing from the table are skipped. */
+export function encodeWord(word: string, lang: Language): string {
+  return [...word]
+    .map((c) => encode(c, lang))
+    .filter((p): p is string => !!p)
+    .join(" ");
+}

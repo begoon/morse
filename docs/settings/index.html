@@ -3,29 +3,69 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Morse Trainer</title>
-    
+    <title>Morse Trainer — Settings</title>
   <style>:root{--bg:#0f1419;--panel:#1a212b;--fg:#e6edf3;--muted:#7d8896;--accent:#36c5f0;--accent-dim:#1f6b85;--ok:#3fb950;--line:#3a4654}*{box-sizing:border-box}body{background:var(--bg);color:var(--fg);display:flex;flex-direction:column;align-items: center;gap:1.25rem;min-height:100vh;margin:0;padding:2rem 1rem 3rem;font-family:system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Noto Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif}h1{letter-spacing:.04em;margin:0;font-size:1.4rem;font-weight:600}.topnav{display:flex;align-items:baseline;gap:1rem;width:100%;max-width:640px;font-size:.95rem}.topnav a{color:var(--muted);text-decoration:none}.topnav a:hover{color:var(--fg)}.topnav a:first-child{color:var(--fg);letter-spacing:.04em;margin-right:auto;font-weight:600}.topnav a.current{color:var(--accent)}.menu{display:flex;flex-direction:column;gap:.75rem;width:100%;max-width:480px}.menu-item{display:flex;background:var(--panel);border:1px solid var(--line);color:var(--fg);text-decoration:none;border-radius:12px;flex-direction:column;gap:.25rem;padding:1rem 1.25rem}.menu-item:hover{border-color:var(--accent-dim)}.menu-item strong{color:var(--accent);letter-spacing:.04em}.menu-item span{color:var(--muted);font-size:.9rem}#output{display:flex;background:var(--panel);border:1px solid var(--line);letter-spacing:.1em;white-space:pre;overflow:hidden;border-radius:12px;justify-content:center;align-items: center;width:100%;min-height:4rem;padding:.75rem 1.25rem;font-family:SF Mono,ui-monospace,Cascadia Code,monospace;font-size:clamp(1.5rem,4vw,2.75rem);font-weight:600}#pattern{color:var(--accent);letter-spacing:.3em;min-height:2rem;font-family:SF Mono,ui-monospace,monospace;font-size:1.75rem}.challenge{cursor:pointer;color:var(--accent)}.challenge .slot{display:inline-block;text-align:center;min-width:.8em;margin:0 .06em}.challenge .slot.done{color:var(--fg)}.challenge-morse{color:var(--muted);letter-spacing:.1em;margin-left:.6em;font-family:SF Mono,ui-monospace,monospace;font-size:.5em}#output{transition:color .12s ease-out}#output.ok{color:var(--ok)}#output.bad{color:#e5534b}#hints{color:var(--muted);text-align:center;min-height:1.2em;font-size:.9rem}.panel{display:grid;grid-template-columns:max-content 1fr max-content;align-items: center;gap:.9rem 1rem;padding:.75rem .5rem .5rem}.panel label{color:var(--muted);font-size:.9rem}.panel select,.panel input[type=range]{width:100%}.panel .val{font-variant-numeric:tabular-nums;color:var(--fg);text-align:right;min-width:3.5rem}.settings .note{color:var(--muted);margin:.75rem .5rem 0;font-size:.85rem;line-height:1.4}button#clear{grid-column:1/-1;color:var(--accent);border:1px solid var(--accent-dim);cursor:pointer;background:0 0;border-radius:8px;justify-self:start;padding:.4rem .9rem;font-size:.9rem}button#clear:hover{background:var(--accent-dim);color:var(--fg)}.cheatsheet,.settings{background:var(--panel);border:1px solid var(--line);border-radius:12px;width:100%;padding:.6rem 1rem 1rem}.cheatsheet summary,.settings summary{cursor:pointer;color:var(--muted);letter-spacing:.04em;user-select:none;padding:.4rem 0;font-size:.95rem}.cheat-board{display:flex;flex-wrap:wrap;justify-content:center;align-items: center;gap:.6rem;margin-top:.5rem}.cheat-keyboard,.cheat-punct{display:flex;flex-direction:column;gap:.3rem}.cheat-row{display:flex;flex-wrap:nowrap;gap:.3rem}.cheat-key{display:flex;background:var(--bg);border:1px solid var(--line);border-radius:6px;flex-direction:column;flex:none;align-items: center;gap:.15rem;min-width:2.4rem;padding:.25rem .35rem}.cheat-key .cheat-char{font-size:.95rem}.cheat-key.target{border-color:var(--accent);background:#36c5f01f}.cheat-key.target .cheat-char{color:var(--accent)}.cheat-key .cheat-pattern{font-size:.7rem}@keyframes key-splash{0%{background:var(--ok);border-color:var(--ok);transform:scale(1.18)}to{background:var(--bg);border-color:var(--line);transform:scale(1)}}.cheat-key.splash{animation:key-splash .35s ease-out}.hide-morse .cheat-pattern{display:none}.hide-morse .cheat-key.reveal .cheat-pattern{display:block}.cheat-char{min-width:1.1em;font-weight:600}.cheat-pattern{color:var(--accent);letter-spacing:.02em;font-family:SF Mono,ui-monospace,monospace}
-</style><script type="module"></script></head>
+</style><script type="module">var r={keyType:"paddle",iambicMode:"A",language:"en",wordLength:1,wpm:10,gapTolerance:1.5,volume:0.2,toneHz:600,keys:{straight:"Space",dit:"Comma",dah:"Period"}};function u(){try{let a=localStorage.getItem("morse-trainer-settings");if(!a)return{...r};let g=JSON.parse(a);return{...r,...g,keys:{...r.keys,...g.keys??{}}}}catch{return{...r}}}function h(a){try{localStorage.setItem("morse-trainer-settings",JSON.stringify(a))}catch{}}var e=u(),t=(a)=>document.getElementById(a),o=t("language"),l=t("wordLength"),v=t("wordLengthVal"),i=t("wpm"),f=t("wpmVal"),s=t("gap"),y=t("gapVal"),p=t("keyType"),c=t("iambicMode"),m=t("volume"),d=t("tone"),b=t("toneVal"),x=(a)=>a<=1?"1 letter":`up to ${a}`;o.value=e.language;l.value=String(e.wordLength);v.textContent=x(e.wordLength);i.value=String(e.wpm);f.textContent=String(e.wpm);s.value=String(e.gapTolerance);y.textContent=`${e.gapTolerance.toFixed(1)}×`;p.value=e.keyType;c.value=e.iambicMode;m.value=String(e.volume);d.value=String(e.toneHz);b.textContent=String(e.toneHz);var n=()=>h(e);o.addEventListener("change",()=>{e.language=o.value,n()});l.addEventListener("input",()=>{e.wordLength=Number(l.value),v.textContent=x(e.wordLength),n()});i.addEventListener("input",()=>{e.wpm=Number(i.value),f.textContent=String(e.wpm),n()});s.addEventListener("input",()=>{e.gapTolerance=Number(s.value),y.textContent=`${e.gapTolerance.toFixed(1)}×`,n()});p.addEventListener("change",()=>{e.keyType=p.value,n()});c.addEventListener("change",()=>{e.iambicMode=c.value,n()});m.addEventListener("input",()=>{e.volume=Number(m.value),n()});d.addEventListener("input",()=>{e.toneHz=Number(d.value),b.textContent=String(e.toneHz),n()});
+</script></head>
   <body>
-    <h1>Morse Trainer</h1>
-    <div class="menu">
-      <a class="menu-item" href="play/">
-        <strong>Play</strong>
-        <span>Listen and type back — single letters or real words</span>
-      </a>
-      <a class="menu-item" href="keying/">
-        <strong>Keying</strong>
-        <span>Iambic paddle or straight key with live decode</span>
-      </a>
-      <a class="menu-item" href="test/">
-        <strong>Test</strong>
-        <span>Foundation licence mock exam papers</span>
-      </a>
-      <a class="menu-item" href="settings/">
-        <strong>Settings</strong>
-        <span>Speed, word length, key type, alphabet, audio</span>
-      </a>
-    </div>
+    <nav class="topnav">
+      <a href="../">Morse Trainer</a>
+      <a href="../play/">Play</a>
+      <a href="../keying/">Keying</a>
+      <a href="../test/">Test</a>
+      <a href="../settings/" class="current" aria-current="page">Settings</a>
+    </nav>
+
+    <section class="settings" aria-label="Settings">
+      <div class="panel">
+        <label for="language">Alphabet</label>
+        <select id="language">
+          <option value="en">English</option>
+          <option value="ru">Русский</option>
+        </select>
+        <span></span>
+
+        <label for="wordLength">Word length</label>
+        <input id="wordLength" type="range" min="1" max="8" step="1" />
+        <span class="val"><span id="wordLengthVal">1</span></span>
+
+        <label for="wpm">Speed</label>
+        <input id="wpm" type="range" min="3" max="40" step="1" />
+        <span class="val"><span id="wpmVal">10</span> wpm</span>
+
+        <label for="gap">Gap tolerance</label>
+        <input id="gap" type="range" min="1" max="3" step="0.1" />
+        <span class="val"><span id="gapVal">1.5×</span></span>
+
+        <label for="keyType">Key</label>
+        <select id="keyType">
+          <option value="paddle">Iambic paddle</option>
+          <option value="straight">Straight key</option>
+        </select>
+        <span></span>
+
+        <label for="iambicMode">Keyer mode</label>
+        <select id="iambicMode">
+          <option value="A">Mode A</option>
+          <option value="B">Mode B</option>
+        </select>
+        <span></span>
+
+        <label for="volume">Volume</label>
+        <input id="volume" type="range" min="0" max="1" step="0.01" />
+        <span></span>
+
+        <label for="tone">Tone</label>
+        <input id="tone" type="range" min="400" max="1000" step="10" />
+        <span class="val"><span id="toneVal">600</span> Hz</span>
+      </div>
+      <p class="note">
+        Word length 1 plays single characters; 2+ plays English words of up to
+        that many letters (Русский always plays single characters). Settings
+        are stored in this browser and apply to all pages.
+      </p>
+    </section>
+
+    
   </body>
 </html>

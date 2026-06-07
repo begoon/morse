@@ -33,6 +33,63 @@ h1 {
   letter-spacing: 0.04em;
 }
 
+/* Top navigation shared by all pages */
+.topnav {
+  display: flex;
+  gap: 1rem;
+  align-items: baseline;
+  width: 100%;
+  max-width: 640px;
+  font-size: 0.95rem;
+}
+.topnav a {
+  color: var(--muted);
+  text-decoration: none;
+}
+.topnav a:hover {
+  color: var(--fg);
+}
+.topnav a:first-child {
+  color: var(--fg);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  margin-right: auto;
+}
+.topnav a.current {
+  color: var(--accent);
+}
+
+/* Landing menu */
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 480px;
+}
+.menu-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  color: var(--fg);
+  text-decoration: none;
+}
+.menu-item:hover {
+  border-color: var(--accent-dim);
+}
+.menu-item strong {
+  color: var(--accent);
+  letter-spacing: 0.04em;
+}
+.menu-item span {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
 #output {
   width: 100%;
   min-height: 4rem;
@@ -59,10 +116,19 @@ h1 {
   letter-spacing: 0.3em;
 }
 
-/* Learn-letters challenge shown in #output */
+/* Play-mode challenge shown in #output */
 .challenge {
   cursor: pointer;
   color: var(--accent);
+}
+.challenge .slot {
+  display: inline-block;
+  min-width: 0.8em;
+  text-align: center;
+  margin: 0 0.06em;
+}
+.challenge .slot.done {
+  color: var(--fg);
 }
 .challenge-morse {
   font-family: "SF Mono", ui-monospace, monospace;
@@ -111,6 +177,13 @@ h1 {
   color: var(--fg);
   min-width: 3.5rem;
   text-align: right;
+}
+
+.settings .note {
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.4;
+  margin: 0.75rem 0.5rem 0;
 }
 
 button#clear {

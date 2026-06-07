@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Morse Trainer — Settings</title>
+  </head>
+  <body>
+    <nav class="topnav">
+      <a href="../">Morse Trainer</a>
+      <a href="../play/">Play</a>
+      <a href="../keying/">Keying</a>
+      <a href="../test/">Test</a>
+      <a href="../settings/" class="current" aria-current="page">Settings</a>
+    </nav>
+
+    <section class="settings" aria-label="Settings">
+      <div class="panel">
+        <label for="language">Alphabet</label>
+        <select id="language">
+          <option value="en">English</option>
+          <option value="ru">Русский</option>
+        </select>
+        <span></span>
+
+        <label for="wordLength">Word length</label>
+        <input id="wordLength" type="range" min="1" max="8" step="1" />
+        <span class="val"><span id="wordLengthVal">1</span></span>
+
+        <label for="wpm">Speed</label>
+        <input id="wpm" type="range" min="3" max="40" step="1" />
+        <span class="val"><span id="wpmVal">10</span> wpm</span>
+
+        <label for="gap">Gap tolerance</label>
+        <input id="gap" type="range" min="1" max="3" step="0.1" />
+        <span class="val"><span id="gapVal">1.5×</span></span>
+
+        <label for="keyType">Key</label>
+        <select id="keyType">
+          <option value="paddle">Iambic paddle</option>
+          <option value="straight">Straight key</option>
+        </select>
+        <span></span>
+
+        <label for="iambicMode">Keyer mode</label>
+        <select id="iambicMode">
+          <option value="A">Mode A</option>
+          <option value="B">Mode B</option>
+        </select>
+        <span></span>
+
+        <label for="volume">Volume</label>
+        <input id="volume" type="range" min="0" max="1" step="0.01" />
+        <span></span>
+
+        <label for="tone">Tone</label>
+        <input id="tone" type="range" min="400" max="1000" step="10" />
+        <span class="val"><span id="toneVal">600</span> Hz</span>
+      </div>
+      <p class="note">
+        Word length 1 plays single characters; 2+ plays English words of up to
+        that many letters (Русский always plays single characters). Settings
+        are stored in this browser and apply to all pages.
+      </p>
+    </section>
+
+    <script type="module" src="./main.ts"></script>
+  </body>
+</html>

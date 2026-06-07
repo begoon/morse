@@ -5,15 +5,14 @@ import type { IambicMode } from "./keyer-iambic";
 
 export type KeyType = "paddle" | "straight";
 
-/** Training mode: listen-and-guess letters, or free keying with decode. */
-export type Mode = "letters" | "keying";
-
 export type Settings = {
-  mode: Mode;
   keyType: KeyType;
   /** Iambic keyer behaviour on squeeze release (Curtis Mode A or B). */
   iambicMode: IambicMode;
   language: Language;
+  /** Play mode: max word length. 1 = single characters; 2+ = English words
+   * of 2..N letters (RU always plays single characters). */
+  wordLength: number;
   wpm: number;
   /** Multiplier widening the decode letter/word gap thresholds (keying speed
    * is unchanged). 1 = strict PARIS spacing; higher = more forgiving pauses. */
@@ -28,10 +27,10 @@ export type Settings = {
 };
 
 export const DEFAULTS: Settings = {
-  mode: "letters",
   keyType: "paddle",
   iambicMode: "A",
   language: "en",
+  wordLength: 1,
   wpm: 10,
   gapTolerance: 1.5,
   volume: 0.2,

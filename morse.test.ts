@@ -1,5 +1,5 @@
 import { test, expect } from "bun:test";
-import { MORSE_EN, MORSE_RU, lookup, encode } from "./src/morse";
+import { MORSE_EN, MORSE_RU, lookup, encode, encodeWord } from "./src/morse";
 
 test("english round-trips every character", () => {
   for (const [char, pattern] of Object.entries(MORSE_EN)) {
@@ -27,4 +27,14 @@ test("unknown pattern returns '?'", () => {
 
 test("empty pattern returns empty string", () => {
   expect(lookup("", "en")).toBe("");
+});
+
+test("encodeWord joins letter patterns with a letter-gap space", () => {
+  expect(encodeWord("CQ", "en")).toBe("-.-. --.-");
+  expect(encodeWord("73", "en")).toBe("--... ...--");
+  expect(encodeWord("e", "en")).toBe(".");
+});
+
+test("encodeWord skips characters missing from the table", () => {
+  expect(encodeWord("A B", "en")).toBe(".- -...");
 });
