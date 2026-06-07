@@ -56,7 +56,7 @@ Each route is a single self-contained HTML file for GitHub Pages.
 ## Exam runner (`src/test/` → `docs/test/`)
 
 Runs the three RSGB Foundation mock papers from
-`foundation/hamtrain.co.uk/*.pdf` (26 single-choice questions each): pick
+`foundation/rsgb.org/*.pdf` (26 single-choice questions each): pick
 Mock 1/2/3 or Combined (26 sampled from
 all 78, or all 78); settings for shuffling questions/answers and immediate vs
 at-the-end feedback (persisted under `morse-exam-settings`). Pass mark 19/26,
@@ -66,7 +66,7 @@ scaled by percentage for the 78-question run.
   `questions.json` — the committed question bank.
 - `tools/extract-questions.ts` regenerates `questions.json` from the PDFs
   (macOS-only: uses PDFKit via `osascript`). Only re-run if the PDFs change.
-- Question diagrams live in `foundation/hamtrain.co.uk/mock_<paper>_q<n>.png`,
+- Question diagrams live in `foundation/rsgb.org/mock_<paper>_q<n>.png`,
   mapped in `src/test/images.ts` and inlined as data URIs by the `png-dataurl`
   plugin in `build.ts` (shown on the quiz screen and in the results review).
 
