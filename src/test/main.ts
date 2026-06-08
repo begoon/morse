@@ -1,14 +1,20 @@
 // Foundation mock exam runner: start screen -> quiz -> results.
+//
+// Structured as small "component" functions — pure(ish) `data in, DOM out`
+// builders over the `h` helper (see ./dom.ts) — with a thin controller at the
+// bottom that owns the run state and swaps screens via `show`.
 
 import rsgbJson from "./questions.json";
 import hamtrainJson from "./questions-hamtrain.json";
 import "./styles.css";
 import { imageFor } from "./images";
+import { h, mount, type Child, type Children, type Props } from "./dom";
 import {
     DEFAULTS,
     buildRun,
     grade,
     migratePaper,
+    type Paper,
     type Question,
     type RunQuestion,
     type Settings,
@@ -23,6 +29,8 @@ const PAPERS: [Tag, number[]][] = [
 ];
 const LETTERS = ["A", "B", "C", "D"];
 const STORAGE_KEY = "morse-exam-settings";
+
+// --- Settings persistence --------------------------------------------------
 
 function loadSettings(): Settings {
     try {
@@ -52,235 +60,173 @@ function saveSettings(s: Settings): void {
     }
 }
 
-const app = document.getElementById("app")!;
-let settings = loadSettings();
-
-// Run state.
-let run: RunQuestion[] = [];
-let picks: (number | null)[] = [];
-let idx = 0;
-
-function el<K extends keyof HTMLElementTagNameMap>(
-    tag: K,
-    attrs: Record<string, string> = {},
-    ...children: (Node | string)[]
-): HTMLElementTagNameMap[K] {
-    const node = document.createElement(tag);
-    for (const [k, v] of Object.entries(attrs)) node.setAttribute(k, v);
-    node.append(...children);
-    return node;
-}
-
-// --- Start screen ---------------------------------------------------------
-
-function renderStart(): void {
-    // One row of Mock buttons per source tag.
-    const paperRows = PAPERS.map(([tag, ns]) => {
-        const row = el("div", { class: "choices", "data-tag": tag });
-        for (const n of ns) {
-            const btn = el("button", { class: "choice", "data-paper": `${tag}-${n}` }, `Mock ${n}`);
-            if (typeof settings.paper === "object" && settings.paper.tag === tag && settings.paper.n === n)
-                btn.classList.add("selected");
-            btn.onclick = () => {
-                settings.paper = { tag, n };
-                saveSettings(settings);
-                renderStart();
-            };
-            row.append(btn);
-        }
-        return el("div", { class: "field" }, el("span", { class: "label" }, tag), row);
-    });
-
-    // Cross-paper modes: a 26-question topic-mixed exam, or every question.
-    const mixedRow = el("div", { class: "choices", id: "mixed" });
-    for (const [mode, label] of [
-        ["combined", "26 questions"],
-        ["everything", `Everything (${POOL.length})`],
-    ] as const) {
-        const btn = el("button", { class: "choice", "data-paper": mode }, label);
-        if (settings.paper === mode) btn.classList.add("selected");
-        btn.onclick = () => {
-            settings.paper = mode;
-            saveSettings(settings);
-            renderStart();
-        };
-        mixedRow.append(btn);
-    }
-
-    const toggle = (id: "shuffleQuestions" | "shuffleAnswers", label: string) => {
-        const input = el("input", { type: "checkbox", id }) as HTMLInputElement;
-        input.checked = settings[id];
-        input.onchange = () => {
-            settings[id] = input.checked;
-            saveSettings(settings);
-        };
-        return el("label", { class: "toggle" }, input, label);
-    };
-
-    const feedback = el("select", { id: "feedback" }) as HTMLSelectElement;
-    feedback.append(
-        el("option", { value: "immediate" }, "after each question"),
-        el("option", { value: "end" }, "at the end"),
-    );
-    feedback.value = settings.feedback;
-    feedback.onchange = () => {
-        settings.feedback = feedback.value as Settings["feedback"];
-        saveSettings(settings);
-    };
-
-    const start = el("button", { class: "primary", id: "start" }, "Start");
-    start.onclick = () => {
-        run = buildRun(POOL, settings);
-        picks = run.map(() => null);
-        idx = 0;
-        renderQuiz();
-    };
-
-    app.replaceChildren(
-        el("div", { class: "panel start" },
-            ...paperRows,
-            el("div", { class: "field" }, el("span", { class: "label" }, "Mixed"), mixedRow),
-            el("div", { class: "field" },
-                el("span", { class: "label" }, "Shuffle"),
-                el("div", { class: "choices" },
-                    toggle("shuffleQuestions", "questions"),
-                    toggle("shuffleAnswers", "answers"))),
-            el("div", { class: "field" },
-                el("label", { class: "label", for: "feedback" }, "Show answers"), feedback),
-            start,
-        ),
-    );
-}
-
-// --- Quiz screen -----------------------------------------------------------
+// --- Shared question pieces ------------------------------------------------
 
 function origin(q: RunQuestion): string {
     return `${q.source.tag} Mock ${q.source.paper} · Q${q.source.n}`;
 }
 
 /** The question's illustration (block diagram etc.), if it has one. */
-function questionImage(q: RunQuestion): HTMLElement[] {
+function questionImage(q: RunQuestion): Child {
     const src = imageFor(q.source.image);
-    return src ? [el("img", { class: "question-image", src, alt: "Question illustration" })] : [];
+    return src ? h("img", { class: "question-image", src, alt: "Question illustration" }) : null;
 }
 
-/** Inline markdown emphasis (`**bold**`, `*italic*`) -> DOM nodes; everything
- * else stays plain text. Paragraph breaks survive via white-space: pre-line. */
-function md(text: string): (Node | string)[] {
+/** Inline markdown emphasis (`**bold**`, `*italic*`) -> nodes; everything else
+ * stays plain text. Paragraph breaks survive via white-space: pre-line. */
+function md(text: string): Child[] {
     return text.split(/(\*\*[^*]+\*\*|\*[^*\n]+\*)/).map((part) => {
-        if (part.startsWith("**") && part.endsWith("**")) return el("strong", {}, part.slice(2, -2));
-        if (part.startsWith("*") && part.endsWith("*")) return el("em", {}, part.slice(1, -1));
+        if (part.startsWith("**") && part.endsWith("**")) return h("strong", {}, part.slice(2, -2));
+        if (part.startsWith("*") && part.endsWith("*")) return h("em", {}, part.slice(1, -1));
         return part;
     });
 }
 
 /** The answer explanation block (hamtrain papers only). */
-function explanation(q: RunQuestion): HTMLElement[] {
-    return q.source.explanation
-        ? [el("div", { class: "explanation" }, ...md(q.source.explanation))]
-        : [];
+function explanation(q: RunQuestion): Child {
+    return q.source.explanation ? h("div", { class: "explanation" }, md(q.source.explanation)) : null;
 }
 
-function renderQuiz(): void {
+// --- Reusable controls -----------------------------------------------------
+
+function Field(label: Child, ...controls: Children[]): HTMLElement {
+    const labelNode = typeof label === "string" ? h("span", { class: "label" }, label) : label;
+    return h("div", { class: "field" }, labelNode, controls);
+}
+
+function Choice(label: string, active: boolean, onSelect: () => void, attrs: Props = {}): HTMLElement {
+    return h("button", { class: active ? "choice selected" : "choice", on: { click: onSelect }, ...attrs }, label);
+}
+
+// --- Start screen ----------------------------------------------------------
+
+function StartScreen(): HTMLElement {
+    const select = (paper: Paper) => {
+        settings.paper = paper;
+        saveSettings(settings);
+        show(StartScreen);
+    };
+    const isPaper = (tag: Tag, n: number) =>
+        typeof settings.paper === "object" && settings.paper.tag === tag && settings.paper.n === n;
+
+    const paperRows = PAPERS.map(([tag, ns]) =>
+        Field(tag, h("div", { class: "choices", "data-tag": tag },
+            ns.map((n) => Choice(`Mock ${n}`, isPaper(tag, n), () => select({ tag, n }), { "data-paper": `${tag}-${n}` })))));
+
+    // Cross-paper modes: a 26-question topic-mixed exam, or every question.
+    const mixed = ([["combined", "26 questions"], ["everything", `Everything (${POOL.length})`]] as const).map(
+        ([mode, label]) => Choice(label, settings.paper === mode, () => select(mode), { "data-paper": mode }));
+
+    const toggle = (id: "shuffleQuestions" | "shuffleAnswers", label: string) =>
+        h("label", { class: "toggle" },
+            h("input", {
+                type: "checkbox", id, checked: settings[id],
+                on: { change: (e) => { settings[id] = (e.target as HTMLInputElement).checked; saveSettings(settings); } },
+            }),
+            label);
+
+    const feedback = h("select", {
+        id: "feedback", value: settings.feedback,
+        on: { change: (e) => { settings.feedback = (e.target as HTMLSelectElement).value as Settings["feedback"]; saveSettings(settings); } },
+    },
+        h("option", { value: "immediate" }, "after each question"),
+        h("option", { value: "end" }, "at the end"));
+
+    return h("div", { class: "panel start" },
+        paperRows,
+        Field("Mixed", h("div", { class: "choices", id: "mixed" }, mixed)),
+        Field("Shuffle", h("div", { class: "choices" }, toggle("shuffleQuestions", "questions"), toggle("shuffleAnswers", "answers"))),
+        Field(h("label", { class: "label", for: "feedback" }, "Show answers"), feedback),
+        h("button", { class: "primary", id: "start", on: { click: startRun } }, "Start"),
+    );
+}
+
+// --- Quiz screen -----------------------------------------------------------
+
+function Option(text: string, i: number, q: RunQuestion, pick: number | null, locked: boolean): HTMLElement {
+    const cls = ["option"];
+    if (pick === i) cls.push("selected");
+    if (locked && i === q.answer) cls.push("correct");
+    else if (locked && i === pick) cls.push("wrong");
+    return h("button", {
+        class: cls.join(" "),
+        "data-i": i,
+        disabled: locked,
+        ...(locked ? {} : { on: { click: () => { picks[idx] = i; show(QuizScreen); } } }),
+    }, h("span", { class: "letter" }, LETTERS[i]!), h("span", {}, md(text)));
+}
+
+function QuizScreen(): HTMLElement {
     const q = run[idx]!;
     const pick = picks[idx] ?? null;
     const immediate = settings.feedback === "immediate";
     const locked = immediate && pick !== null;
-
-    const options = el("div", { class: "options" });
-    q.options.forEach((text, i) => {
-        const btn = el("button", { class: "option", "data-i": String(i) },
-            el("span", { class: "letter" }, LETTERS[i]!), el("span", {}, ...md(text)));
-        if (pick === i) btn.classList.add("selected");
-        if (locked) {
-            if (i === q.answer) btn.classList.add("correct");
-            else if (i === pick) btn.classList.add("wrong");
-            (btn as HTMLButtonElement).disabled = true;
-        } else {
-            btn.onclick = () => {
-                picks[idx] = i;
-                renderQuiz();
-            };
-        }
-        options.append(btn);
-    });
-
-    const nav = el("div", { class: "nav" });
-    if (!immediate && idx > 0) {
-        const prev = el("button", { id: "prev" }, "Back");
-        prev.onclick = () => {
-            idx--;
-            renderQuiz();
-        };
-        nav.append(prev);
-    }
     const last = idx === run.length - 1;
-    const next = el("button", { class: "primary", id: "next" }, last ? "Finish" : "Next");
-    (next as HTMLButtonElement).disabled = immediate && pick === null;
-    next.onclick = () => {
-        if (last) renderResults();
-        else {
-            idx++;
-            renderQuiz();
-        }
-    };
-    nav.append(next);
 
-    app.replaceChildren(
-        el("div", { class: "panel quiz" },
-            el("div", { class: "progress" },
-                el("span", { id: "counter" }, `Question ${idx + 1} / ${run.length}`),
-                typeof settings.paper === "string" ? el("span", { class: "origin" }, origin(q)) : ""),
-            el("div", { class: "question", id: "question" }, ...md(q.source.question)),
-            ...questionImage(q),
-            options,
-            ...(locked ? explanation(q) : []),
-            nav,
-        ),
+    return h("div", { class: "panel quiz" },
+        h("div", { class: "progress" },
+            h("span", { id: "counter" }, `Question ${idx + 1} / ${run.length}`),
+            typeof settings.paper === "string" ? h("span", { class: "origin" }, origin(q)) : null),
+        h("div", { class: "question", id: "question" }, md(q.source.question)),
+        questionImage(q),
+        h("div", { class: "options" }, q.options.map((text, i) => Option(text, i, q, pick, locked))),
+        locked ? explanation(q) : null,
+        h("div", { class: "nav" },
+            !immediate && idx > 0
+                ? h("button", { id: "prev", on: { click: () => { idx--; show(QuizScreen); } } }, "Back")
+                : null,
+            h("button", {
+                class: "primary", id: "next", disabled: immediate && pick === null,
+                on: { click: () => { if (last) show(ResultsScreen); else { idx++; show(QuizScreen); } } },
+            }, last ? "Finish" : "Next")),
     );
 }
 
 // --- Results screen --------------------------------------------------------
 
-function renderResults(): void {
-    const g = grade(run, picks);
-
-    const review = el("div", { class: "review" });
-    run.forEach((q, i) => {
-        const pick = picks[i] ?? null;
-        const ok = pick === q.answer;
-        const item = el("div", { class: `review-item ${ok ? "ok" : "bad"}` },
-            el("div", { class: "review-head" },
-                el("span", { class: "mark" }, ok ? "✓" : "✗"),
-                el("span", {}, `${i + 1}. `, ...md(q.source.question)),
-                el("span", { class: "origin" }, origin(q))),
-            ...questionImage(q),
-        );
-        if (!ok)
-            item.append(el("div", { class: "review-answer" },
-                ...(pick === null
-                    ? ["Not answered."]
-                    : [`Your answer: ${LETTERS[pick]!} — `, ...md(q.options[pick]!)])));
-        item.append(el("div", { class: "review-answer correct-answer" },
-            `Correct: ${LETTERS[q.answer]} — `, ...md(q.options[q.answer]!)));
-        item.append(...explanation(q));
-        review.append(item);
-    });
-
-    const again = el("button", { class: "primary", id: "again" }, "New test");
-    again.onclick = renderStart;
-
-    app.replaceChildren(
-        el("div", { class: "panel results" },
-            el("div", { class: `score ${g.pass ? "pass" : "fail"}`, id: "score" },
-                `${g.correct} / ${g.total} (${g.percent}%) — ${g.pass ? "PASS" : "FAIL"}`),
-            el("div", { class: "passmark" },
-                `Pass mark: ${g.passMark} of ${g.total}` +
-                (g.unanswered ? ` · ${g.unanswered} unanswered` : "")),
-            again,
-            review,
-        ),
+function ReviewItem(q: RunQuestion, i: number): HTMLElement {
+    const pick = picks[i] ?? null;
+    const ok = pick === q.answer;
+    return h("div", { class: `review-item ${ok ? "ok" : "bad"}` },
+        h("div", { class: "review-head" },
+            h("span", { class: "mark" }, ok ? "✓" : "✗"),
+            h("span", {}, `${i + 1}. `, md(q.source.question)),
+            h("span", { class: "origin" }, origin(q))),
+        questionImage(q),
+        ok ? null : h("div", { class: "review-answer" },
+            pick === null ? "Not answered." : [`Your answer: ${LETTERS[pick]!} — `, md(q.options[pick]!)]),
+        h("div", { class: "review-answer correct-answer" }, `Correct: ${LETTERS[q.answer]} — `, md(q.options[q.answer]!)),
+        explanation(q),
     );
 }
 
-renderStart();
+function ResultsScreen(): HTMLElement {
+    const g = grade(run, picks);
+    return h("div", { class: "panel results" },
+        h("div", { class: `score ${g.pass ? "pass" : "fail"}`, id: "score" },
+            `${g.correct} / ${g.total} (${g.percent}%) — ${g.pass ? "PASS" : "FAIL"}`),
+        h("div", { class: "passmark" },
+            `Pass mark: ${g.passMark} of ${g.total}` + (g.unanswered ? ` · ${g.unanswered} unanswered` : "")),
+        h("button", { class: "primary", id: "again", on: { click: () => show(StartScreen) } }, "New test"),
+        h("div", { class: "review" }, run.map((q, i) => ReviewItem(q, i))),
+    );
+}
+
+// --- Controller ------------------------------------------------------------
+
+const app = document.getElementById("app")!;
+let settings = loadSettings();
+let run: RunQuestion[] = [];
+let picks: (number | null)[] = [];
+let idx = 0;
+
+const show = (screen: () => HTMLElement) => mount(app, screen());
+
+function startRun(): void {
+    run = buildRun(POOL, settings);
+    picks = run.map(() => null);
+    idx = 0;
+    show(QuizScreen);
+}
+
+show(StartScreen);
