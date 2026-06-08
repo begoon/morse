@@ -1,0 +1,13 @@
+{
+  // Serve and scope Live Server to the built site; reload only on docs/
+  // changes, not on src/build/git/editor churn elsewhere in the workspace.
+  "liveServer.settings.root": "/docs",
+  "liveServer.settings.ignoreFiles": [
+    ".git/**",
+    "node_modules/**",
+    "src/**",
+    "tools/**",
+    "foundation/**",
+    "**/*.ts"
+  ]
+}
