@@ -1,86 +1,113 @@
 # Morse Trainer
 
-A browser-based Morse code trainer. Key Morse with an iambic paddle or a
-straight key, hear audio sidetone, and watch the decoded letters appear.
+A browser-based Morse trainer, shipped as separate GitHub Pages routes with a
+landing menu. Listen and type characters and words back, key Morse with an
+iambic paddle or straight key and watch the live decode, or sit one of nine
+RSGB Foundation mock exams.
 
 ## Build & run
 
-The app is a static site. Bundle it into `docs/` (served by GitHub Pages),
-then serve that folder:
+Each route is a single self-contained HTML file (all JS/CSS inlined) under
+`docs/`, served by GitHub Pages from `main` / `docs`.
 
 ```bash
 just install        # bun install
-just build          # bundle into a single self-contained docs/index.html
-just serve          # build, then python -m http.server -d docs 3000
+just build          # bundle every route into docs/<route>/index.html
+just serve          # build, then python3 -m http.server -d docs 3000
+just test           # bun test  (typecheck with: bunx tsc --noEmit)
 ```
 
-`just build` inlines all JS and CSS into one `docs/index.html` (no standalone
-assets). `docs/` is committed so GitHub Pages can serve it. You can also just open
-`docs/index.html` with the VS Code **Live Server** extension after `just build`.
+**Rebuild after any `src/` change and commit `docs/`** — that's what GitHub
+Pages serves. You can also open `docs/index.html` with the VS Code **Live
+Server** extension after building (a `.vscode/settings.json` scopes Live Server
+to `docs/` so it only reloads on rebuilds).
 
-`index.ts` (a `Bun.serve()` dev server with HMR) is kept for convenience —
-`bun --hot index.ts` still works — but is no longer the primary way to run.
+`index.ts` is an optional `bun --hot index.ts` dev server (HMR); not the
+primary path.
 
-## Test
+## Routes
 
-```bash
-just test           # bun test
-```
+The landing menu (`docs/index.html`) links to four pages, all sharing one set
+of settings:
 
-## Modes
+- **Play** (`docs/play/`) — a target is played as Morse and you type it back
+  (correct → the key splashes and it advances; wrong → an error buzz). `Space`
+  replays, `/` shows the code, a second `/` (or clicking the output) reveals
+  the next expected key on the cheatsheet. The **Word length** setting caps the
+  target: `1` = single characters; `2+` = an English word of up to that many
+  letters (≈⅓ of the time from CW jargon / Q-codes). A running line shows the
+  letters you've guessed. Russian always plays single characters.
+- **Keying** (`docs/keying/`) — key Morse yourself with an iambic paddle
+  (Curtis Mode A/B) or a straight key; it decodes to text live. `Space` clears
+  the output (unless it's bound as the straight key).
+- **Test** (`docs/test/`) — Foundation mock exam runner (see below).
+- **Settings** (`docs/settings/`) — alphabet, word length, speed, gap
+  tolerance, key type, keyer mode, volume, and tone, persisted in
+  `localStorage` and shared by every page.
 
-Pick a mode in the settings panel.
-
-- **Learn letters** (default): a random character is played as Morse. Type the
-  letter to answer (correct advances to the next). `Space` replays the sound,
-  `/` reveals the code beside the `?`, and clicking the `?` reveals which key it
-  is on the cheatsheet. Playback uses the Speed setting (default 10 wpm).
-- **Keying**: key Morse yourself with the paddle or straight key; it decodes to
-  text live.
-
-## Keys (keying mode)
+## Keying
 
 - **Iambic paddle** (default): `,` = dit, `.` = dah. Hold for repeats, squeeze
   both for di-dah alternation.
 - **Straight key**: hold `Space` — short press = dit, long press = dah.
 
-## Keyer mode
+The iambic keyer supports **Curtis Mode A** (default) and **Mode B**,
+switchable in Settings. They differ only when you release both paddles
+mid-element while squeezing:
 
-The iambic keyer supports both **Curtis Mode A** (default) and **Mode B**,
-switchable in the settings panel. They differ only when you release both
-paddles mid-element while squeezing:
-
-- **Mode A**: finishes the current element and stops.
-- **Mode B**: finishes the current element, then sends one extra opposite
+- **Mode A** finishes the current element and stops.
+- **Mode B** finishes the current element, then sends one extra opposite
   element.
 
-Mode A is the more forgiving, original Curtis behaviour; Mode B can save a
-paddle movement on some characters but has a tighter release window.
+## Exam runner
+
+Nine Foundation mock papers (26 single-choice questions each), tagged by
+source:
+
+- **rsgb** — Mock 1–3, extracted from the RSGB mock PDFs.
+- **hamtrain** — Mock 1–6, with a written explanation per question.
+
+Pick a single paper, **Combined** (a 26-question exam with one question per
+topic — the papers are topic-ordered, so each of the 26 positions is drawn from
+a random paper), or **Everything** (all 234 questions). Options for shuffling
+questions and answers, and showing the correct answer immediately or only at
+the end. Pass mark is 19/26, scaled by percentage
+for longer runs. Some questions include a diagram. The hamtrain answer
+explanations are shown after you answer (immediate mode) and in the results
+review.
 
 ## Features
 
-- Learn-letters listening trainer and a free keying mode
+- Listening trainer (characters and words) and a free keying mode
 - Switchable iambic (Curtis Mode A/B) paddle keyer and straight-key keyer
 - Web Audio sidetone with adjustable tone (400–1000 Hz) and volume
-- Live decode to text, showing the last 10 characters
+- Live decode to text
 - English and Russian Morse tables
-- Adjustable speed (default 5 WPM, PARIS standard: `dit = 1200 / WPM` ms)
-- SVG key schematics that animate while keying
+- Adjustable speed (PARIS standard: `dit = 1200 / wpm` ms)
+- QWERTY / ЙЦУКЕН cheatsheet keyboard
+- Nine RSGB Foundation mock exams with images and explanations
 - All settings persisted in `localStorage`
 
 ## Layout
 
 ```
-index.ts              Bun.serve serving index.html (HMR)
-index.html            markup + settings panel
-src/morse.ts          EN/RU tables + lookup/encode
-src/timing.ts         PARIS timing + straight-key thresholds
-src/audio.ts          Web Audio sidetone
-src/keyer-iambic.ts   iambic Mode-B keyer
-src/keyer-straight.ts straight-key keyer + press classifier
-src/decoder.ts        element stream -> decoded text (testable timers)
-src/visuals.ts        SVG schematics
-src/settings.ts       localStorage settings
-src/main.ts           wires it all together
-*.test.ts             unit tests (morse, decoder, keyer)
+index.html                landing menu
+src/play/                  Play route (main.ts + index.html + word bank)
+src/keying/                Keying route
+src/settings-page/         Settings route
+src/test/                  Exam runner (quiz.ts logic, question banks, images)
+src/morse.ts               EN/RU tables + lookup/encode
+src/timing.ts              PARIS timing + straight-key thresholds
+src/audio.ts               Web Audio sidetone + error buzz
+src/player.ts              plays a pattern as audio
+src/keyer-iambic.ts        iambic Curtis Mode A/B keyer
+src/keyer-straight.ts      straight-key keyer + press classifier
+src/decoder.ts             element stream -> decoded text
+src/cheatsheet.ts          QWERTY / ЙЦУКЕН keyboard
+src/settings.ts            localStorage settings
+src/styles.css             shared styles
+build.ts                   bundles each route into self-contained docs/ HTML
+tools/                     one-off word-bank and question-bank extractors
+foundation/                mock-exam source material (PDFs / markdown / images)
+*.test.ts                  unit tests
 ```
