@@ -25,7 +25,7 @@ const POOL = [...(rsgbJson as Question[]), ...(hamtrainJson as Question[])];
 /** Mock paper numbers per source tag, in display order. */
 const PAPERS: [Tag, number[]][] = [
     ["rsgb", [1, 2, 3]],
-    ["hamtrain", [1, 2, 3, 4, 5, 6]],
+    ["hamtrain", [1, 2, 3, 4, 5, 6, 7]],
 ];
 const LETTERS = ["A", "B", "C", "D"];
 const STORAGE_KEY = "morse-exam-settings";

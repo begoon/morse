@@ -2189,5 +2189,347 @@
     ],
     "answer": 3,
     "explanation": "This question relates to safety. It is not true that equipment should be earthed to copper central heating pipes. Never use heating pipes as an earth, as this is dangerous."
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 7,
+    "n": 1,
+    "question": "What are the three UK Amateur Radio licence levels?",
+    "options": [
+      "Beginner, Intermediate, Advanced",
+      "Foundation, Advanced, Full",
+      "Foundation, Intermediate, Full",
+      "Technical, General, Extra"
+    ],
+    "answer": 2
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 7,
+    "n": 2,
+    "question": "Your licence requires you to ensure that your station is clearly identifiable. Which of the following is the recommended practice for giving your callsign?",
+    "options": [
+      "At least once every 15 minutes",
+      "When transmitting on a frequency and as frequently as practicable",
+      "At least once per transmission",
+      "When transmitting on a new frequency and when leaving a frequency"
+    ],
+    "answer": 1
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 7,
+    "n": 3,
+    "question": "What is the correct term for a conversation with 3 or more amateurs with whom communication and identification has been established?",
+    "options": [
+      "A 'Net'",
+      "A 'Sked'",
+      "A 'CQ'",
+      "A 'Group'"
+    ],
+    "answer": 0
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 7,
+    "n": 4,
+    "question": "Under what circumstances does Ofcom have the right to close down your amateur radio station?",
+    "options": [
+      "You are in breach of your licence conditions",
+      "You have not transmitted in over a year",
+      "You operate from a location other than your home address",
+      "You use a mode other than voice"
+    ],
+    "answer": 0
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 7,
+    "n": 5,
+    "question": "Which statement is TRUE for the frequency 0.1357MHz?",
+    "options": [
+      "You cannot use more than 1 watt erp",
+      "You cannot use this frequency for satellite comms",
+      "Priority has to be given to other users",
+      "The other 3 answers are all true"
+    ],
+    "answer": 3
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 7,
+    "n": 6,
+    "question": "Restrictions apply for signals radiated over 10 watts EIRP (6.1 watts ERP). Why?",
+    "options": [
+      "To ensure that members of the public are not exposed to high EMF limits",
+      "To prevent interference with other spectrum users",
+      "To reduce interference to other countries",
+      "To protect the transmitter from damage"
+    ],
+    "answer": 0
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 7,
+    "n": 7,
+    "question": "Which of the following is NOT an insulator?",
+    "options": [
+      "Rubber",
+      "Ceramic",
+      "Glass",
+      "Brass"
+    ],
+    "answer": 3
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 7,
+    "n": 8,
+    "question": "As the wavelength of a transmitted amplitude modulated radio signal increases, what happens to its frequency?",
+    "options": [
+      "Frequency increases",
+      "Frequency decreases",
+      "Frequency does not alter",
+      "More cycles per second generated"
+    ],
+    "answer": 1
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 7,
+    "n": 9,
+    "question": "What does the following diagram represent?",
+    "options": [
+      "An ACD",
+      "An ADC",
+      "A DCA",
+      "A DAC"
+    ],
+    "answer": 1,
+    "image": "mock7-q9.png"
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 7,
+    "n": 10,
+    "question": "What is this?",
+    "options": [
+      "A Continuous Wave (Morse)",
+      "A carrier waveform",
+      "A modulated waveform",
+      "An audio waveform"
+    ],
+    "answer": 2,
+    "image": "mock7-q10.png"
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 7,
+    "n": 11,
+    "question": "In the following diagram, what function is performed by Box 3?",
+    "options": [
+      "RF Power Amplifier",
+      "Oscillator",
+      "Modulator",
+      "Audio Stage"
+    ],
+    "answer": 1,
+    "image": "mock7-q11.png"
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 7,
+    "n": 12,
+    "question": "What is the name given to a device designed to recover information sent from one place to another using electromagnetic radiation?",
+    "options": [
+      "A radio receiver",
+      "A modulator",
+      "A DAC",
+      "An RF Power Amplifier"
+    ],
+    "answer": 0
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 7,
+    "n": 13,
+    "question": "A long length of co-ax feeder cable may exhibit what?",
+    "options": [
+      "Gain",
+      "Loss",
+      "Dummy loads",
+      "ERP"
+    ],
+    "answer": 1
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 7,
+    "n": 14,
+    "question": "An amateur radio antenna will",
+    "options": [
+      "pick up radio waves and convert them into electrical signals",
+      "always require planning permission",
+      "work equally well at all frequencies",
+      "require an RF earth equal to half the antenna length"
+    ],
+    "answer": 0
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 7,
+    "n": 15,
+    "question": "What type of connector is this?",
+    "options": [
+      "BNC",
+      "SMA",
+      "PL-259",
+      "N-Type"
+    ],
+    "answer": 0,
+    "image": "mock7-q15.png"
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 7,
+    "n": 16,
+    "question": "Radio waves can be what...?",
+    "options": [
+      "Refracted",
+      "Diffracted",
+      "Reflected",
+      "All of the above"
+    ],
+    "answer": 3
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 7,
+    "n": 17,
+    "question": "Which of the following has the least effect on local VHF/UHF radio signals?",
+    "options": [
+      "Hills",
+      "Buildings",
+      "Bad weather",
+      "Reflected signals from the Ionosphere"
+    ],
+    "answer": 3
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 7,
+    "n": 18,
+    "question": "Amateur radio signals are least likely to interfere with what?",
+    "options": [
+      "A microwave oven",
+      "A CCTV camera",
+      "A wi-fi router",
+      "A computer monitor"
+    ],
+    "answer": 0
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 7,
+    "n": 19,
+    "question": "Which antenna would typically be the most problematic in terms of causing interference?",
+    "options": [
+      "Dipole",
+      "Yagi (beam) antenna",
+      "End-fed wire",
+      "1/4 wave groundplane"
+    ],
+    "answer": 2
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 7,
+    "n": 20,
+    "question": "From an EMC perspective, why might it be useful to keep a log of transmissions?",
+    "options": [
+      "To prove you are operating within your licence conditions",
+      "To have a list of people who can vouch for your contact",
+      "In case Ofcom asks to see it during an inspection",
+      "To help identify if you may be the cause of interference"
+    ],
+    "answer": 3
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 7,
+    "n": 21,
+    "question": "What can we tell about the callsign MM7QQQ/P?",
+    "options": [
+      "The station is operating from a temporary location",
+      "This is a UK Full licence holder",
+      "The operator is on the Isle of Man",
+      "The operator is mobile in Scotland"
+    ],
+    "answer": 0
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 7,
+    "n": 22,
+    "question": "Why do repeaters need two frequencies?",
+    "options": [
+      "To allow them to retransmit a received signal in real-time",
+      "For ease of radio programming",
+      "So that they can hear their own signal",
+      "To filter unwanted noise"
+    ],
+    "answer": 0
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 7,
+    "n": 23,
+    "question": "In which country are you NOT permitted to operate using your Foundation Licence?",
+    "options": [
+      "Scotland",
+      "France",
+      "Northern Ireland",
+      "Wales"
+    ],
+    "answer": 1
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 7,
+    "n": 24,
+    "question": "What is the correct wiring for a UK mains plug?",
+    "options": [
+      "Blue=Live ; Green/Yellow=Neutral ; Brown=Earth",
+      "Brown=Live ; Blue=Neutral ; Green/Yellow=Earth",
+      "Brown=Live ; Green/Yellow=Neutral ; Blue=Earth",
+      "Blue=Live ; Brown=Neutral ; Green/Yellow=Earth"
+    ],
+    "answer": 1
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 7,
+    "n": 25,
+    "question": "When must eye protection be worn?",
+    "options": [
+      "To prevent solder or flux from splashing into the eyes",
+      "When erecting an antenna",
+      "When up a ladder",
+      "When adjusting the elements of an antenna whilst it is transmitting"
+    ],
+    "answer": 0
+  },
+  {
+    "tag": "hamtrain",
+    "paper": 7,
+    "n": 26,
+    "question": "Which of the following statements is FALSE:",
+    "options": [
+      "Antennas and feeders must be sited away from overhead power cables",
+      "Headphones can be dangerous",
+      "You should not touch antennas when they are transmitting",
+      "Equipment should be earthed to copper central heating pipes"
+    ],
+    "answer": 3
   }
 ]

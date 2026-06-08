@@ -13,6 +13,10 @@ import ham3q7 from "../../foundation/hamtrain.co.uk/mock3-q7.png";
 import ham4q12 from "../../foundation/hamtrain.co.uk/mock4-q12.png";
 import ham5q11 from "../../foundation/hamtrain.co.uk/mock5-q11.png";
 import ham6q7 from "../../foundation/hamtrain.co.uk/mock6-q7.png";
+import ham7q9 from "../../foundation/hamtrain.co.uk/mock7/mock7-q9.png";
+import ham7q10 from "../../foundation/hamtrain.co.uk/mock7/mock7-q10.png";
+import ham7q11 from "../../foundation/hamtrain.co.uk/mock7/mock7-q11.png";
+import ham7q15 from "../../foundation/hamtrain.co.uk/mock7/mock7-q15.png";
 
 const IMAGES: Record<string, string> = {
     "mock_01_q11.png": rsgb1q11,
@@ -26,6 +30,10 @@ const IMAGES: Record<string, string> = {
     "mock4-q12.png": ham4q12,
     "mock5-q11.png": ham5q11,
     "mock6-q7.png": ham6q7,
+    "mock7-q9.png": ham7q9,
+    "mock7-q10.png": ham7q10,
+    "mock7-q11.png": ham7q11,
+    "mock7-q15.png": ham7q15,
 };
 
 export const imageFor = (file: string | undefined): string | undefined =>

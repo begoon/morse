@@ -23,9 +23,9 @@ describe("question banks", () => {
         }
     });
 
-    test("hamtrain: six papers of 26 questions each", () => {
-        expect(hamtrain.length).toBe(156);
-        for (const paper of [1, 2, 3, 4, 5, 6]) {
+    test("hamtrain: seven papers of 26 questions each", () => {
+        expect(hamtrain.length).toBe(182);
+        for (const paper of [1, 2, 3, 4, 5, 6, 7]) {
             const qs = hamtrain.filter((q) => q.paper === paper);
             expect(qs.length).toBe(26);
             expect(qs.every((q) => q.tag === "hamtrain")).toBe(true);
@@ -51,13 +51,15 @@ describe("question banks", () => {
         expect(new Set(refs).size).toBe(refs.length);
     });
 
-    test("every hamtrain question has an explanation", () => {
-        for (const q of hamtrain) expect(q.explanation!.length).toBeGreaterThan(0);
+    test("mocks 1-6 carry explanations; any explanation present is non-empty", () => {
+        // mock7 has no explanations; the other six papers do.
+        for (const q of hamtrain.filter((q) => q.paper <= 6)) expect(q.explanation!.length).toBeGreaterThan(0);
+        for (const q of pool) if (q.explanation !== undefined) expect(q.explanation.length).toBeGreaterThan(0);
     });
 
     test("every image reference resolves", () => {
         const withImages = pool.filter((q) => q.image);
-        expect(withImages.length).toBe(11); // 4 rsgb + 7 hamtrain
+        expect(withImages.length).toBe(15); // 4 rsgb + 11 hamtrain
         for (const q of withImages) expect(imageFor(q.image)).toBeDefined();
     });
 });

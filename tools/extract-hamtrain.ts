@@ -1,6 +1,9 @@
 // One-off extractor: foundation/hamtrain.co.uk/mock<N>.md (+ -answers.md) ->
 // src/test/questions-hamtrain.json. The markdown layout is documented in
 // foundation/hamtrain.co.uk/FORMAT.md. Run with: bun tools/extract-hamtrain.ts
+//
+// Papers 1-6 sit flat in DIR; mock7 sits in its own mock7/ subdir and carries
+// no answer explanations. Source files are read as-is, never modified.
 
 type Question = {
     tag: "hamtrain";
@@ -9,13 +12,18 @@ type Question = {
     question: string;
     options: string[];
     answer: number;
-    explanation: string;
+    explanation?: string;
     image?: string;
 };
 
 const DIR = "foundation/hamtrain.co.uk";
 const LETTERS = ["A", "B", "C", "D"];
 const IMAGE_RE = /^!\[[^\]]*\]\(([^)]+)\)\s*$/;
+
+/** Locate a paper's markdown, flat (`mock3.md`) or in a subdir (`mock7/mock7.md`). */
+async function paperDir(paper: number): Promise<string> {
+    return (await Bun.file(`${DIR}/mock${paper}.md`).exists()) ? DIR : `${DIR}/mock${paper}`;
+}
 
 function parsePaper(paper: number, questionsMd: string, answersMd: string): Question[] {
     // Answer key + explanations: "## Question <Q> — <LETTER>" headings.
@@ -72,7 +80,7 @@ function parsePaper(paper: number, questionsMd: string, answersMd: string): Ques
             question,
             options,
             answer: LETTERS.indexOf(ans.letter),
-            explanation: ans.explanation,
+            ...(ans.explanation ? { explanation: ans.explanation } : {}),
             ...(image ? { image } : {}),
         });
     }
@@ -82,9 +90,10 @@ function parsePaper(paper: number, questionsMd: string, answersMd: string): Ques
 }
 
 const all: Question[] = [];
-for (let paper = 1; paper <= 6; paper++) {
-    const questionsMd = await Bun.file(`${DIR}/mock${paper}.md`).text();
-    const answersMd = await Bun.file(`${DIR}/mock${paper}-answers.md`).text();
+for (let paper = 1; paper <= 7; paper++) {
+    const dir = await paperDir(paper);
+    const questionsMd = await Bun.file(`${dir}/mock${paper}.md`).text();
+    const answersMd = await Bun.file(`${dir}/mock${paper}-answers.md`).text();
     all.push(...parsePaper(paper, questionsMd, answersMd));
 }
 

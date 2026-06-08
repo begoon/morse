@@ -87,10 +87,10 @@ describe("buildRun", () => {
         );
     });
 
-    test("everything: every question from all 9 papers once, in source order", () => {
+    test("everything: every question from all 10 papers once, in source order", () => {
         const run = buildRun(pool, settings({ paper: "everything" }));
-        expect(run.length).toBe(234);
-        expect(new Set(run.map((q) => key(q.source))).size).toBe(234);
+        expect(run.length).toBe(260);
+        expect(new Set(run.map((q) => key(q.source))).size).toBe(260);
         const order = run.map((q) =>
             `${q.source.tag}:${String(q.source.paper).padStart(2, "0")}:${String(q.source.n).padStart(2, "0")}`,
         );
@@ -141,8 +141,8 @@ describe("grade", () => {
     test("pass mark scales to the all-questions run", () => {
         const run = buildRun(pool, settings({ paper: "everything" }));
         const g = grade(run, run.map((q) => q.answer));
-        expect(g.total).toBe(234);
-        expect(g.passMark).toBe(171); // ceil(234 * 19/26)
+        expect(g.total).toBe(260);
+        expect(g.passMark).toBe(190); // ceil(260 * 19/26)
         expect(g.pass).toBe(true);
         expect(g.percent).toBe(100);
     });

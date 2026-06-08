@@ -2,7 +2,7 @@
 
 A browser-based Morse trainer, shipped as separate GitHub Pages routes with a
 landing menu. Listen and type characters and words back, key Morse with an
-iambic paddle or straight key and watch the live decode, or sit one of nine
+iambic paddle or straight key and watch the live decode, or sit one of ten
 RSGB Foundation mock exams.
 
 ## Build & run
@@ -65,11 +65,11 @@ Nine Foundation mock papers (26 single-choice questions each), tagged by
 source:
 
 - **rsgb** — Mock 1–3, extracted from the RSGB mock PDFs.
-- **hamtrain** — Mock 1–6, with a written explanation per question.
+- **hamtrain** — Mock 1–7 (1–6 with a written explanation per question).
 
 Pick a single paper, **Combined** (a 26-question exam with one question per
 topic — the papers are topic-ordered, so each of the 26 positions is drawn from
-a random paper), or **Everything** (all 234 questions). Options for shuffling
+a random paper), or **Everything** (all 260 questions). Options for shuffling
 questions and answers, and showing the correct answer immediately or only at
 the end. Pass mark is 19/26, scaled by percentage
 for longer runs. Some questions include a diagram. The hamtrain answer

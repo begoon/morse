@@ -55,13 +55,14 @@ Each route is a single self-contained HTML file for GitHub Pages.
 
 ## Exam runner (`src/test/` → `docs/test/`)
 
-Runs nine Foundation mock papers (26 single-choice questions each), tagged by
+Runs ten Foundation mock papers (26 single-choice questions each), tagged by
 source: **rsgb** — Mock 1–3 from `foundation/rsgb.org/*.pdf`; **hamtrain** —
-Mock 1–6 from `foundation/hamtrain.co.uk/mock<N>.md` (+ `-answers.md` with
-per-question explanations; layout documented in that folder's `FORMAT.md`).
+Mock 1–7 from `foundation/hamtrain.co.uk/mock<N>.md` (+ `-answers.md`; layout
+documented in that folder's `FORMAT.md`). Mocks 1–6 carry per-question answer
+explanations; mock7 lives in its own `mock7/` subdir and has none.
 Pick a single paper, **Combined** (a 26-question exam, one question per
 ordinal position 1..26 — the mocks are topic-ordered, so each position is a
-topic, drawn from a random paper), or **Everything** (all 234 questions).
+topic, drawn from a random paper), or **Everything** (all 260 questions).
 Settings for shuffling questions/answers and immediate vs at-the-end feedback
 (persisted under `morse-exam-settings`; the old numeric `paper` and the
 `combinedAll` flag are migrated). Pass mark 19/26, scaled by percentage for
