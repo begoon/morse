@@ -21,7 +21,6 @@ function rng(seed: number): () => number {
 
 const settings = (over: Partial<Settings>): Settings => ({
     paper: { tag: "rsgb", n: 1 },
-    combinedAll: false,
     shuffleQuestions: false,
     shuffleAnswers: false,
     feedback: "immediate",
@@ -65,24 +64,37 @@ describe("buildRun", () => {
         }
     });
 
-    test("combined sample: 26 distinct questions mixed across tags, stable order", () => {
+    test("combined: one question per ordinal position 1..26, in topic order", () => {
         const run = buildRun(pool, settings({ paper: "combined" }), rng(1));
         expect(run.length).toBe(26);
-        const keys = run.map((q) => key(q.source));
-        expect(new Set(keys).size).toBe(26);
-        // A 26-question sample from all 9 papers should span both sources.
+        // Exactly one question per position, in position order (topic order).
+        expect(run.map((q) => q.source.n)).toEqual(Array.from({ length: 26 }, (_, i) => i + 1));
+        // The 26 are distinct questions drawn from across the papers.
+        expect(new Set(run.map((q) => key(q.source))).size).toBe(26);
         expect(new Set(run.map((q) => q.source.tag)).size).toBe(2);
-        // Without question shuffle the sample is sorted by tag, paper, number.
+    });
+
+    test("combined: each position's question really comes from that position", () => {
+        const run = buildRun(pool, settings({ paper: "combined" }), rng(99));
+        for (const [i, q] of run.entries()) expect(q.source.n).toBe(i + 1);
+    });
+
+    test("combined with question shuffle keeps one-per-position, reorders", () => {
+        const run = buildRun(pool, settings({ paper: "combined", shuffleQuestions: true }), rng(3));
+        expect(run.length).toBe(26);
+        expect([...run.map((q) => q.source.n)].sort((a, b) => a - b)).toEqual(
+            Array.from({ length: 26 }, (_, i) => i + 1),
+        );
+    });
+
+    test("everything: every question from all 9 papers once, in source order", () => {
+        const run = buildRun(pool, settings({ paper: "everything" }));
+        expect(run.length).toBe(234);
+        expect(new Set(run.map((q) => key(q.source))).size).toBe(234);
         const order = run.map((q) =>
             `${q.source.tag}:${String(q.source.paper).padStart(2, "0")}:${String(q.source.n).padStart(2, "0")}`,
         );
         expect(order).toEqual([...order].sort());
-    });
-
-    test("combined all: every question from all 9 papers once", () => {
-        const run = buildRun(pool, settings({ paper: "combined", combinedAll: true }));
-        expect(run.length).toBe(234);
-        expect(new Set(run.map((q) => key(q.source))).size).toBe(234);
     });
 });
 
@@ -90,13 +102,19 @@ describe("migratePaper", () => {
     test("old numeric papers map to rsgb", () => {
         expect(migratePaper(2)).toEqual({ tag: "rsgb", n: 2 });
     });
-    test("combined and tagged papers pass through", () => {
+    test("combined, everything, and tagged papers pass through", () => {
         expect(migratePaper("combined")).toBe("combined");
+        expect(migratePaper("everything")).toBe("everything");
         expect(migratePaper({ tag: "hamtrain", n: 5 })).toEqual({ tag: "hamtrain", n: 5 });
     });
     test("garbage falls back to the default", () => {
         expect(migratePaper(undefined)).toEqual({ tag: "rsgb", n: 1 });
         expect(migratePaper({ tag: "nope", n: 1 })).toEqual({ tag: "rsgb", n: 1 });
+    });
+    // The legacy combinedAll -> "everything" mapping is applied in main.ts's
+    // loadSettings (which has both fields); migratePaper only normalises paper.
+    test("a bare legacy 'combined' stays combined", () => {
+        expect(migratePaper("combined")).toBe("combined");
     });
 });
 
@@ -121,7 +139,7 @@ describe("grade", () => {
     });
 
     test("pass mark scales to the all-questions run", () => {
-        const run = buildRun(pool, settings({ paper: "combined", combinedAll: true }));
+        const run = buildRun(pool, settings({ paper: "everything" }));
         const g = grade(run, run.map((q) => q.answer));
         expect(g.total).toBe(234);
         expect(g.passMark).toBe(171); // ceil(234 * 19/26)

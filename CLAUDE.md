@@ -59,10 +59,13 @@ Runs nine Foundation mock papers (26 single-choice questions each), tagged by
 source: **rsgb** — Mock 1–3 from `foundation/rsgb.org/*.pdf`; **hamtrain** —
 Mock 1–6 from `foundation/hamtrain.co.uk/mock<N>.md` (+ `-answers.md` with
 per-question explanations; layout documented in that folder's `FORMAT.md`).
-Pick a single paper or Combined (26 sampled from all 234, or all 234);
-settings for shuffling questions/answers and immediate vs at-the-end feedback
-(persisted under `morse-exam-settings`; the old numeric `paper` value is
-migrated). Pass mark 19/26, scaled by percentage for longer runs.
+Pick a single paper, **Combined** (a 26-question exam, one question per
+ordinal position 1..26 — the mocks are topic-ordered, so each position is a
+topic, drawn from a random paper), or **Everything** (all 234 questions).
+Settings for shuffling questions/answers and immediate vs at-the-end feedback
+(persisted under `morse-exam-settings`; the old numeric `paper` and the
+`combinedAll` flag are migrated). Pass mark 19/26, scaled by percentage for
+longer runs.
 
 - `src/test/quiz.ts` — pure logic (build run, shuffle, grade, `migratePaper`);
   `main.ts` — UI (explanations shown after answering and in the review;

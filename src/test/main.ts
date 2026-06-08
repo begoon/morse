@@ -27,9 +27,18 @@ const STORAGE_KEY = "morse-exam-settings";
 function loadSettings(): Settings {
     try {
         const raw = localStorage.getItem(STORAGE_KEY);
-        const s = raw ? { ...DEFAULTS, ...(JSON.parse(raw) as Partial<Settings>) } : { ...DEFAULTS };
-        s.paper = migratePaper(s.paper);
-        return s;
+        if (!raw) return { ...DEFAULTS };
+        const parsed = JSON.parse(raw) as Record<string, unknown>;
+        let paper = migratePaper(parsed.paper);
+        // Legacy: the old "Combined" mode used a `combinedAll` flag for the
+        // all-questions run, now its own "everything" mode.
+        if (paper === "combined" && parsed.combinedAll === true) paper = "everything";
+        return {
+            paper,
+            shuffleQuestions: parsed.shuffleQuestions === true,
+            shuffleAnswers: parsed.shuffleAnswers === true,
+            feedback: parsed.feedback === "end" ? "end" : "immediate",
+        };
     } catch {
         return { ...DEFAULTS };
     }
@@ -82,22 +91,20 @@ function renderStart(): void {
         return el("div", { class: "field" }, el("span", { class: "label" }, tag), row);
     });
 
-    // Combined mode mixes questions from every paper; picking a length
-    // selects it.
-    const combinedRow = el("div", { class: "choices", id: "combined" });
-    for (const [all, label] of [
-        [false, "26 random questions"],
-        [true, `All ${POOL.length} questions`],
+    // Cross-paper modes: a 26-question topic-mixed exam, or every question.
+    const mixedRow = el("div", { class: "choices", id: "mixed" });
+    for (const [mode, label] of [
+        ["combined", "26 questions"],
+        ["everything", `Everything (${POOL.length})`],
     ] as const) {
-        const btn = el("button", { class: "choice", "data-all": String(all) }, label);
-        if (settings.paper === "combined" && settings.combinedAll === all) btn.classList.add("selected");
+        const btn = el("button", { class: "choice", "data-paper": mode }, label);
+        if (settings.paper === mode) btn.classList.add("selected");
         btn.onclick = () => {
-            settings.paper = "combined";
-            settings.combinedAll = all;
+            settings.paper = mode;
             saveSettings(settings);
             renderStart();
         };
-        combinedRow.append(btn);
+        mixedRow.append(btn);
     }
 
     const toggle = (id: "shuffleQuestions" | "shuffleAnswers", label: string) => {
@@ -132,7 +139,7 @@ function renderStart(): void {
     app.replaceChildren(
         el("div", { class: "panel start" },
             ...paperRows,
-            el("div", { class: "field" }, el("span", { class: "label" }, "Combined"), combinedRow),
+            el("div", { class: "field" }, el("span", { class: "label" }, "Mixed"), mixedRow),
             el("div", { class: "field" },
                 el("span", { class: "label" }, "Shuffle"),
                 el("div", { class: "choices" },
@@ -223,7 +230,7 @@ function renderQuiz(): void {
         el("div", { class: "panel quiz" },
             el("div", { class: "progress" },
                 el("span", { id: "counter" }, `Question ${idx + 1} / ${run.length}`),
-                settings.paper === "combined" ? el("span", { class: "origin" }, origin(q)) : ""),
+                typeof settings.paper === "string" ? el("span", { class: "origin" }, origin(q)) : ""),
             el("div", { class: "question", id: "question" }, ...md(q.source.question)),
             ...questionImage(q),
             options,

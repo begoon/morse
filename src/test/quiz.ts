@@ -18,12 +18,17 @@ export type Question = {
     image?: string;
 };
 
-export type Paper = { tag: Tag; n: number } | "combined";
+/**
+ * A single mock paper, or one of the cross-paper modes:
+ * - `"combined"` — a 26-question exam, one question per ordinal position
+ *   (the mocks are topic-ordered, so position N is the same topic across all
+ *   papers; each position's question is drawn from a random paper).
+ * - `"everything"` — every question from every paper.
+ */
+export type Paper = { tag: Tag; n: number } | "combined" | "everything";
 
 export type Settings = {
     paper: Paper;
-    /** Combined mode length: a 26-question sample or all of them. */
-    combinedAll: boolean;
     shuffleQuestions: boolean;
     shuffleAnswers: boolean;
     /** Show the correct answer immediately, or only on the results screen. */
@@ -32,15 +37,14 @@ export type Settings = {
 
 export const DEFAULTS: Settings = {
     paper: { tag: "rsgb", n: 1 },
-    combinedAll: false,
     shuffleQuestions: false,
     shuffleAnswers: false,
     feedback: "immediate",
 };
 
-/** Accept settings persisted by older versions (paper was 1 | 2 | 3). */
+/** Accept a `paper` persisted by older versions (it was once `1 | 2 | 3`). */
 export function migratePaper(paper: unknown): Paper {
-    if (paper === "combined") return "combined";
+    if (paper === "combined" || paper === "everything") return paper;
     if (typeof paper === "number") return { tag: "rsgb", n: paper };
     if (typeof paper === "object" && paper !== null) {
         const p = paper as { tag?: unknown; n?: unknown };
@@ -75,14 +79,19 @@ export function shuffle<T>(items: readonly T[], rng: Rng): T[] {
 /** Assemble the question sequence for one run. */
 export function buildRun(pool: readonly Question[], s: Settings, rng: Rng = Math.random): RunQuestion[] {
     let picked: Question[];
-    if (s.paper === "combined") {
-        picked = s.combinedAll ? [...pool] : shuffle(pool, rng).slice(0, EXAM_LENGTH);
-        // The sample comes out in random order; restore source/paper order
-        // unless the user asked for shuffled questions.
-        if (!s.shuffleQuestions)
-            picked.sort(
-                (a, b) => a.tag.localeCompare(b.tag) || a.paper - b.paper || a.n - b.n,
-            );
+    if (s.paper === "everything") {
+        // Every question, in source order (tag, paper, position).
+        picked = [...pool].sort(
+            (a, b) => a.tag.localeCompare(b.tag) || a.paper - b.paper || a.n - b.n,
+        );
+    } else if (s.paper === "combined") {
+        // One question per ordinal position 1..26 (= one per topic), each from
+        // a randomly chosen paper. Built in position order.
+        picked = [];
+        for (let n = 1; n <= EXAM_LENGTH; n++) {
+            const candidates = pool.filter((q) => q.n === n);
+            if (candidates.length) picked.push(candidates[Math.floor(rng() * candidates.length)]!);
+        }
     } else {
         const { tag, n } = s.paper;
         picked = pool.filter((q) => q.tag === tag && q.paper === n);
