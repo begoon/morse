@@ -109,6 +109,30 @@ h1 {
   overflow: hidden;
 }
 
+/* Keying: a fixed 6-line copy pane that scrolls internally as text arrives. */
+#output.multiline {
+  display: block;
+  text-align: left;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  overflow-y: auto;
+  line-height: 1.4;
+  font-size: clamp(1.2rem, 5vw, 1.9rem);
+  height: calc(1.4em * 6 + 1.5rem); /* 6 lines + vertical padding */
+}
+
+/* Flexible spacers that position the keying keypad ~3/4 down the page. */
+.grow {
+  width: 100%;
+  max-width: 640px;
+}
+.grow-3 {
+  flex: 7 1 0;
+}
+.grow-1 {
+  flex: 1 1 0;
+}
+
 /* Play-mode challenge shown in #output */
 .challenge {
   cursor: pointer;
@@ -123,12 +147,25 @@ h1 {
 .challenge .slot.done {
   color: var(--fg);
 }
-.challenge-morse {
+/* Revealed code: its own wrappable row under the output pane. */
+#morse {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem 1.6rem;
+  width: 100%;
+  max-width: 640px;
   font-family: "SF Mono", ui-monospace, monospace;
-  color: var(--muted);
-  font-size: 0.5em;
-  margin-left: 0.6em;
-  letter-spacing: 0.1em;
+  color: var(--accent);
+  font-size: 1.4rem;
+  letter-spacing: 0.35em;
+}
+#morse:empty {
+  display: none;
+}
+.morse-letter {
+  white-space: nowrap;
 }
 #output {
   transition: color 120ms ease-out;
@@ -202,6 +239,34 @@ h1 {
   margin: 0.75rem 0.5rem 0;
 }
 
+/* Play actions: Replay (Space) and Reveal (/) buttons. */
+.actions {
+  display: flex;
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 640px;
+}
+.action-btn {
+  flex: 1;
+  font: inherit;
+  font-size: 1rem;
+  min-height: 3rem;
+  cursor: pointer;
+  border-radius: 12px;
+  border: 1px solid var(--accent-dim);
+  background: transparent;
+  color: var(--accent);
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.action-btn:hover,
+.action-btn:active {
+  background: var(--accent-dim);
+  color: var(--fg);
+}
+
 /* Keying keypad: two large element buttons (. / -) plus Clear. */
 .keypad {
   display: flex;
@@ -229,7 +294,7 @@ h1 {
   font-weight: 600;
   line-height: 1;
 }
-.keypad-element:active {
+.keypad-element.pressed {
   background: var(--accent-dim);
   color: var(--fg);
 }

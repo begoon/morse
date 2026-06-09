@@ -14,7 +14,11 @@
       <a href="../settings/">Settings</a>
     </nav>
 
-    <div id="output"> </div>
+    <div id="output" class="multiline"> </div>
+
+    <!-- Spacers push the keypad to about 3/4 down the screen (free space split
+         3:1 above/below the keypad + cheatsheet block). -->
+    <div class="grow grow-3"></div>
 
     <div class="keypad">
       <button id="key-dit" class="keypad-btn keypad-element" aria-label="dit">
@@ -30,6 +34,8 @@
       <summary>Cheatsheet</summary>
       <div id="cheatsheet"></div>
     </details>
+
+    <div class="grow grow-1"></div>
 
     <script type="module" src="./main.ts"></script>
   </body>

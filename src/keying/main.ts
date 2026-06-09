@@ -26,9 +26,11 @@ const decoder = new Decoder({
   language: settings.language,
   letterGapMs: th.gapLetter * settings.gapTolerance,
   wordGapMs: th.gapWord * settings.gapTolerance,
-  maxChars: 40,
+  maxChars: 240,
   onChange: (s) => {
     outputEl.textContent = s.text || " ";
+    // Keep the latest copy visible as the multi-line pane fills and scrolls.
+    outputEl.scrollTop = outputEl.scrollHeight;
   },
 });
 
@@ -116,11 +118,13 @@ function wireKeypadButton(btn: HTMLButtonElement, which: "dit" | "dah") {
   const down = () => {
     if (active) return;
     active = true;
+    btn.classList.add("pressed");
     pressElement(which);
   };
   const up = () => {
     if (!active) return;
     active = false;
+    btn.classList.remove("pressed");
     releaseElement(which);
   };
 

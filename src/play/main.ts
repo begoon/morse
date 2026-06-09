@@ -20,9 +20,11 @@ sidetone.setTone(settings.toneHz);
 sidetone.setVolume(settings.volume);
 
 const outputEl = document.getElementById("output")!;
+const morseEl = document.getElementById("morse")!;
 const historyEl = document.getElementById("history")!;
-const hintsEl = document.getElementById("hints")!;
 const cheatsheetEl = document.getElementById("cheatsheet")!;
+const replayBtn = document.getElementById("replay") as HTMLButtonElement;
+const revealBtn = document.getElementById("reveal") as HTMLButtonElement;
 
 const HISTORY_MAX = 40; // like keying's decoder maxChars
 let history = ""; // running line of guessed letters, targets separated by spaces
@@ -44,12 +46,6 @@ function playTarget() {
 }
 
 function render() {
-  const morse = showMorse
-    ? `<span class="challenge-morse">${encodeWord(target, settings.language)
-        .split(" ")
-        .map(glyphs)
-        .join("&nbsp;&nbsp;")}</span>`
-    : "";
   const slots =
     target.length === 1
       ? `<span class="slot">?</span>`
@@ -60,7 +56,15 @@ function render() {
               : `<span class="slot">_</span>`,
           )
           .join("");
-  outputEl.innerHTML = `<span class="challenge" title="Click to reveal">${slots}</span>${morse}`;
+  outputEl.innerHTML = `<span class="challenge" title="Click to reveal">${slots}</span>`;
+  // The revealed code lives below the output in its own wrappable row, one
+  // letter pattern per cell so long words wrap.
+  morseEl.innerHTML = showMorse
+    ? encodeWord(target, settings.language)
+        .split(" ")
+        .map((p) => `<span class="morse-letter">${glyphs(p)}</span>`)
+        .join("")
+    : "";
   highlightTarget();
 }
 
@@ -68,8 +72,9 @@ function highlightTarget() {
   const expected = target[pos] ?? "";
   cheatsheetEl.querySelectorAll<HTMLElement>(".cheat-key").forEach((el) => {
     const isTarget = revealed && (el.dataset.char ?? "") === expected;
+    // Highlight the key only — the code is shown in the #morse row, not on the
+    // key, so we don't toggle `.reveal` (which would un-hide its pattern).
     el.classList.toggle("target", isTarget);
-    el.classList.toggle("reveal", isTarget);
     if (isTarget) el.scrollIntoView({ block: "nearest", inline: "center" });
   });
 }
@@ -77,6 +82,17 @@ function highlightTarget() {
 function reveal() {
   revealed = true;
   render();
+}
+
+// The "/" action (key or button): first press shows the code, a second reveals
+// the next expected key on the cheatsheet.
+function revealStep() {
+  if (!showMorse) {
+    showMorse = true;
+    render();
+  } else {
+    reveal();
+  }
 }
 
 function newTarget() {
@@ -125,13 +141,7 @@ window.addEventListener("keydown", (e) => {
     playTarget();
   } else if (e.key === "/") {
     e.preventDefault();
-    // First "/" shows the code; a second "/" reveals the next letter.
-    if (!showMorse) {
-      showMorse = true;
-      render();
-    } else {
-      reveal();
-    }
+    revealStep();
   } else if (e.key.length === 1) {
     e.preventDefault();
     sidetone.ensure(); // first keypress unlocks audio
@@ -141,10 +151,17 @@ window.addEventListener("keydown", (e) => {
 
 outputEl.addEventListener("click", reveal);
 
+// On-screen equivalents of Space (replay) and "/" (show code / reveal). blur()
+// keeps a subsequent Space keypress from re-triggering the focused button.
+replayBtn.addEventListener("click", () => {
+  playTarget();
+  replayBtn.blur();
+});
+revealBtn.addEventListener("click", () => {
+  revealStep();
+  revealBtn.blur();
+});
+
 // --- Init --------------------------------------------------------------------
 renderCheatsheet(cheatsheetEl, settings.language, { showPatterns: false });
-hintsEl.textContent =
-  settings.wordLength > 1 && settings.language === "en"
-    ? "Listen, then type the word · Space replays · / shows the code, / again reveals the next letter"
-    : "Listen, then type the letter · Space replays · / shows the code, / again reveals";
 newTarget();
