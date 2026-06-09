@@ -364,6 +364,13 @@ h1 {
   border-radius: 6px;
   padding: 0.25rem 0.35rem;
 }
+/* Play mode: cheatsheet keys are tappable to submit a guess. */
+.guessable .cheat-key {
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
 .cheat-key .cheat-char {
   font-size: 0.95rem;
 }

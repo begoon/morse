@@ -164,4 +164,16 @@ revealBtn.addEventListener("click", () => {
 
 // --- Init --------------------------------------------------------------------
 renderCheatsheet(cheatsheetEl, settings.language, { showPatterns: false });
+// Tap a cheatsheet key to guess it (the only input path on touch devices,
+// where there's no physical keyboard). Keys are static after render, so a
+// single pass of listeners is enough.
+cheatsheetEl.classList.add("guessable");
+cheatsheetEl.querySelectorAll<HTMLElement>(".cheat-key").forEach((el) => {
+  el.addEventListener("click", () => {
+    const char = el.dataset.char;
+    if (!char) return;
+    sidetone.ensure(); // first tap unlocks audio
+    guess(char);
+  });
+});
 newTarget();
