@@ -23,8 +23,8 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.25rem;
-  padding: 2rem 1rem 3rem;
+  gap: 1rem;
+  padding: 1.5rem 0.6rem 2.5rem;
 }
 
 h1 {
@@ -107,14 +107,6 @@ h1 {
   padding: 0.75rem 1.25rem;
   white-space: pre;
   overflow: hidden;
-}
-
-#pattern {
-  font-family: "SF Mono", ui-monospace, monospace;
-  font-size: 1.75rem;
-  color: var(--accent);
-  min-height: 2rem;
-  letter-spacing: 0.3em;
 }
 
 /* Play-mode challenge shown in #output */
@@ -210,18 +202,43 @@ h1 {
   margin: 0.75rem 0.5rem 0;
 }
 
-button#clear {
-  grid-column: 1 / -1;
-  justify-self: start;
+/* Keying keypad: two large element buttons (. / -) plus Clear. */
+.keypad {
+  display: flex;
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 640px;
+  align-items: stretch;
+}
+.keypad-btn {
+  font: inherit;
+  cursor: pointer;
+  border-radius: 12px;
+  border: 1px solid var(--accent-dim);
   background: transparent;
   color: var(--accent);
-  border: 1px solid var(--accent-dim);
-  border-radius: 8px;
-  padding: 0.4rem 0.9rem;
-  cursor: pointer;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.keypad-element {
+  flex: 1;
+  min-height: 4.5rem;
+  font-size: 2.25rem;
+  font-weight: 600;
+  line-height: 1;
+}
+.keypad-element:active {
+  background: var(--accent-dim);
+  color: var(--fg);
+}
+.keypad-clear {
+  flex: 0 0 auto;
+  padding: 0 1.1rem;
   font-size: 0.9rem;
 }
-button#clear:hover {
+.keypad-clear:hover {
   background: var(--accent-dim);
   color: var(--fg);
 }
@@ -329,4 +346,40 @@ button#clear:hover {
   font-family: "SF Mono", ui-monospace, monospace;
   color: var(--accent);
   letter-spacing: 0.02em;
+}
+
+/* Mobile: shrink the cheatsheet keys and let each row wrap to fit a narrow
+   screen instead of overflowing (the keyboard stagger is dropped). */
+@media (max-width: 480px) {
+  body {
+    padding: 0.75rem 0.3rem 1.5rem;
+    gap: 0.75rem;
+  }
+  .cheatsheet,
+  .settings {
+    padding: 0.5rem 0.5rem 0.75rem;
+  }
+  .cheat-board {
+    gap: 0.4rem;
+  }
+  .cheat-row {
+    flex-wrap: wrap;
+    margin-left: 0 !important;
+  }
+  /* Let . , ? flow and wrap as a row instead of a fixed side column. */
+  .cheat-punct {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-self: stretch;
+  }
+  .cheat-key {
+    min-width: 1.9rem;
+    padding: 0.2rem 0.25rem;
+  }
+  .cheat-key .cheat-char {
+    font-size: 0.8rem;
+  }
+  .cheat-key .cheat-pattern {
+    font-size: 0.6rem;
+  }
 }

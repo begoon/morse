@@ -16,10 +16,10 @@ sidetone.setTone(settings.toneHz);
 sidetone.setVolume(settings.volume);
 
 const outputEl = document.getElementById("output")!;
-const patternEl = document.getElementById("pattern")!;
-const hintsEl = document.getElementById("hints")!;
 const cheatsheetEl = document.getElementById("cheatsheet")!;
 const clearEl = document.getElementById("clear") as HTMLButtonElement;
+const ditBtn = document.getElementById("key-dit") as HTMLButtonElement;
+const dahBtn = document.getElementById("key-dah") as HTMLButtonElement;
 
 const th = thresholds(settings.wpm);
 const decoder = new Decoder({
@@ -29,7 +29,6 @@ const decoder = new Decoder({
   maxChars: 40,
   onChange: (s) => {
     outputEl.textContent = s.text || " ";
-    patternEl.textContent = s.pattern || " ";
   },
 });
 
@@ -54,24 +53,38 @@ async function unlockAudio() {
   await sidetone.ensure();
 }
 
+// Pressing/releasing a keying "element" (the `.` and `-` keypad buttons map to
+// the dit/dah paddles, or to the single straight key). Shared by the keyboard
+// keys and the on-screen buttons so both drive the keyer identically.
+function pressElement(which: "dit" | "dah") {
+  unlockAudio();
+  if (settings.keyType === "straight") straight.down();
+  else if (which === "dit") iambic.setDit(true);
+  else iambic.setDah(true);
+}
+
+function releaseElement(which: "dit" | "dah") {
+  if (settings.keyType === "straight") straight.up();
+  else if (which === "dit") iambic.setDit(false);
+  else iambic.setDah(false);
+}
+
 window.addEventListener("keydown", (e) => {
+  if (e.repeat) return;
   if (settings.keyType === "straight") {
     if (e.code === settings.keys.straight) {
       e.preventDefault();
-      unlockAudio();
-      straight.down();
+      pressElement("dit");
       return;
     }
   } else {
     if (e.code === settings.keys.dit) {
       e.preventDefault();
-      unlockAudio();
-      iambic.setDit(true);
+      pressElement("dit");
       return;
     } else if (e.code === settings.keys.dah) {
       e.preventDefault();
-      unlockAudio();
-      iambic.setDah(true);
+      pressElement("dah");
       return;
     }
   }
@@ -84,19 +97,31 @@ window.addEventListener("keydown", (e) => {
 
 window.addEventListener("keyup", (e) => {
   if (settings.keyType === "straight") {
-    if (e.code === settings.keys.straight) straight.up();
+    if (e.code === settings.keys.straight) releaseElement("dit");
   } else {
-    if (e.code === settings.keys.dit) iambic.setDit(false);
-    else if (e.code === settings.keys.dah) iambic.setDah(false);
+    if (e.code === settings.keys.dit) releaseElement("dit");
+    else if (e.code === settings.keys.dah) releaseElement("dah");
   }
 });
+
+// On-screen keypad: hold-to-key with pointer capture so the release still fires
+// if the finger slides off the button. preventDefault stops the tap from also
+// firing a synthetic click / scrolling / zooming on touch.
+function wireKeypadButton(btn: HTMLButtonElement, which: "dit" | "dah") {
+  btn.addEventListener("pointerdown", (e) => {
+    e.preventDefault();
+    btn.setPointerCapture(e.pointerId);
+    pressElement(which);
+  });
+  const up = () => releaseElement(which);
+  btn.addEventListener("pointerup", up);
+  btn.addEventListener("pointercancel", up);
+}
+wireKeypadButton(ditBtn, "dit");
+wireKeypadButton(dahBtn, "dah");
 
 clearEl.addEventListener("click", () => decoder.reset());
 
 // --- Init --------------------------------------------------------------------
 renderCheatsheet(cheatsheetEl, settings.language, { showPatterns: true });
-hintsEl.textContent =
-  settings.keyType === "straight"
-    ? "Hold Space to key · short press = dit, long press = dah"
-    : "Tap , for dit · . for dah · hold/squeeze for iambic · Space clears";
 decoder.reset();

@@ -15,15 +15,21 @@
     </nav>
 
     <div id="output"> </div>
-    <div id="pattern"> </div>
-    <div id="hints"></div>
 
-    <details class="cheatsheet" open>
+    <div class="keypad">
+      <button id="key-dit" class="keypad-btn keypad-element" aria-label="dit">
+        .
+      </button>
+      <button id="key-dah" class="keypad-btn keypad-element" aria-label="dah">
+        -
+      </button>
+      <button id="clear" class="keypad-btn keypad-clear">Clear</button>
+    </div>
+
+    <details class="cheatsheet">
       <summary>Cheatsheet</summary>
       <div id="cheatsheet"></div>
     </details>
-
-    <button id="clear">Clear output</button>
 
     <script type="module" src="./main.ts"></script>
   </body>
