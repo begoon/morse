@@ -104,18 +104,48 @@ window.addEventListener("keyup", (e) => {
   }
 });
 
-// On-screen keypad: hold-to-key with pointer capture so the release still fires
-// if the finger slides off the button. preventDefault stops the tap from also
-// firing a synthetic click / scrolling / zooming on touch.
+// On-screen keypad: hold-to-key. Touch events (not pointer events) are used so
+// two paddle buttons can be held at once — iOS Safari delivers only a single
+// pointer and fires pointercancel on a second finger, which broke iambic
+// squeeze. Each finger lands on its own button with its own touchstart, so
+// holding both `.` and `-` squeezes the keyer (alternating di-dah). A mouse
+// fallback covers the desktop; preventDefault on touchstart suppresses the
+// synthetic mouse events so a press is never counted twice.
 function wireKeypadButton(btn: HTMLButtonElement, which: "dit" | "dah") {
-  btn.addEventListener("pointerdown", (e) => {
-    e.preventDefault();
-    btn.setPointerCapture(e.pointerId);
+  let active = false;
+  const down = () => {
+    if (active) return;
+    active = true;
     pressElement(which);
+  };
+  const up = () => {
+    if (!active) return;
+    active = false;
+    releaseElement(which);
+  };
+
+  btn.addEventListener(
+    "touchstart",
+    (e) => {
+      e.preventDefault();
+      down();
+    },
+    { passive: false },
+  );
+  const touchUp = (e: TouchEvent) => {
+    e.preventDefault();
+    up();
+  };
+  btn.addEventListener("touchend", touchUp, { passive: false });
+  btn.addEventListener("touchcancel", touchUp, { passive: false });
+
+  // Mouse (desktop): release on the window so dragging off the button still
+  // ends the press.
+  btn.addEventListener("mousedown", (e) => {
+    e.preventDefault();
+    down();
   });
-  const up = () => releaseElement(which);
-  btn.addEventListener("pointerup", up);
-  btn.addEventListener("pointercancel", up);
+  window.addEventListener("mouseup", up);
 }
 wireKeypadButton(ditBtn, "dit");
 wireKeypadButton(dahBtn, "dah");
