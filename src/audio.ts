@@ -4,12 +4,46 @@
 
 const RAMP = 0.005; // seconds — envelope ramp to avoid key clicks
 
+// A 1-second mono silent WAV (8-bit unsigned, midpoint 128 = silence). Played
+// as a looping media element on iOS, this flips the page's audio session into
+// the "playback" category so the hardware mute switch no longer silences our
+// Web Audio sidetone (Safari otherwise treats Web Audio as mutable "ambient").
+function silentWavUrl(): string {
+  const sampleRate = 8000;
+  const n = sampleRate; // 1s of samples
+  const bytes = new Uint8Array(44 + n);
+  const dv = new DataView(bytes.buffer);
+  const w = (off: number, str: string) => {
+    for (let i = 0; i < str.length; i++) dv.setUint8(off + i, str.charCodeAt(i));
+  };
+  w(0, "RIFF");
+  dv.setUint32(4, 36 + n, true);
+  w(8, "WAVE");
+  w(12, "fmt ");
+  dv.setUint32(16, 16, true); // PCM chunk size
+  dv.setUint16(20, 1, true); // PCM
+  dv.setUint16(22, 1, true); // mono
+  dv.setUint32(24, sampleRate, true);
+  dv.setUint32(28, sampleRate, true); // byte rate (1 byte/sample, mono)
+  dv.setUint16(32, 1, true); // block align
+  dv.setUint16(34, 8, true); // bits per sample
+  w(36, "data");
+  dv.setUint32(40, n, true);
+  bytes.fill(128, 44); // 8-bit unsigned silence
+  let bin = "";
+  for (let i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]!);
+  return "data:audio/wav;base64," + btoa(bin);
+}
+
 export class Sidetone {
   private ctx: AudioContext | null = null;
   private osc: OscillatorNode | null = null;
   private gain: GainNode | null = null;
   private freq = 600;
   private volume = 0.2;
+  /** Set once we've asked iOS to ignore the mute switch (see ensure). */
+  private playbackEnabled = false;
+  private silentAudio: HTMLAudioElement | null = null;
 
   setTone(hz: number) {
     this.freq = hz;
@@ -22,8 +56,42 @@ export class Sidetone {
     this.volume = Math.max(0, Math.min(1, v));
   }
 
+  // Ask iOS to treat our audio as "playback" so the hardware mute (ring/silent)
+  // switch doesn't silence it — like a music/video app rather than a UI beep.
+  // Must run inside a user gesture (the media element needs to start playing).
+  private enablePlaybackSession() {
+    if (this.playbackEnabled) return;
+    this.playbackEnabled = true;
+
+    // Modern path: the Audio Session API (Safari 16.4+). Setting "playback"
+    // is the supported way to opt out of the mute switch.
+    const session = (navigator as unknown as { audioSession?: { type: string } })
+      .audioSession;
+    if (session) {
+      try {
+        session.type = "playback";
+      } catch {
+        // read-only / unsupported value — fall through to the media trick.
+      }
+    }
+
+    // Fallback for older iOS: start a looping silent media element. Real media
+    // playback switches the page's session to the playback category, after
+    // which the Web Audio sidetone is also heard with the mute switch on.
+    try {
+      const a = new Audio(silentWavUrl());
+      a.loop = true;
+      a.setAttribute("playsinline", "");
+      this.silentAudio = a;
+      void a.play().catch(() => {});
+    } catch {
+      // Audio element unavailable — nothing more we can do here.
+    }
+  }
+
   /** Create/resume the audio graph. Call from a user-gesture handler. */
   async ensure() {
+    this.enablePlaybackSession();
     if (!this.ctx) {
       const Ctx =
         window.AudioContext ||
