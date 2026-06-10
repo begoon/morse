@@ -156,6 +156,36 @@ wireKeypadButton(dahBtn, "dah");
 
 clearEl.addEventListener("click", () => decoder.reset());
 
+// USB "keyer" that presents as a mouse: left button (0) = left paddle (dit),
+// right button (2) = right paddle (dah). Active in paddle mode. The on-screen
+// controls (buttons, nav links, cheatsheet toggle) are left alone so normal
+// clicking still works; mouseup always releases so a paddle can't stick.
+function mousePaddle(button: number): "dit" | "dah" | null {
+  if (settings.keyType !== "paddle") return null;
+  if (button === 0) return "dit";
+  if (button === 2) return "dah";
+  return null;
+}
+function isControl(t: EventTarget | null): boolean {
+  return !!(t as HTMLElement | null)?.closest?.("button, a, summary");
+}
+
+window.addEventListener("mousedown", (e) => {
+  const which = mousePaddle(e.button);
+  if (!which || isControl(e.target)) return;
+  e.preventDefault();
+  unlockAudio();
+  pressElement(which);
+});
+window.addEventListener("mouseup", (e) => {
+  const which = mousePaddle(e.button);
+  if (which) releaseElement(which); // release even if the cursor is over a control
+});
+// Keep the right paddle from opening the context menu.
+window.addEventListener("contextmenu", (e) => {
+  if (settings.keyType === "paddle" && !isControl(e.target)) e.preventDefault();
+});
+
 // --- Init --------------------------------------------------------------------
 renderCheatsheet(cheatsheetEl, settings.language, { showPatterns: true });
 decoder.reset();
