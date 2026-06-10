@@ -167,12 +167,14 @@ h1 {
 .morse-letter {
   white-space: nowrap;
 }
-/* The auto-revealed answer letter (timer expired) — bold and a touch larger so
-   it reads as the answer rather than a code. */
-.morse-answer {
+
+/* The latest auto-revealed letter, previewed in the history line. */
+#history .revealed {
+  color: var(--accent);
   font-weight: 700;
-  font-size: 1.9rem;
-  letter-spacing: normal;
+  background: rgba(14, 135, 182, 0.15);
+  border-radius: 4px;
+  padding: 0 0.15em;
 }
 #output {
   transition: color 120ms ease-out;

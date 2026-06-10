@@ -53,9 +53,10 @@ function clearRevealTimer() {
 
 function autoReveal() {
   revealTimer = null;
-  answerShown = true; // show the answer letter in the reveal line
+  answerShown = true; // preview the answer letter in the history pane
   revealed = true; // and highlight its key on the cheatsheet
   render();
+  renderHistory();
 }
 
 function playTarget() {
@@ -80,20 +81,26 @@ function render() {
           )
           .join("");
   outputEl.innerHTML = `<span class="challenge" title="Click to reveal">${slots}</span>`;
-  // The reveal line below the output shows either the auto-revealed answer
-  // letter (timer expired) or, on "/", the morse code — one letter pattern per
-  // cell so long words wrap.
-  if (answerShown) {
-    morseEl.innerHTML = `<span class="morse-answer">${target[pos] ?? ""}</span>`;
-  } else if (showMorse) {
-    morseEl.innerHTML = encodeWord(target, settings.language)
-      .split(" ")
-      .map((p) => `<span class="morse-letter">${glyphs(p)}</span>`)
-      .join("");
-  } else {
-    morseEl.innerHTML = "";
-  }
+  // The reveal line below the output shows the morse code on "/", one letter
+  // pattern per cell so long words wrap.
+  morseEl.innerHTML = showMorse
+    ? encodeWord(target, settings.language)
+        .split(" ")
+        .map((p) => `<span class="morse-letter">${glyphs(p)}</span>`)
+        .join("")
+    : "";
   highlightTarget();
+}
+
+// The running line of previous letters. When the timer auto-reveals the current
+// letter, it's previewed highlighted at the end here (the player still types it
+// to commit); only this latest auto-revealed letter is highlighted.
+function renderHistory() {
+  if (answerShown && pos < target.length) {
+    historyEl.innerHTML = `${history}<span class="revealed">${target[pos]}</span>`;
+  } else {
+    historyEl.textContent = history;
+  }
 }
 
 function highlightTarget() {
@@ -130,6 +137,7 @@ function newTarget() {
   revealed = false;
   answerShown = false;
   render();
+  renderHistory();
   playTarget();
   startRevealTimer();
 }
@@ -156,7 +164,7 @@ function guess(char: string) {
     history += expected;
     if (pos >= target.length) history += " ";
     if (history.length > HISTORY_MAX) history = history.slice(-HISTORY_MAX);
-    historyEl.textContent = history;
+    renderHistory();
     render();
     if (pos >= target.length) {
       setTimeout(newTarget, 150); // newTarget starts the next clock
