@@ -33,7 +33,30 @@ let target = ""; // the word (or single character) being played
 let pos = 0; // next expected letter index
 let showMorse = false; // "/" revealed the pattern
 let revealed = false; // second "/" -> next expected key shown on the keyboard
+let answerShown = false; // auto-reveal fired -> the answer letter is shown
 let playing: PlayHandle | null = null;
+let revealTimer: ReturnType<typeof setTimeout> | null = null;
+
+// Start (or restart) the "beat the clock" countdown for the current letter.
+// When it expires the answer is revealed; the player still types it to advance.
+function startRevealTimer() {
+  clearRevealTimer();
+  if (settings.autoRevealSec > 0 && pos < target.length) {
+    revealTimer = setTimeout(autoReveal, settings.autoRevealSec * 1000);
+  }
+}
+
+function clearRevealTimer() {
+  if (revealTimer) clearTimeout(revealTimer);
+  revealTimer = null;
+}
+
+function autoReveal() {
+  revealTimer = null;
+  answerShown = true; // show the answer letter in the reveal line
+  revealed = true; // and highlight its key on the cheatsheet
+  render();
+}
 
 function playTarget() {
   if (!target) return;
@@ -57,14 +80,19 @@ function render() {
           )
           .join("");
   outputEl.innerHTML = `<span class="challenge" title="Click to reveal">${slots}</span>`;
-  // The revealed code lives below the output in its own wrappable row, one
-  // letter pattern per cell so long words wrap.
-  morseEl.innerHTML = showMorse
-    ? encodeWord(target, settings.language)
-        .split(" ")
-        .map((p) => `<span class="morse-letter">${glyphs(p)}</span>`)
-        .join("")
-    : "";
+  // The reveal line below the output shows either the auto-revealed answer
+  // letter (timer expired) or, on "/", the morse code — one letter pattern per
+  // cell so long words wrap.
+  if (answerShown) {
+    morseEl.innerHTML = `<span class="morse-answer">${target[pos] ?? ""}</span>`;
+  } else if (showMorse) {
+    morseEl.innerHTML = encodeWord(target, settings.language)
+      .split(" ")
+      .map((p) => `<span class="morse-letter">${glyphs(p)}</span>`)
+      .join("");
+  } else {
+    morseEl.innerHTML = "";
+  }
   highlightTarget();
 }
 
@@ -100,8 +128,10 @@ function newTarget() {
   pos = 0;
   showMorse = false;
   revealed = false;
+  answerShown = false;
   render();
   playTarget();
+  startRevealTimer();
 }
 
 function splashKey(char: string) {
@@ -118,15 +148,21 @@ function guess(char: string) {
   const expected = target[pos];
   if (!expected) return;
   if (char.toUpperCase() === expected) {
+    clearRevealTimer(); // this letter was answered — stop its clock
     splashKey(expected); // short splash on the correct key
     pos++;
     revealed = false; // each letter must be revealed anew
+    answerShown = false;
     history += expected;
     if (pos >= target.length) history += " ";
     if (history.length > HISTORY_MAX) history = history.slice(-HISTORY_MAX);
     historyEl.textContent = history;
     render();
-    if (pos >= target.length) setTimeout(newTarget, 150);
+    if (pos >= target.length) {
+      setTimeout(newTarget, 150); // newTarget starts the next clock
+    } else {
+      startRevealTimer(); // next letter, fresh clock
+    }
   } else {
     sidetone.error();
     outputEl.classList.add("bad");

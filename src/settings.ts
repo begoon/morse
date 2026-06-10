@@ -14,6 +14,9 @@ export type Settings = {
    * of 2..N letters (RU always plays single characters). */
   wordLength: number;
   wpm: number;
+  /** Play mode: auto-reveal the current letter after this many seconds (the
+   * "beat the clock" challenge). 0 = off. */
+  autoRevealSec: number;
   /** Multiplier widening the decode letter/word gap thresholds (keying speed
    * is unchanged). 1 = strict PARIS spacing; higher = more forgiving pauses. */
   gapTolerance: number;
@@ -32,6 +35,7 @@ export const DEFAULTS: Settings = {
   language: "en",
   wordLength: 1,
   wpm: 10,
+  autoRevealSec: 0,
   gapTolerance: 1.5,
   volume: 0.2,
   toneHz: 600,

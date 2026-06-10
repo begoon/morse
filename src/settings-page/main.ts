@@ -16,6 +16,8 @@ const wpmEl = $<HTMLInputElement>("wpm");
 const wpmValEl = $("wpmVal");
 const gapEl = $<HTMLInputElement>("gap");
 const gapValEl = $("gapVal");
+const autoRevealEl = $<HTMLInputElement>("autoReveal");
+const autoRevealValEl = $("autoRevealVal");
 const keyTypeEl = $<HTMLSelectElement>("keyType");
 const iambicModeEl = $<HTMLSelectElement>("iambicMode");
 const volumeEl = $<HTMLInputElement>("volume");
@@ -31,6 +33,9 @@ wpmEl.value = String(settings.wpm);
 wpmValEl.textContent = String(settings.wpm);
 gapEl.value = String(settings.gapTolerance);
 gapValEl.textContent = `${settings.gapTolerance.toFixed(1)}×`;
+const autoRevealLabel = (s: number) => (s <= 0 ? "Off" : `${s}s`);
+autoRevealEl.value = String(settings.autoRevealSec);
+autoRevealValEl.textContent = autoRevealLabel(settings.autoRevealSec);
 keyTypeEl.value = settings.keyType;
 iambicModeEl.value = settings.iambicMode;
 volumeEl.value = String(settings.volume);
@@ -66,6 +71,12 @@ wpmEl.addEventListener("input", () => {
 gapEl.addEventListener("input", () => {
   settings.gapTolerance = Number(gapEl.value);
   gapValEl.textContent = `${settings.gapTolerance.toFixed(1)}×`;
+  persist();
+});
+
+autoRevealEl.addEventListener("input", () => {
+  settings.autoRevealSec = Number(autoRevealEl.value);
+  autoRevealValEl.textContent = autoRevealLabel(settings.autoRevealSec);
   persist();
 });
 
