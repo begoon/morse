@@ -146,6 +146,7 @@ function wireKeypadButton(btn: HTMLButtonElement, which: "dit" | "dah") {
   // Mouse (desktop): release on the window so dragging off the button still
   // ends the press.
   btn.addEventListener("mousedown", (e) => {
+    if (e.button !== 0) return; // right-click is the dah paddle, handled globally
     e.preventDefault();
     down();
   });
@@ -181,17 +182,11 @@ window.addEventListener("mouseup", (e) => {
   const which = mousePaddle(e.button);
   if (which) releaseElement(which); // release even if the cursor is over a control
 });
-// Many USB keyers surface the right paddle as a right-click — which the browser
-// delivers as `contextmenu` (and `auxclick`), not a button-2 mousedown — so key
-// the dah here. The event fires once per paddle press, so press+release emits a
-// single dah (mirroring the left paddle's single dit per click), and also
-// suppresses the menu.
+// The right paddle keys the dah via button-2 mousedown/mouseup above (a clean
+// hold, so iambic squeeze works); here we only suppress the context menu that a
+// right-click would otherwise pop up.
 window.addEventListener("contextmenu", (e) => {
-  if (settings.keyType !== "paddle" || isControl(e.target)) return;
-  e.preventDefault();
-  unlockAudio();
-  pressElement("dah");
-  releaseElement("dah");
+  if (settings.keyType === "paddle" && !isControl(e.target)) e.preventDefault();
 });
 
 // --- Init --------------------------------------------------------------------
