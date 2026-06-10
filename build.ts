@@ -66,5 +66,6 @@ await $`rm -rf docs`;
 await buildPage("./index.html", "docs/index.html");
 await buildPage("./src/play/index.html", "docs/play/index.html");
 await buildPage("./src/keying/index.html", "docs/keying/index.html");
+await buildPage("./src/paddle/index.html", "docs/paddle/index.html");
 await buildPage("./src/settings-page/index.html", "docs/settings/index.html");
 await buildPage("./src/test/index.html", "docs/test/index.html");

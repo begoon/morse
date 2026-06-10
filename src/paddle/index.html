@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Morse Trainer — Paddle test</title>
+    <style>
+      #pad {
+        width: 100%;
+        max-width: 640px;
+        min-height: 38vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        background: var(--panel);
+        border: 2px dashed var(--accent-dim);
+        border-radius: 12px;
+        color: var(--muted);
+        font-size: 1.05rem;
+        padding: 1rem;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: none;
+      }
+      #log {
+        width: 100%;
+        max-width: 640px;
+        height: 34vh;
+        font-family: "SF Mono", ui-monospace, "Cascadia Code", monospace;
+        font-size: 0.78rem;
+        line-height: 1.35;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 0.5rem 0.6rem;
+        background: var(--panel);
+        color: var(--fg);
+        white-space: pre;
+        overflow: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="topnav">
+      <a href="../">Morse Trainer</a>
+      <a href="../keying/">Keying</a>
+      <a href="../paddle/" class="current" aria-current="page">Paddle test</a>
+    </nav>
+
+    <div id="pad">
+      Press / hold the paddles here.<br />Then Copy the log and paste it back.
+    </div>
+
+    <div class="actions">
+      <button id="copy" class="action-btn">Copy</button>
+      <button id="clear" class="action-btn">Clear</button>
+      <span class="val">events: <span id="count">0</span></span>
+    </div>
+
+    <textarea id="log" readonly spellcheck="false"></textarea>
+
+    <script type="module" src="./main.ts"></script>
+  </body>
+</html>

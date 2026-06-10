@@ -181,9 +181,17 @@ window.addEventListener("mouseup", (e) => {
   const which = mousePaddle(e.button);
   if (which) releaseElement(which); // release even if the cursor is over a control
 });
-// Keep the right paddle from opening the context menu.
+// Many USB keyers surface the right paddle as a right-click — which the browser
+// delivers as `contextmenu` (and `auxclick`), not a button-2 mousedown — so key
+// the dah here. The event fires once per paddle press, so press+release emits a
+// single dah (mirroring the left paddle's single dit per click), and also
+// suppresses the menu.
 window.addEventListener("contextmenu", (e) => {
-  if (settings.keyType === "paddle" && !isControl(e.target)) e.preventDefault();
+  if (settings.keyType !== "paddle" || isControl(e.target)) return;
+  e.preventDefault();
+  unlockAudio();
+  pressElement("dah");
+  releaseElement("dah");
 });
 
 // --- Init --------------------------------------------------------------------
