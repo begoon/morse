@@ -95,6 +95,17 @@ function updateMistakes(): void {
     saveMistakes(set);
 }
 
+/** Record a single answer as it's made, so leaving a run mid-way still captures
+ * it (the workout pool updates live, not only on finish). */
+function recordAnswer(i: number): void {
+    const q = run[i]!;
+    const key = questionKey(q.source);
+    const set = loadMistakes();
+    if (picks[i] === q.answer) set.delete(key);
+    else set.add(key);
+    saveMistakes(set);
+}
+
 // --- Shared question pieces ------------------------------------------------
 
 function origin(q: RunQuestion): string {
@@ -200,7 +211,7 @@ function Option(text: string, i: number, q: RunQuestion, pick: number | null, lo
         class: cls.join(" "),
         "data-i": i,
         disabled: locked,
-        ...(locked ? {} : { on: { click: () => { picks[idx] = i; show(QuizScreen); } } }),
+        ...(locked ? {} : { on: { click: () => { picks[idx] = i; recordAnswer(idx); show(QuizScreen); } } }),
     }, h("span", { class: "letter" }, LETTERS[i]!), h("span", {}, md(text)));
 }
 
