@@ -14,6 +14,7 @@ import {
     buildRun,
     grade,
     migratePaper,
+    questionKey,
     type Paper,
     type Question,
     type RunQuestion,
@@ -29,6 +30,7 @@ const PAPERS: [Tag, number[]][] = [
 ];
 const LETTERS = ["A", "B", "C", "D"];
 const STORAGE_KEY = "morse-exam-settings";
+const MISTAKES_KEY = "morse-exam-mistakes";
 
 // --- Settings persistence --------------------------------------------------
 
@@ -58,6 +60,39 @@ function saveSettings(s: Settings): void {
     } catch {
         // storage unavailable (private mode, etc.) — ignore.
     }
+}
+
+// --- Mistakes set (the "workout" pool) -------------------------------------
+
+/** Question keys answered wrong, persisted across Combined/Workout runs. */
+function loadMistakes(): Set<string> {
+    try {
+        const arr = JSON.parse(localStorage.getItem(MISTAKES_KEY) ?? "[]");
+        return new Set(Array.isArray(arr) ? arr.filter((x): x is string => typeof x === "string") : []);
+    } catch {
+        return new Set();
+    }
+}
+
+function saveMistakes(set: Set<string>): void {
+    try {
+        localStorage.setItem(MISTAKES_KEY, JSON.stringify([...set]));
+    } catch {
+        // storage unavailable — ignore.
+    }
+}
+
+/** After a Combined/Workout run, add questions answered wrong and drop ones now
+ * answered right; unanswered questions are left as-is. */
+function updateMistakes(): void {
+    const set = loadMistakes();
+    run.forEach((q, i) => {
+        const key = questionKey(q.source);
+        const pick = picks[i];
+        if (pick === q.answer) set.delete(key);
+        else if (pick !== null && pick !== undefined) set.add(key);
+    });
+    saveMistakes(set);
 }
 
 // --- Shared question pieces ------------------------------------------------
@@ -101,6 +136,14 @@ function Choice(label: string, active: boolean, onSelect: () => void, attrs: Pro
 // --- Start screen ----------------------------------------------------------
 
 function StartScreen(): HTMLElement {
+    const mistakes = loadMistakes();
+    // A workout is only offered once a Combined run has logged wrong answers;
+    // if the persisted choice points at an empty set, fall back to the default.
+    if (settings.paper === "mistakes" && mistakes.size === 0) {
+        settings.paper = DEFAULTS.paper;
+        saveSettings(settings);
+    }
+
     const select = (paper: Paper) => {
         settings.paper = paper;
         saveSettings(settings);
@@ -113,9 +156,14 @@ function StartScreen(): HTMLElement {
         Field(tag, h("div", { class: "choices", "data-tag": tag },
             ns.map((n) => Choice(`Mock ${n}`, isPaper(tag, n), () => select({ tag, n }), { "data-paper": `${tag}-${n}` })))));
 
-    // Cross-paper modes: a 26-question topic-mixed exam, or every question.
+    // Cross-paper modes: a 26-question topic-mixed exam, or every question, plus
+    // a "workout" on previously-wrong questions once any have been logged.
     const mixed = ([["combined", "26 questions"], ["everything", `Everything (${POOL.length})`]] as const).map(
         ([mode, label]) => Choice(label, settings.paper === mode, () => select(mode), { "data-paper": mode }));
+    if (mistakes.size > 0) {
+        mixed.push(Choice(`Mistakes (${mistakes.size})`, settings.paper === "mistakes",
+            () => select("mistakes"), { "data-paper": "mistakes" }));
+    }
 
     const toggle = (id: "shuffleQuestions" | "shuffleAnswers", label: string) =>
         h("label", { class: "toggle" },
@@ -177,7 +225,7 @@ function QuizScreen(): HTMLElement {
                 : null,
             h("button", {
                 class: "primary", id: "next", disabled: immediate && pick === null,
-                on: { click: () => { if (last) show(ResultsScreen); else { idx++; show(QuizScreen); } } },
+                on: { click: () => { if (last) finishRun(); else { idx++; show(QuizScreen); } } },
             }, last ? "Finish" : "Next")),
     );
 }
@@ -223,10 +271,18 @@ let idx = 0;
 const show = (screen: () => HTMLElement) => mount(app, screen());
 
 function startRun(): void {
-    run = buildRun(POOL, settings);
+    run = buildRun(POOL, settings, Math.random, loadMistakes());
+    if (run.length === 0) return; // nothing to run (e.g. an emptied mistakes set)
     picks = run.map(() => null);
     idx = 0;
     show(QuizScreen);
+}
+
+/** Called once when a run finishes; refreshes the mistakes set for the modes
+ * that own it. */
+function finishRun(): void {
+    if (settings.paper === "combined" || settings.paper === "mistakes") updateMistakes();
+    show(ResultsScreen);
 }
 
 show(StartScreen);

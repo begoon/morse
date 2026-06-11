@@ -24,8 +24,15 @@ export type Question = {
  *   (the mocks are topic-ordered, so position N is the same topic across all
  *   papers; each position's question is drawn from a random paper).
  * - `"everything"` — every question from every paper.
+ * - `"mistakes"` — every question previously answered wrong (see the mistakes
+ *   set tracked by the runner); a "workout" on weak spots.
  */
-export type Paper = { tag: Tag; n: number } | "combined" | "everything";
+export type Paper = { tag: Tag; n: number } | "combined" | "everything" | "mistakes";
+
+/** Stable identity of a question across papers (the topic `n` repeats). */
+export function questionKey(q: Pick<Question, "tag" | "paper" | "n">): string {
+    return `${q.tag}-${q.paper}-${q.n}`;
+}
 
 export type Settings = {
     paper: Paper;
@@ -44,7 +51,7 @@ export const DEFAULTS: Settings = {
 
 /** Accept a `paper` persisted by older versions (it was once `1 | 2 | 3`). */
 export function migratePaper(paper: unknown): Paper {
-    if (paper === "combined" || paper === "everything") return paper;
+    if (paper === "combined" || paper === "everything" || paper === "mistakes") return paper;
     if (typeof paper === "number") return { tag: "rsgb", n: paper };
     if (typeof paper === "object" && paper !== null) {
         const p = paper as { tag?: unknown; n?: unknown };
@@ -76,14 +83,25 @@ export function shuffle<T>(items: readonly T[], rng: Rng): T[] {
     return out;
 }
 
-/** Assemble the question sequence for one run. */
-export function buildRun(pool: readonly Question[], s: Settings, rng: Rng = Math.random): RunQuestion[] {
+/** Assemble the question sequence for one run. `wrongKeys` is consulted only by
+ * the `"mistakes"` mode (the set of `questionKey`s answered wrong before). */
+export function buildRun(
+    pool: readonly Question[],
+    s: Settings,
+    rng: Rng = Math.random,
+    wrongKeys: ReadonlySet<string> = new Set(),
+): RunQuestion[] {
     let picked: Question[];
     if (s.paper === "everything") {
         // Every question, in source order (tag, paper, position).
         picked = [...pool].sort(
             (a, b) => a.tag.localeCompare(b.tag) || a.paper - b.paper || a.n - b.n,
         );
+    } else if (s.paper === "mistakes") {
+        // Every question previously answered wrong, in source order.
+        picked = [...pool]
+            .filter((q) => wrongKeys.has(questionKey(q)))
+            .sort((a, b) => a.tag.localeCompare(b.tag) || a.paper - b.paper || a.n - b.n);
     } else if (s.paper === "combined") {
         // One question per ordinal position 1..26 (= one per topic), each from
         // a randomly chosen paper. Built in position order.
