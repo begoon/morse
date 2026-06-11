@@ -82,22 +82,11 @@ function saveMistakes(set: Set<string>): void {
     }
 }
 
-/** After any run, add questions answered wrong and drop ones now answered
- * right; unanswered questions are left as-is. */
-function updateMistakes(): void {
-    const set = loadMistakes();
-    run.forEach((q, i) => {
-        const key = questionKey(q.source);
-        const pick = picks[i];
-        if (pick === q.answer) set.delete(key);
-        else if (pick !== null && pick !== undefined) set.add(key);
-    });
-    saveMistakes(set);
-}
-
-/** Record a single answer as it's made, so leaving a run mid-way still captures
- * it (the workout pool updates live, not only on finish). */
+/** Record a single answer as it's made (so leaving a run mid-way still captures
+ * it): wrong picks are added, correct ones removed. Only real test runs feed
+ * the set — the Workout ("mistakes") run is practice and never changes it. */
 function recordAnswer(i: number): void {
+    if (settings.paper === "mistakes") return;
     const q = run[i]!;
     const key = questionKey(q.source);
     const set = loadMistakes();
@@ -236,7 +225,7 @@ function QuizScreen(): HTMLElement {
                 : null,
             h("button", {
                 class: "primary", id: "next", disabled: immediate && pick === null,
-                on: { click: () => { if (last) finishRun(); else { idx++; show(QuizScreen); } } },
+                on: { click: () => { if (last) show(ResultsScreen); else { idx++; show(QuizScreen); } } },
             }, last ? "Finish" : "Next")),
     );
 }
@@ -287,12 +276,6 @@ function startRun(): void {
     picks = run.map(() => null);
     idx = 0;
     show(QuizScreen);
-}
-
-/** Called once when a run finishes; every run feeds the mistakes/workout set. */
-function finishRun(): void {
-    updateMistakes();
-    show(ResultsScreen);
 }
 
 show(StartScreen);
