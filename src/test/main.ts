@@ -82,8 +82,8 @@ function saveMistakes(set: Set<string>): void {
     }
 }
 
-/** After a Combined/Workout run, add questions answered wrong and drop ones now
- * answered right; unanswered questions are left as-is. */
+/** After any run, add questions answered wrong and drop ones now answered
+ * right; unanswered questions are left as-is. */
 function updateMistakes(): void {
     const set = loadMistakes();
     run.forEach((q, i) => {
@@ -137,8 +137,8 @@ function Choice(label: string, active: boolean, onSelect: () => void, attrs: Pro
 
 function StartScreen(): HTMLElement {
     const mistakes = loadMistakes();
-    // A workout is only offered once a Combined run has logged wrong answers;
-    // if the persisted choice points at an empty set, fall back to the default.
+    // A workout is offered once any run has logged wrong answers; if the
+    // persisted choice points at an empty set, fall back to the default.
     if (settings.paper === "mistakes" && mistakes.size === 0) {
         settings.paper = DEFAULTS.paper;
         saveSettings(settings);
@@ -157,7 +157,7 @@ function StartScreen(): HTMLElement {
             ns.map((n) => Choice(`Mock ${n}`, isPaper(tag, n), () => select({ tag, n }), { "data-paper": `${tag}-${n}` })))));
 
     // Cross-paper modes: a 26-question topic-mixed exam, or every question, plus
-    // a "workout" on previously-wrong questions once any have been logged.
+    // a "workout" on previously-wrong questions (from any run) once any logged.
     const mixed = ([["combined", "26 questions"], ["everything", `Everything (${POOL.length})`]] as const).map(
         ([mode, label]) => Choice(label, settings.paper === mode, () => select(mode), { "data-paper": mode }));
     if (mistakes.size > 0) {
@@ -278,10 +278,9 @@ function startRun(): void {
     show(QuizScreen);
 }
 
-/** Called once when a run finishes; refreshes the mistakes set for the modes
- * that own it. */
+/** Called once when a run finishes; every run feeds the mistakes/workout set. */
 function finishRun(): void {
-    if (settings.paper === "combined" || settings.paper === "mistakes") updateMistakes();
+    updateMistakes();
     show(ResultsScreen);
 }
 
