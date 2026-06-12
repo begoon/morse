@@ -10,9 +10,8 @@ import { Decoder } from "../decoder";
 import { Sidetone } from "../audio";
 import { IambicKeyer } from "../keyer-iambic";
 import { StraightKeyer } from "../keyer-straight";
-import { ditMs, thresholds, UNITS } from "../timing";
-import { encodeWord } from "../morse";
-import { playPattern, type PlayHandle } from "../player";
+import { ditMs, thresholds } from "../timing";
+import { encode } from "../morse";
 import * as Settings from "../settings";
 import { complete, SYSTEM_PROMPT, type ChatMessage } from "./ai";
 import { detectSend } from "./trigger";
@@ -34,6 +33,8 @@ const showMorseEl = document.getElementById("showMorse") as HTMLInputElement;
 // Running transcript sent to the AI for context (system prompt first).
 const messages: ChatMessage[] = [{ role: "system", content: SYSTEM_PROMPT }];
 let awaiting = false;
+let lastReply: string | null = null; // most recent AI answer, for "r" replay
+let lastBubble: HTMLElement | null = null; // its bubble, for replay highlighting
 
 // --- Decoder / keyer (the operator's input) ---------------------------------
 const th = thresholds(settings.wpm);
@@ -104,9 +105,16 @@ window.addEventListener("keydown", (e) => {
       return;
     }
   }
-  if (e.code === "Space") {
+  // Space or "c" clears the in-progress input.
+  if (e.code === "Space" || e.code === "KeyC") {
     e.preventDefault();
     decoder.reset();
+    return;
+  }
+  // "r" replays the last AI answer as CW.
+  if (e.code === "KeyR") {
+    e.preventDefault();
+    if (lastReply) void playReply(lastReply, lastBubble);
   }
 });
 
@@ -185,25 +193,70 @@ function addBubble(log: HTMLElement, text: string, cls: string): HTMLElement {
   return el;
 }
 
-/** Render the AI text into "<letters>" / "<morse>" per the display checkboxes. */
-function morseOf(text: string): string {
+// Flat per-word/per-letter/per-element model of the reply, skipping characters
+// not in the alphabet table. Shared by rendering and playback so each element's
+// span (keyed by letter index `li` + element index `ei`) lines up with the tone
+// being played, enabling the synchronized highlight.
+type Letter = { li: number; char: string; elements: string[] };
+function buildModel(text: string): Letter[][] {
+  let li = 0;
   return text
     .toUpperCase()
     .split(/\s+/)
-    .map((w) => encodeWord(w, settings.language))
     .filter(Boolean)
-    .join("  /  ");
+    .map((word) =>
+      [...word]
+        .map((ch) => {
+          const pattern = encode(ch, settings.language);
+          return pattern ? { li: li++, char: ch, elements: [...pattern] } : null;
+        })
+        .filter((l): l is Letter => l !== null),
+    )
+    .filter((w) => w.length > 0);
 }
+
 function renderAiBubble(el: HTMLElement) {
   const text = el.dataset.text ?? "";
   el.textContent = "";
+  const model = buildModel(text);
   const showLetters = settings.chatShowLetters || !settings.chatShowMorse;
-  if (showLetters) el.appendChild(document.createTextNode(text));
+  if (showLetters) {
+    const line = document.createElement("div");
+    line.className = "ai-letters";
+    model.forEach((word, wi) => {
+      if (wi) line.appendChild(document.createTextNode(" "));
+      for (const l of word) {
+        const s = document.createElement("span");
+        s.className = "ltr";
+        s.dataset.li = String(l.li);
+        s.textContent = l.char;
+        line.appendChild(s);
+      }
+    });
+    el.appendChild(line);
+  }
   if (settings.chatShowMorse) {
-    const m = document.createElement("span");
-    m.className = "morse";
-    m.textContent = morseOf(text);
-    el.appendChild(m);
+    const line = document.createElement("div");
+    line.className = "ai-morse morse";
+    model.forEach((word, wi) => {
+      if (wi) line.appendChild(document.createTextNode("  /  "));
+      word.forEach((l, k) => {
+        if (k) line.appendChild(document.createTextNode(" "));
+        const lspan = document.createElement("span");
+        lspan.className = "m-ltr";
+        lspan.dataset.li = String(l.li);
+        l.elements.forEach((e, ei) => {
+          const es = document.createElement("span");
+          es.className = "m-el";
+          es.dataset.li = String(l.li);
+          es.dataset.ei = String(ei);
+          es.textContent = e;
+          lspan.appendChild(es);
+        });
+        line.appendChild(lspan);
+      });
+    });
+    el.appendChild(line);
   }
 }
 
@@ -226,11 +279,13 @@ function sendMessage(body: string) {
   complete(provider, settings.aiModel, apiKey, messages)
     .then((reply) => {
       messages.push({ role: "assistant", content: reply });
+      lastReply = reply;
+      lastBubble = bubble;
       bubble.classList.remove("pending");
       bubble.dataset.text = reply;
       renderAiBubble(bubble);
       aiLogEl.scrollTop = aiLogEl.scrollHeight;
-      void playReply(reply);
+      void playReply(reply, bubble);
     })
     .catch((err: unknown) => {
       bubble.classList.remove("pending");
@@ -242,37 +297,69 @@ function sendMessage(body: string) {
     });
 }
 
-// --- CW playback of the reply ------------------------------------------------
+// --- CW playback of the reply, with letter/element highlighting --------------
 let playTimers: ReturnType<typeof setTimeout>[] = [];
-let playHandles: PlayHandle[] = [];
+let playingBubble: HTMLElement | null = null;
+
+function clearHighlights(bubble: HTMLElement | null) {
+  bubble
+    ?.querySelectorAll(".active, .playing")
+    .forEach((e) => e.classList.remove("active", "playing"));
+}
+function setActiveLetter(bubble: HTMLElement | null, li: number) {
+  if (!bubble) return;
+  bubble.querySelectorAll(".active").forEach((e) => e.classList.remove("active"));
+  bubble
+    .querySelectorAll(`.ltr[data-li="${li}"], .m-ltr[data-li="${li}"]`)
+    .forEach((e) => e.classList.add("active"));
+}
+function setPlaying(bubble: HTMLElement | null, li: number, ei: number, on: boolean) {
+  bubble
+    ?.querySelectorAll(`.m-el[data-li="${li}"][data-ei="${ei}"]`)
+    .forEach((e) => e.classList.toggle("playing", on));
+}
+
 function stopPlayback() {
   for (const id of playTimers) clearTimeout(id);
   playTimers = [];
-  for (const h of playHandles) h.cancel();
-  playHandles = [];
+  sidetone.keyOff(); // silence if cancelled mid-element
+  clearHighlights(playingBubble);
+  playingBubble = null;
 }
-function patternDuration(pattern: string, dit: number): number {
-  let t = 0;
-  for (const sym of pattern) {
-    if (sym === " ") t += 2 * dit;
-    else t += (sym === "." ? 1 : 3) * dit + dit;
-  }
-  return t;
-}
-async function playReply(text: string) {
+
+// Schedule the reply as CW: each element keys the tone on/off and toggles its
+// span's highlight at the same instant, so the dit/dah lights up exactly as it
+// sounds; the current letter stays highlighted for its whole duration. Timing
+// is PARIS standard (1-dit intra gap, 3-dit letter gap, 7-dit word gap).
+async function playReply(text: string, bubble: HTMLElement | null) {
   stopPlayback();
   await sidetone.ensure();
+  playingBubble = bubble;
   const dit = ditMs(settings.wpm);
-  let offset = 0;
-  for (const word of text.toUpperCase().split(/\s+/).filter(Boolean)) {
-    const pattern = encodeWord(word, settings.language);
-    if (!pattern) continue;
-    const start = offset;
-    playTimers.push(
-      setTimeout(() => playHandles.push(playPattern(sidetone, pattern, dit)), start),
-    );
-    offset += patternDuration(pattern, dit) + UNITS.wordGap * dit;
-  }
+  const at = (ms: number, fn: () => void) => playTimers.push(setTimeout(fn, ms));
+  const model = buildModel(text);
+  let t = 0;
+  model.forEach((word, wi) => {
+    word.forEach((l, k) => {
+      at(t, () => setActiveLetter(bubble, l.li));
+      l.elements.forEach((e, ei) => {
+        const on = (e === "." ? 1 : 3) * dit;
+        const start = t;
+        at(start, () => {
+          sidetone.keyOn();
+          setPlaying(bubble, l.li, ei, true);
+        });
+        at(start + on, () => {
+          sidetone.keyOff();
+          setPlaying(bubble, l.li, ei, false);
+        });
+        t += on + dit; // element + 1-dit intra-element gap
+      });
+      if (k < word.length - 1) t += 2 * dit; // → 3-dit letter gap
+    });
+    if (wi < model.length - 1) t += 6 * dit; // → 7-dit word gap
+  });
+  at(t, () => clearHighlights(bubble));
 }
 
 // --- Display checkboxes ------------------------------------------------------

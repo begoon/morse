@@ -53,8 +53,8 @@ export const DEFAULTS: Settings = {
   toneHz: 600,
   keys: {
     straight: "Space",
-    dit: "Comma", // ,
-    dah: "Period", // .
+    dit: "BracketLeft", // [
+    dah: "BracketRight", // ]
   },
   aiProvider: "openai",
   aiModel: "gpt-4o-mini",
@@ -72,11 +72,15 @@ export function load(): Settings {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return { ...DEFAULTS };
     const parsed = JSON.parse(raw) as Partial<Settings>;
-    return {
-      ...DEFAULTS,
-      ...parsed,
-      keys: { ...DEFAULTS.keys, ...(parsed.keys ?? {}) },
-    };
+    const keys = { ...DEFAULTS.keys, ...(parsed.keys ?? {}) };
+    // Migrate the previous default keying keys (Comma/Period) to the current
+    // ones. There's no UI to customise keys, so a persisted Comma/Period pair
+    // is only ever a stale default snapshot — safe to upgrade in place.
+    if (keys.dit === "Comma" && keys.dah === "Period") {
+      keys.dit = DEFAULTS.keys.dit;
+      keys.dah = DEFAULTS.keys.dah;
+    }
+    return { ...DEFAULTS, ...parsed, keys };
   } catch {
     return { ...DEFAULTS };
   }

@@ -107,8 +107,8 @@ window.addEventListener("keydown", (e) => {
       return;
     }
   }
-  // Space clears the output (unless it's bound as a keying key above).
-  if (e.code === "Space") {
+  // Space or "c" clears the output (unless bound as a keying key above).
+  if (e.code === "Space" || e.code === "KeyC") {
     e.preventDefault();
     periodRun = 0;
     decoder.reset();

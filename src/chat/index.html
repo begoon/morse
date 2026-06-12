@@ -82,6 +82,22 @@
         white-space: pre-wrap;
         overflow-wrap: anywhere;
       }
+      /* Playback highlight: current letter (whole letter) + current element. */
+      .chat-msg .ltr,
+      .chat-msg .m-ltr,
+      .chat-msg .m-el {
+        padding: 0 1px;
+        border-radius: 3px;
+      }
+      .chat-msg .ltr.active,
+      .chat-msg .m-ltr.active {
+        background: var(--accent);
+        color: #fff;
+      }
+      .chat-msg .m-el.playing {
+        background: #fff;
+        color: var(--accent);
+      }
       .chat-toggles {
         display: flex;
         gap: 0.9rem;
@@ -119,11 +135,11 @@
       </div>
       <div class="chat-col chat-ai">
         <h2>AI</h2>
+        <div id="aiLog" class="chat-log"></div>
         <div class="chat-toggles">
           <label><input type="checkbox" id="showLetters" /> Letter</label>
           <label><input type="checkbox" id="showMorse" /> Morse</label>
         </div>
-        <div id="aiLog" class="chat-log"></div>
       </div>
     </div>
 
