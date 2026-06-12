@@ -234,6 +234,17 @@ h1 {
   border-radius: 6px;
 }
 
+.panel input[type="text"],
+.panel input[type="password"] {
+  width: 100%;
+  font: inherit;
+  padding: 0.25rem 0.5rem;
+  background: var(--panel);
+  color: var(--fg);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}
+
 .panel .val {
   font-variant-numeric: tabular-nums;
   color: var(--fg);

@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Morse Trainer — Chat</title>
+    <style>
+      .chat {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.75rem;
+        width: 100%;
+        max-width: 640px;
+      }
+      .chat-col {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        min-width: 0;
+      }
+      .chat-col h2 {
+        font-size: 0.85rem;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin: 0;
+      }
+      .chat-log {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 0.6rem;
+        height: 40vh;
+        overflow-y: auto;
+      }
+      .chat-ai .chat-log {
+        align-items: flex-end;
+        text-align: right;
+      }
+      .chat-msg {
+        font-size: 0.95rem;
+        line-height: 1.35;
+        padding: 0.35rem 0.55rem;
+        border-radius: 8px;
+        background: var(--bg);
+        max-width: 95%;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+      }
+      .chat-ai .chat-msg {
+        background: var(--accent-dim);
+        color: var(--fg);
+      }
+      .chat-msg.pending {
+        color: var(--muted);
+      }
+      .chat-msg.error {
+        background: transparent;
+        color: #b3261e;
+        font-size: 0.85rem;
+      }
+      .chat-msg .morse {
+        font-family: "SF Mono", ui-monospace, "Cascadia Code", monospace;
+        letter-spacing: 0.08em;
+        color: var(--accent);
+        display: block;
+        margin-top: 0.15rem;
+      }
+      .chat-ai .chat-msg .morse {
+        color: var(--fg);
+      }
+      .chat-live {
+        min-height: 1.4em;
+        font-family: "SF Mono", ui-monospace, "Cascadia Code", monospace;
+        font-size: 1rem;
+        color: var(--accent);
+        padding: 0.2rem 0.1rem;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+      }
+      .chat-toggles {
+        display: flex;
+        gap: 0.9rem;
+        font-size: 0.85rem;
+        color: var(--muted);
+      }
+      .chat-toggles label {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        cursor: pointer;
+      }
+    </style>
+  <style>:root{--buncss-light:initial;--buncss-dark: ;color-scheme:light;--bg:#f5f7fa;--panel:#fff;--fg:#1c2430;--muted:#5d6b7a;--accent:#0e87b6;--accent-dim:#8ccfe8;--ok:#1f883d;--line:#d0d7de}*{box-sizing:border-box}body{background:var(--bg);color:var(--fg);display:flex;flex-direction:column;align-items: center;gap:1rem;min-height:100vh;margin:0;padding:1.5rem .6rem 2.5rem;font-family:system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Noto Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif}h1{letter-spacing:.04em;margin:0;font-size:1.4rem;font-weight:600}.topnav{display:flex;align-items:baseline;gap:1rem;width:100%;max-width:640px;font-size:.95rem}.topnav a{color:var(--muted);text-decoration:none}.topnav a:hover{color:var(--fg)}.topnav a:first-child{color:var(--fg);letter-spacing:.04em;margin-right:auto;font-weight:600}.topnav a.current{color:var(--accent)}.menu{display:flex;flex-direction:column;gap:.75rem;width:100%;max-width:480px}.menu-item{display:flex;background:var(--panel);border:1px solid var(--line);color:var(--fg);text-decoration:none;border-radius:12px;flex-direction:column;gap:.25rem;padding:1rem 1.25rem}.menu-item:hover{border-color:var(--accent-dim)}.menu-item strong{color:var(--accent);letter-spacing:.04em}.menu-item span{color:var(--muted);font-size:.9rem}#output{display:flex;background:var(--panel);border:1px solid var(--line);letter-spacing:.1em;white-space:pre;overflow:hidden;border-radius:12px;justify-content:center;align-items: center;width:100%;min-height:4rem;padding:.75rem 1.25rem;font-family:SF Mono,ui-monospace,Cascadia Code,monospace;font-size:clamp(1.5rem,4vw,2.75rem);font-weight:600}#output.multiline{display:block;text-align:left;white-space:pre-wrap;overflow-wrap:anywhere;overflow-y:auto;height:calc(8.4em + 1.5rem);font-size:clamp(1.2rem,5vw,1.9rem);line-height:1.4}.grow{width:100%;max-width:640px}.grow-3{flex:7 1 0}.grow-1{flex:1 1 0}.challenge{cursor:pointer;color:var(--accent)}.challenge .slot{display:inline-block;text-align:center;min-width:.8em;margin:0 .06em}.challenge .slot.done{color:var(--fg)}#morse{display:flex;color:var(--accent);letter-spacing:.35em;flex-wrap:wrap;justify-content:center;align-items: center;gap:.4rem 2.6rem;width:100%;max-width:640px;font-family:SF Mono,ui-monospace,monospace;font-size:1.4rem}#morse:empty{display:none}.morse-letter{white-space:nowrap}#history .revealed{color:var(--accent);background:#0e87b626;border-radius:4px;padding:0 .15em;font-weight:700}#output{transition:color .12s ease-out}#output.ok{color:var(--ok)}#output.bad{color:#cf222e}#history{color:var(--muted);letter-spacing:.15em;white-space:pre;overflow:hidden;max-width:100%;min-height:1.4em;font-family:SF Mono,ui-monospace,Cascadia Code,monospace;font-size:1.1rem}#hints{color:var(--muted);text-align:center;min-height:1.2em;font-size:.9rem}.panel{display:grid;grid-template-columns:max-content 1fr max-content;align-items: center;gap:.9rem 1rem;padding:.75rem .5rem .5rem}.panel label{color:var(--muted);font-size:.9rem}.panel select,.panel input[type=range]{width:100%}.panel input[type=number]{font:inherit;background:var(--panel);color:var(--fg);border:1px solid var(--line);border-radius:6px;justify-self:start;width:5rem;padding:.25rem .5rem}.panel input[type=text],.panel input[type=password]{font:inherit;background:var(--panel);color:var(--fg);border:1px solid var(--line);border-radius:6px;width:100%;padding:.25rem .5rem}.panel .val{font-variant-numeric:tabular-nums;color:var(--fg);text-align:right;min-width:3.5rem}.settings .note{color:var(--muted);margin:.75rem .5rem 0;font-size:.85rem;line-height:1.4}.actions{display:flex;gap:.75rem;width:100%;max-width:640px}.action-btn{font:inherit;cursor:pointer;border:1px solid var(--accent-dim);color:var(--accent);touch-action:manipulation;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent;background:0 0;border-radius:12px;flex:1;min-height:3rem;font-size:1rem}.action-btn:hover,.action-btn:active{background:var(--accent-dim);color:var(--fg)}.keypad{display:flex;align-items:stretch;gap:.75rem;width:100%;max-width:640px}.keypad-btn{font:inherit;cursor:pointer;border:1px solid var(--accent-dim);color:var(--accent);touch-action:none;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent;background:0 0;border-radius:12px}.keypad-element{flex:1;min-height:4.5rem;font-size:2.25rem;font-weight:600;line-height:1}.keypad-element.pressed{background:var(--accent-dim);color:var(--fg)}.keypad-clear{flex:none;padding:0 1.1rem;font-size:.9rem}.keypad-clear:hover{background:var(--accent-dim);color:var(--fg)}.cheatsheet,.settings{background:var(--panel);border:1px solid var(--line);border-radius:12px;width:100%;padding:.6rem 1rem 1rem}.cheatsheet summary,.settings summary{cursor:pointer;color:var(--muted);letter-spacing:.04em;user-select:none;padding:.4rem 0;font-size:.95rem}.cheat-board{display:flex;flex-wrap:wrap;justify-content:center;align-items: center;gap:.6rem;margin-top:.5rem}.cheat-keyboard{display:flex;flex-direction:column;gap:.3rem}.cheat-punct{display:flex;flex-direction:column;align-self: flex-start;gap:.3rem}.cheat-row{display:flex;flex-wrap:nowrap;gap:.3rem}.cheat-key{display:flex;background:var(--bg);border:1px solid var(--line);border-radius:6px;flex-direction:column;flex:none;align-items: center;gap:.15rem;min-width:2.4rem;padding:.25rem .35rem}.guessable .cheat-key{cursor:pointer;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent}.cheat-key .cheat-char{font-size:.95rem}.cheat-key.target{border-color:var(--accent);background:#0e87b61f}.cheat-key.target .cheat-char{color:var(--accent)}.cheat-key .cheat-pattern{font-size:.7rem}@keyframes key-splash{0%{background:var(--ok);border-color:var(--ok);transform:scale(1.18)}to{background:var(--bg);border-color:var(--line);transform:scale(1)}}.cheat-key.splash{animation:key-splash .35s ease-out}.hide-morse .cheat-pattern{display:none}.hide-morse .cheat-key.reveal .cheat-pattern{display:block}.cheat-char{min-width:1.1em;font-weight:600}.cheat-pattern{color:var(--accent);letter-spacing:.02em;font-family:SF Mono,ui-monospace,monospace}@media (max-width:480px){body{gap:.75rem;padding:.75rem .3rem 1.5rem}.cheatsheet,.settings{padding:.5rem .5rem .75rem}.cheat-board{gap:.4rem}.cheat-row{flex-wrap:wrap;margin-left:0!important}.cheat-punct{flex-flow:wrap;align-self:stretch}.cheat-key{min-width:1.9rem;padding:.2rem .25rem}.cheat-key .cheat-char{font-size:.8rem}.cheat-key .cheat-pattern{font-size:.6rem}}
+</style><script type="module">var q={A:".-",B:"-...",C:"-.-.",D:"-..",E:".",F:"..-.",G:"--.",H:"....",I:"..",J:".---",K:"-.-",L:".-..",M:"--",N:"-.",O:"---",P:".--.",Q:"--.-",R:".-.",S:"...",T:"-",U:"..-",V:"...-",W:".--",X:"-..-",Y:"-.--",Z:"--..","0":"-----","1":".----","2":"..---","3":"...--","4":"....-","5":".....","6":"-....","7":"--...","8":"---..","9":"----.",".":".-.-.-",",":"--..--","?":"..--..","'":".----.","!":"-.-.--","/":"-..-.","(":"-.--.",")":"-.--.-","&":".-...",":":"---...",";":"-.-.-.","=":"-...-","+":".-.-.","-":"-....-",_:"..--.-",'"':".-..-.","@":".--.-."},I={А:".-",Б:"-...",В:".--",Г:"--.",Д:"-..",Е:".",Ж:"...-",З:"--..",И:"..",Й:".---",К:"-.-",Л:".-..",М:"--",Н:"-.",О:"---",П:".--.",Р:".-.",С:"...",Т:"-",У:"..-",Ф:"..-.",Х:"....",Ц:"-.-.",Ч:"---.",Ш:"----",Щ:"--.-",Ъ:"--.--",Ы:"-.--",Ь:"-..-",Э:"..-..",Ю:"..--",Я:".-.-","0":"-----","1":".----","2":"..---","3":"...--","4":"....-","5":".....","6":"-....","7":"--...","8":"---..","9":"----.",".":"......",",":".-.-.-","?":"..--..","/":"-..-.","-":"-....-"};function $(a){let r={};for(let[e,c]of Object.entries(a))if(!(c in r))r[c]=e;return r}var M={en:$(q),ru:$(I)};function E(a){return a==="ru"?I:q}function V(a,r){if(a==="")return"";return M[r][a]??"?"}function aa(a,r){return E(r)[a.toUpperCase()]}function y(a,r){return[...a].map((e)=>aa(e,r)).filter((e)=>!!e).join(" ")}var ra={set:(a,r)=>setTimeout(a,r),clear:(a)=>clearTimeout(a)};class w{opts;timers;pattern="";text="";letterTimer=null;wordTimer=null;constructor(a){this.opts={language:a.language,letterGapMs:a.letterGapMs,wordGapMs:a.wordGapMs,maxChars:a.maxChars??10,onChange:a.onChange,onChar:a.onChar},this.timers=a.timers??ra}setLanguage(a){this.opts.language=a}setGaps(a,r){this.opts.letterGapMs=a,this.opts.wordGapMs=r}get state(){return{text:this.text,pattern:this.pattern}}elementStart(){this.cancelTimers()}element(a){this.cancelTimers(),this.pattern+=a,this.emit(),this.letterTimer=this.timers.set(()=>this.flushLetter(),this.opts.letterGapMs)}flushLetter(){if(this.cancelTimers(),this.pattern==="")return;let a=V(this.pattern,this.opts.language);this.pattern="",this.append(a);let r=this.opts.wordGapMs-this.opts.letterGapMs;this.wordTimer=this.timers.set(()=>this.flushWord(),Math.max(0,r))}flushWord(){if(this.cancelTimers(),this.text.length>0&&!this.text.endsWith(" "))this.append(" ")}reset(){this.cancelTimers(),this.pattern="",this.text="",this.emit()}append(a){if(this.text+=a,this.text.length>this.opts.maxChars)this.text=this.text.slice(-this.opts.maxChars);this.opts.onChar?.(a),this.emit()}cancelTimers(){if(this.letterTimer!==null)this.timers.clear(this.letterTimer),this.letterTimer=null;if(this.wordTimer!==null)this.timers.clear(this.wordTimer),this.wordTimer=null}emit(){this.opts.onChange?.(this.state)}}function ea(){let e=new Uint8Array(8044),c=new DataView(e.buffer),o=(i,p)=>{for(let l=0;l<p.length;l++)c.setUint8(i+l,p.charCodeAt(l))};o(0,"RIFF"),c.setUint32(4,8036,!0),o(8,"WAVE"),o(12,"fmt "),c.setUint32(16,16,!0),c.setUint16(20,1,!0),c.setUint16(22,1,!0),c.setUint32(24,8000,!0),c.setUint32(28,8000,!0),c.setUint16(32,1,!0),c.setUint16(34,8,!0),o(36,"data"),c.setUint32(40,8000,!0),e.fill(128,44);let t="";for(let i=0;i<e.length;i++)t+=String.fromCharCode(e[i]);return"data:audio/wav;base64,"+btoa(t)}class b{ctx=null;osc=null;gain=null;freq=600;volume=0.2;playbackEnabled=!1;silentAudio=null;setTone(a){if(this.freq=a,this.osc&&this.ctx)this.osc.frequency.setValueAtTime(a,this.ctx.currentTime)}setVolume(a){this.volume=Math.max(0,Math.min(1,a))}enablePlaybackSession(){if(this.playbackEnabled)return;this.playbackEnabled=!0;let a=navigator.audioSession;if(a)try{a.type="playback"}catch{}try{let r=new Audio(ea());r.loop=!0,r.setAttribute("playsinline",""),this.silentAudio=r,r.play().catch(()=>{})}catch{}}async ensure(){if(this.enablePlaybackSession(),!this.ctx){let a=window.AudioContext||window.webkitAudioContext;this.ctx=new a,this.gain=this.ctx.createGain(),this.gain.gain.value=0,this.gain.connect(this.ctx.destination),this.osc=this.ctx.createOscillator(),this.osc.type="sine",this.osc.frequency.value=this.freq,this.osc.connect(this.gain),this.osc.start()}if(this.ctx.state==="suspended")await this.ctx.resume()}keyOn(){if(!this.ctx||!this.gain)return;let a=this.ctx.currentTime;this.gain.gain.cancelScheduledValues(a),this.gain.gain.setValueAtTime(this.gain.gain.value,a),this.gain.gain.linearRampToValueAtTime(this.volume,a+0.005)}keyOff(){if(!this.ctx||!this.gain)return;let a=this.ctx.currentTime;this.gain.gain.cancelScheduledValues(a),this.gain.gain.setValueAtTime(this.gain.gain.value,a),this.gain.gain.linearRampToValueAtTime(0,a+0.005)}async error(){if(await this.ensure(),!this.ctx)return;let a=this.ctx.currentTime,r=this.ctx.createOscillator(),e=this.ctx.createGain();r.type="square",r.frequency.value=160,r.connect(e),e.connect(this.ctx.destination),e.gain.setValueAtTime(0,a),e.gain.linearRampToValueAtTime(this.volume,a+0.005),e.gain.setValueAtTime(this.volume,a+0.18),e.gain.linearRampToValueAtTime(0,a+0.2),r.start(a),r.stop(a+0.22)}}class z{hooks;paddle={dit:!1,dah:!1};ditMemory=!1;dahMemory=!1;last=null;running=!1;timer=null;mode="A";currentEl=null;oppositeSeen=!1;constructor(a){this.hooks=a}setMode(a){this.mode=a}setDit(a){if(this.paddle.dit=a,a){if(this.currentEl==="-")this.oppositeSeen=!0;this.start()}}setDah(a){if(this.paddle.dah=a,a){if(this.currentEl===".")this.oppositeSeen=!0;this.start()}}stop(){if(this.timer)clearTimeout(this.timer);this.timer=null,this.running=!1,this.paddle.dit=this.paddle.dah=!1,this.ditMemory=this.dahMemory=!1,this.last=null,this.currentEl=null,this.oppositeSeen=!1,this.hooks.toneOff(),this.hooks.setActive?.(null)}start(){if(!this.running)this.running=!0,this.nextElement()}nextElement(){let a=this.paddle.dit||this.ditMemory,r=this.paddle.dah||this.dahMemory;this.ditMemory=!1,this.dahMemory=!1;let e;if(a&&r)e=this.last==="."?"-":".";else if(a)e=".";else if(r)e="-";else{this.running=!1,this.last=null,this.hooks.setActive?.(null);return}this.last=e,this.sendElement(e)}sendElement(a){let r=this.hooks.ditMs(),e=(a==="."?1:3)*r;this.currentEl=a,this.oppositeSeen=a==="."?this.paddle.dah:this.paddle.dit,this.hooks.onElementStart?.(),this.hooks.toneOn(),this.hooks.setActive?.(a),this.timer=setTimeout(()=>{this.hooks.toneOff(),this.hooks.setActive?.(null),this.hooks.onElement(a);let c=a==="."?this.paddle.dah:this.paddle.dit;if(this.mode==="B"?c||this.oppositeSeen:c)if(a===".")this.dahMemory=!0;else this.ditMemory=!0;this.currentEl=null,this.timer=setTimeout(()=>this.nextElement(),r)},e)}}function u(a){return 1200/a}var j={dit:1,dah:3,intraGap:1,letterGap:3,wordGap:7};function v(a){let r=u(a);return{ditMs:r,pressDitDah:2*r,gapLetter:2*r,gapWord:5*r}}function ca(a,r){return a<v(r).pressDitDah?".":"-"}class C{hooks;now;pressedAt=null;constructor(a){this.hooks=a,this.now=a.now??(()=>performance.now())}down(){if(this.pressedAt!==null)return;this.pressedAt=this.now(),this.hooks.onElementStart?.(),this.hooks.toneOn(),this.hooks.setActive?.(".")}up(){if(this.pressedAt===null)return;let a=this.now()-this.pressedAt;this.pressedAt=null,this.hooks.toneOff(),this.hooks.setActive?.(null),this.hooks.onElement(ca(a,this.hooks.wpm()))}stop(){if(this.pressedAt!==null)this.pressedAt=null,this.hooks.toneOff(),this.hooks.setActive?.(null)}}function H(a,r,e){let c=[],o=0;for(let t of r){if(t===" "){o+=2*e;continue}let i=(t==="."?1:3)*e;c.push(setTimeout(()=>a.keyOn(),o)),c.push(setTimeout(()=>a.keyOff(),o+i)),o+=i+e}return{cancel(){for(let t of c)clearTimeout(t);a.keyOff()}}}var x={keyType:"paddle",iambicMode:"A",language:"en",wordLength:1,wpm:10,autoRevealSec:0,gapTolerance:1.5,volume:0.2,toneHz:600,keys:{straight:"Space",dit:"Comma",dah:"Period"},aiProvider:"openai",aiModel:"gpt-4o-mini",openaiKey:"",geminiKey:"",anthropicKey:"",chatShowLetters:!0,chatShowMorse:!0};function N(){try{let a=localStorage.getItem("morse-trainer-settings");if(!a)return{...x};let r=JSON.parse(a);return{...x,...r,keys:{...x.keys,...r.keys??{}}}}catch{return{...x}}}function P(a){try{localStorage.setItem("morse-trainer-settings",JSON.stringify(a))}catch{}}var W="You are a friendly amateur-radio operator chatting in Morse code (CW) on the air. ALWAYS reply with just 2 to 5 words. Use common, short words and standard CW abbreviations where natural (e.g. 73, GM, GE, GA, TNX, FB, OM, UR, RST, QTH, HW, CUL, R, ES, HI, WX, RIG, ANT). Write in UPPERCASE. Avoid punctuation other than a trailing K. Never explain yourself or add notes.";function oa(a,r,e,c){if(a==="openai")return{url:"https://api.openai.com/v1/chat/completions",init:{method:"POST",headers:{"Content-Type":"application/json",Authorization:`Bearer ${e}`},body:JSON.stringify({model:r,messages:c,max_tokens:32,temperature:0.8})}};if(a==="anthropic"){let i=c.find((l)=>l.role==="system")?.content,p=c.filter((l)=>l.role!=="system").map((l)=>({role:l.role,content:l.content}));return{url:"https://api.anthropic.com/v1/messages",init:{method:"POST",headers:{"content-type":"application/json","x-api-key":e,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},body:JSON.stringify({model:r,max_tokens:64,...i?{system:i}:{},messages:p})}}}let o=c.find((i)=>i.role==="system")?.content,t=c.filter((i)=>i.role!=="system").map((i)=>({role:i.role==="assistant"?"model":"user",parts:[{text:i.content}]}));return{url:`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(r)}:generateContent?key=${encodeURIComponent(e)}`,init:{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({...o?{systemInstruction:{parts:[{text:o}]}}:{},contents:t,generationConfig:{maxOutputTokens:32,temperature:0.8}})}}}function ia(a,r){let e=r;if(a==="anthropic"&&e?.stop_reason==="refusal")throw Error("The AI declined to respond.");let c=a==="openai"?e?.choices?.[0]?.message?.content:a==="anthropic"?e?.content?.filter((o)=>o?.type==="text").map((o)=>o?.text).join(""):e?.candidates?.[0]?.content?.parts?.map((o)=>o?.text).join("");if(typeof c!=="string"||!c.trim())throw Error("Empty response from the AI.");return c.trim()}async function G(a,r,e,c){if(!e)throw Error(`Set your ${a==="openai"?"OpenAI":a==="anthropic"?"Anthropic":"Gemini"} API key in Settings.`);let{url:o,init:t}=oa(a,r,e,c),i=new AbortController,p=setTimeout(()=>i.abort(),30000),l;try{l=await fetch(o,{...t,signal:i.signal})}catch{throw Error("Network error or timeout reaching the AI.")}finally{clearTimeout(p)}if(!l.ok){let Z=await l.text().catch(()=>"");throw Error(`AI error ${l.status}: ${Z.slice(0,200)||l.statusText}`)}return ia(a,await l.json())}function S(a){if(a.trimEnd().endsWith(".")){let c=a.trimEnd().replace(/\.+$/,"").trim();return{send:c.length>0,body:c}}let r=a.trim().split(/\s+/),e=r[r.length-1];if(e==="K"||e==="KK"){let c=r.slice(0,-1).join(" ").trim();return{send:c.length>0,body:c}}return{send:!1,body:a}}var n=N(),m=new b;m.setTone(n.toneHz);m.setVolume(n.volume);var la=document.getElementById("youLog"),k=document.getElementById("aiLog"),ta=document.getElementById("live"),ma=document.getElementById("key-dit"),ha=document.getElementById("key-dah"),pa=document.getElementById("clear"),X=document.getElementById("showLetters"),Y=document.getElementById("showMorse"),s=[{role:"system",content:W}],F=!1,L=v(n.wpm),h=new w({language:n.language,letterGapMs:L.gapLetter*n.gapTolerance,wordGapMs:L.gapWord*n.gapTolerance,maxChars:120,onChange:(a)=>{ta.textContent=a.text+(a.pattern?" "+a.pattern:"")||" "},onChar:()=>{if(F)return;let{send:a,body:r}=S(h.state.text);if(a)da(r)}}),g=new z({ditMs:()=>u(n.wpm),toneOn:()=>m.keyOn(),toneOff:()=>m.keyOff(),onElementStart:()=>h.elementStart(),onElement:(a)=>h.element(a)});g.setMode(n.iambicMode);var O=new C({wpm:()=>n.wpm,toneOn:()=>m.keyOn(),toneOff:()=>m.keyOff(),onElementStart:()=>h.elementStart(),onElement:(a)=>h.element(a)});function T(){m.ensure()}function f(a){if(T(),n.keyType==="straight")O.down();else if(a==="dit")g.setDit(!0);else g.setDah(!0)}function d(a){if(n.keyType==="straight")O.up();else if(a==="dit")g.setDit(!1);else g.setDah(!1)}window.addEventListener("keydown",(a)=>{if(a.repeat)return;if(n.keyType==="straight"){if(a.code===n.keys.straight){a.preventDefault(),f("dit");return}}else if(a.code===n.keys.dit){a.preventDefault(),f("dit");return}else if(a.code===n.keys.dah){a.preventDefault(),f("dah");return}if(a.code==="Space")a.preventDefault(),h.reset()});window.addEventListener("keyup",(a)=>{if(n.keyType==="straight"){if(a.code===n.keys.straight)d("dit")}else if(a.code===n.keys.dit)d("dit");else if(a.code===n.keys.dah)d("dah")});function A(a,r){let e=!1,c=()=>{if(e)return;e=!0,a.classList.add("pressed"),f(r)},o=()=>{if(!e)return;e=!1,a.classList.remove("pressed"),d(r)};a.addEventListener("touchstart",(i)=>{i.preventDefault(),c()},{passive:!1});let t=(i)=>{i.preventDefault(),o()};a.addEventListener("touchend",t,{passive:!1}),a.addEventListener("touchcancel",t,{passive:!1}),a.addEventListener("mousedown",(i)=>{if(i.button!==0)return;i.preventDefault(),c()}),window.addEventListener("mouseup",o)}A(ma,"dit");A(ha,"dah");pa.addEventListener("click",()=>h.reset());function B(a){if(n.keyType!=="paddle")return null;if(a===0)return"dit";if(a===2)return"dah";return null}function U(a){return!!a?.closest?.("button, a, summary, input, label")}window.addEventListener("mousedown",(a)=>{let r=B(a.button);if(!r||U(a.target))return;a.preventDefault(),T(),f(r)});window.addEventListener("mouseup",(a)=>{let r=B(a.button);if(r)d(r)});window.addEventListener("contextmenu",(a)=>{if(n.keyType==="paddle"&&!U(a.target))a.preventDefault()});function _(a,r,e){let c=document.createElement("div");return c.className="chat-msg "+e,c.textContent=r,a.appendChild(c),a.scrollTop=a.scrollHeight,c}function fa(a){return a.toUpperCase().split(/\s+/).map((r)=>y(r,n.language)).filter(Boolean).join("  /  ")}function K(a){let r=a.dataset.text??"";if(a.textContent="",n.chatShowLetters||!n.chatShowMorse)a.appendChild(document.createTextNode(r));if(n.chatShowMorse){let c=document.createElement("span");c.className="morse",c.textContent=fa(r),a.appendChild(c)}}function da(a){R(),_(la,a,"you"),h.reset(),s.push({role:"user",content:a}),F=!0;let r=_(k,"…","ai pending"),e=n.aiProvider,c=e==="openai"?n.openaiKey:e==="anthropic"?n.anthropicKey:n.geminiKey;G(e,n.aiModel,c,s).then((o)=>{s.push({role:"assistant",content:o}),r.classList.remove("pending"),r.dataset.text=o,K(r),k.scrollTop=k.scrollHeight,ua(o)}).catch((o)=>{r.classList.remove("pending"),r.classList.add("error"),r.textContent=o instanceof Error?o.message:String(o)}).finally(()=>{F=!1})}var J=[],Q=[];function R(){for(let a of J)clearTimeout(a);J=[];for(let a of Q)a.cancel();Q=[]}function ga(a,r){let e=0;for(let c of a)if(c===" ")e+=2*r;else e+=(c==="."?1:3)*r+r;return e}async function ua(a){R(),await m.ensure();let r=u(n.wpm),e=0;for(let c of a.toUpperCase().split(/\s+/).filter(Boolean)){let o=y(c,n.language);if(!o)continue;let t=e;J.push(setTimeout(()=>Q.push(H(m,o,r)),t)),e+=ga(o,r)+j.wordGap*r}}X.checked=n.chatShowLetters;Y.checked=n.chatShowMorse;function D(){n.chatShowLetters=X.checked,n.chatShowMorse=Y.checked,P(n);for(let a of k.querySelectorAll(".chat-msg.ai:not(.error):not(.pending)"))K(a)}X.addEventListener("change",D);Y.addEventListener("change",D);h.reset();
+</script></head>
+  <body>
+    <nav class="topnav">
+      <a href="../">Morse Trainer</a>
+      <a href="../play/">Play</a>
+      <a href="../keying/">Keying</a>
+      <a href="../chat/" class="current" aria-current="page">Chat</a>
+      <a href="../test/">Test</a>
+      <a href="../settings/">Settings</a>
+    </nav>
+
+    <div id="hints">
+      Key a message, then key <strong>K</strong>, <strong>KK</strong>, or
+      <strong>.</strong> (·−·−·−) to send.
+    </div>
+
+    <div class="chat">
+      <div class="chat-col chat-you">
+        <h2>You</h2>
+        <div id="youLog" class="chat-log"></div>
+        <div id="live" class="chat-live"> </div>
+      </div>
+      <div class="chat-col chat-ai">
+        <h2>AI</h2>
+        <div class="chat-toggles">
+          <label><input type="checkbox" id="showLetters" /> Letter</label>
+          <label><input type="checkbox" id="showMorse" /> Morse</label>
+        </div>
+        <div id="aiLog" class="chat-log"></div>
+      </div>
+    </div>
+
+    <div class="grow grow-3"></div>
+
+    <div class="keypad">
+      <button id="key-dit" class="keypad-btn keypad-element" aria-label="dit">
+        .
+      </button>
+      <button id="key-dah" class="keypad-btn keypad-element" aria-label="dah">
+        -
+      </button>
+      <button id="clear" class="keypad-btn keypad-clear">Clear</button>
+    </div>
+
+    <div class="grow grow-1"></div>
+
+    
+  </body>
+</html>

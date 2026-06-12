@@ -27,7 +27,19 @@ export type Settings = {
     dit: string;
     dah: string;
   };
+  /** AI chat (/chat): provider, model, and per-provider API keys. Keys live
+   * only in this browser's localStorage and are never built into docs/. */
+  aiProvider: AiProvider;
+  aiModel: string;
+  openaiKey: string;
+  geminiKey: string;
+  anthropicKey: string;
+  /** Chat: whether the AI reply is shown as letters and/or as Morse. */
+  chatShowLetters: boolean;
+  chatShowMorse: boolean;
 };
+
+export type AiProvider = "openai" | "gemini" | "anthropic";
 
 export const DEFAULTS: Settings = {
   keyType: "paddle",
@@ -44,6 +56,13 @@ export const DEFAULTS: Settings = {
     dit: "Comma", // ,
     dah: "Period", // .
   },
+  aiProvider: "openai",
+  aiModel: "gpt-4o-mini",
+  openaiKey: "",
+  geminiKey: "",
+  anthropicKey: "",
+  chatShowLetters: true,
+  chatShowMorse: true,
 };
 
 const STORAGE_KEY = "morse-trainer-settings";

@@ -22,6 +22,13 @@ const ditBtn = document.getElementById("key-dit") as HTMLButtonElement;
 const dahBtn = document.getElementById("key-dah") as HTMLButtonElement;
 
 const th = thresholds(settings.wpm);
+
+// "Wipe" gesture: keying the period prosign ".-.-.-" three times clears the
+// output. The period is the only character whose pattern is ".-.-.-", so we
+// count "." chars. Word-gap spaces are neutral (pausing between the periods, as
+// you naturally would, must not break the run); only a real letter resets it.
+let periodRun = 0;
+
 const decoder = new Decoder({
   language: settings.language,
   letterGapMs: th.gapLetter * settings.gapTolerance,
@@ -31,6 +38,16 @@ const decoder = new Decoder({
     outputEl.textContent = s.text || " ";
     // Keep the latest copy visible as the multi-line pane fills and scrolls.
     outputEl.scrollTop = outputEl.scrollHeight;
+  },
+  onChar: (char) => {
+    if (char === ".") {
+      if (++periodRun >= 3) {
+        periodRun = 0;
+        decoder.reset();
+      }
+    } else if (char !== " ") {
+      periodRun = 0;
+    }
   },
 });
 
@@ -93,6 +110,7 @@ window.addEventListener("keydown", (e) => {
   // Space clears the output (unless it's bound as a keying key above).
   if (e.code === "Space") {
     e.preventDefault();
+    periodRun = 0;
     decoder.reset();
   }
 });
@@ -155,7 +173,10 @@ function wireKeypadButton(btn: HTMLButtonElement, which: "dit" | "dah") {
 wireKeypadButton(ditBtn, "dit");
 wireKeypadButton(dahBtn, "dah");
 
-clearEl.addEventListener("click", () => decoder.reset());
+clearEl.addEventListener("click", () => {
+  periodRun = 0;
+  decoder.reset();
+});
 
 // USB "keyer" that presents as a mouse: left button (0) = left paddle (dit),
 // right button (2) = right paddle (dah). Active in paddle mode. The on-screen

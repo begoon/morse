@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Morse Trainer — Chat</title>
+    <style>
+      .chat {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.75rem;
+        width: 100%;
+        max-width: 640px;
+      }
+      .chat-col {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        min-width: 0;
+      }
+      .chat-col h2 {
+        font-size: 0.85rem;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin: 0;
+      }
+      .chat-log {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 0.6rem;
+        height: 40vh;
+        overflow-y: auto;
+      }
+      .chat-ai .chat-log {
+        align-items: flex-end;
+        text-align: right;
+      }
+      .chat-msg {
+        font-size: 0.95rem;
+        line-height: 1.35;
+        padding: 0.35rem 0.55rem;
+        border-radius: 8px;
+        background: var(--bg);
+        max-width: 95%;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+      }
+      .chat-ai .chat-msg {
+        background: var(--accent-dim);
+        color: var(--fg);
+      }
+      .chat-msg.pending {
+        color: var(--muted);
+      }
+      .chat-msg.error {
+        background: transparent;
+        color: #b3261e;
+        font-size: 0.85rem;
+      }
+      .chat-msg .morse {
+        font-family: "SF Mono", ui-monospace, "Cascadia Code", monospace;
+        letter-spacing: 0.08em;
+        color: var(--accent);
+        display: block;
+        margin-top: 0.15rem;
+      }
+      .chat-ai .chat-msg .morse {
+        color: var(--fg);
+      }
+      .chat-live {
+        min-height: 1.4em;
+        font-family: "SF Mono", ui-monospace, "Cascadia Code", monospace;
+        font-size: 1rem;
+        color: var(--accent);
+        padding: 0.2rem 0.1rem;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+      }
+      .chat-toggles {
+        display: flex;
+        gap: 0.9rem;
+        font-size: 0.85rem;
+        color: var(--muted);
+      }
+      .chat-toggles label {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="topnav">
+      <a href="../">Morse Trainer</a>
+      <a href="../play/">Play</a>
+      <a href="../keying/">Keying</a>
+      <a href="../chat/" class="current" aria-current="page">Chat</a>
+      <a href="../test/">Test</a>
+      <a href="../settings/">Settings</a>
+    </nav>
+
+    <div id="hints">
+      Key a message, then key <strong>K</strong>, <strong>KK</strong>, or
+      <strong>.</strong> (·−·−·−) to send.
+    </div>
+
+    <div class="chat">
+      <div class="chat-col chat-you">
+        <h2>You</h2>
+        <div id="youLog" class="chat-log"></div>
+        <div id="live" class="chat-live"> </div>
+      </div>
+      <div class="chat-col chat-ai">
+        <h2>AI</h2>
+        <div class="chat-toggles">
+          <label><input type="checkbox" id="showLetters" /> Letter</label>
+          <label><input type="checkbox" id="showMorse" /> Morse</label>
+        </div>
+        <div id="aiLog" class="chat-log"></div>
+      </div>
+    </div>
+
+    <div class="grow grow-3"></div>
+
+    <div class="keypad">
+      <button id="key-dit" class="keypad-btn keypad-element" aria-label="dit">
+        .
+      </button>
+      <button id="key-dah" class="keypad-btn keypad-element" aria-label="dah">
+        -
+      </button>
+      <button id="clear" class="keypad-btn keypad-clear">Clear</button>
+    </div>
+
+    <div class="grow grow-1"></div>
+
+    <script type="module" src="./main.ts"></script>
+  </body>
+</html>
