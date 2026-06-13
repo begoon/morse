@@ -115,6 +115,13 @@ h1 {
   text-align: left;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
+  /* Wrap to the full available window width. word-break + min-width:0 force
+     long, space-less runs to wrap on mobile (iOS Safari ignores
+     overflow-wrap:anywhere as a flex item without these). */
+  word-break: break-word;
+  min-width: 0;
+  width: 100%;
+  overflow-x: hidden;
   overflow-y: auto;
   line-height: 1.4;
   font-size: clamp(1.2rem, 5vw, 1.9rem);
@@ -193,9 +200,13 @@ h1 {
   color: var(--muted);
   letter-spacing: 0.15em;
   min-height: 1.4em;
-  white-space: pre;
-  overflow: hidden;
-  max-width: 100%;
+  /* Wrap to the available window width instead of running off the edge. */
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  width: 100%;
+  min-width: 0;
+  text-align: center;
 }
 
 #hints {
