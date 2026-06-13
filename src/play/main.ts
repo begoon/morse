@@ -28,6 +28,7 @@ const replayBtn = document.getElementById("replay") as HTMLButtonElement;
 const revealBtn = document.getElementById("reveal") as HTMLButtonElement;
 const statsBodyEl = document.getElementById("statsBody")!;
 const statsResetEl = document.getElementById("statsReset") as HTMLButtonElement;
+const headCopyEl = document.getElementById("headCopy") as HTMLInputElement;
 
 const HISTORY_MAX = 40; // like keying's decoder maxChars
 let history = ""; // running line of guessed letters, targets separated by spaces
@@ -41,8 +42,9 @@ let playing: PlayHandle | null = null;
 let revealTimer: ReturnType<typeof setTimeout> | null = null;
 
 // Head-copy mode: play the whole target, then type it blind and press Enter to
-// check. No per-letter hints, reveal, or cheatsheet highlight.
-const headCopy = settings.headCopy;
+// check. No per-letter hints, reveal, or cheatsheet highlight. Toggleable live
+// from the Play page (and persisted to Settings).
+let headCopy = settings.headCopy;
 let buffer = ""; // what the operator has typed for the current target
 let checked = false; // the buffer has been graded and the answer revealed
 
@@ -315,6 +317,16 @@ statsResetEl.addEventListener("click", () => {
   Stats.reset();
   renderStats();
   statsResetEl.blur();
+});
+
+// Head-copy toggle: flip the mode live, persist it, and restart with a fresh
+// target so the input flow and display match the new mode.
+headCopyEl.checked = headCopy;
+headCopyEl.addEventListener("change", () => {
+  headCopy = headCopyEl.checked;
+  settings.headCopy = headCopy;
+  Settings.save(settings);
+  newTarget();
 });
 
 // --- Init --------------------------------------------------------------------

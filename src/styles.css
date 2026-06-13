@@ -216,6 +216,18 @@ h1 {
   min-height: 1.2em;
 }
 
+/* Play-mode head-copy toggle. */
+.play-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  width: 100%;
+  max-width: 640px;
+  font-size: 0.9rem;
+  color: var(--muted);
+  cursor: pointer;
+}
+
 /* Head-copy result colours. */
 .hc-ok {
   color: var(--ok);
