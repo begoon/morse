@@ -4,11 +4,11 @@ import { buildRequest, parseReply } from "./src/chat/ai";
 
 // --- send-trigger detection --------------------------------------------------
 
-test("K as the final token sends the preceding message", () => {
-  expect(detectSend("HELLO K")).toEqual({ send: true, body: "HELLO" });
+test("a single trailing K does NOT send", () => {
+  expect(detectSend("HELLO K")).toEqual({ send: false, body: "HELLO K" });
 });
 
-test("KK sends too", () => {
+test("KK as the final token sends the preceding message", () => {
   expect(detectSend("HW CPY KK")).toEqual({ send: true, body: "HW CPY" });
 });
 
@@ -16,8 +16,12 @@ test("a trailing period sends (no space needed)", () => {
   expect(detectSend("GM OM.")).toEqual({ send: true, body: "GM OM" });
 });
 
-test("a bare K does not send (empty body)", () => {
-  expect(detectSend("K")).toEqual({ send: false, body: "" });
+test("a bare KK does not send (empty body)", () => {
+  expect(detectSend("KK")).toEqual({ send: false, body: "" });
+});
+
+test("a bare K does not send", () => {
+  expect(detectSend("K")).toEqual({ send: false, body: "K" });
 });
 
 test("mid-message K (no trailing trigger) does not send", () => {
