@@ -11,6 +11,7 @@ import { imageFor } from "./images";
 import { h, mount, type Child, type Children, type Props } from "./dom";
 import {
     DEFAULTS,
+    FREQUENCY_KEYS,
     buildRun,
     grade,
     migratePaper,
@@ -158,8 +159,14 @@ function StartScreen(): HTMLElement {
 
     // Cross-paper modes: a 26-question topic-mixed exam, or every question, plus
     // a "workout" on previously-wrong questions (from any run) once any logged.
-    const mixed = ([["combined", "26 questions"], ["everything", `Everything (${POOL.length})`]] as const).map(
-        ([mode, label]) => Choice(label, settings.paper === mode, () => select(mode), { "data-paper": mode }));
+    const freqCount = POOL.filter((q) => FREQUENCY_KEYS.has(questionKey(q))).length;
+    const mixed = (
+        [
+            ["combined", "26 questions"],
+            ["everything", `Everything (${POOL.length})`],
+            ["frequencies", `Frequencies (${freqCount})`],
+        ] as const
+    ).map(([mode, label]) => Choice(label, settings.paper === mode, () => select(mode), { "data-paper": mode }));
     if (mistakes.size > 0) {
         mixed.push(Choice(`Mistakes (${mistakes.size})`, settings.paper === "mistakes",
             () => select("mistakes"), { "data-paper": "mistakes" }));

@@ -3,7 +3,14 @@
 import { describe, expect, test } from "bun:test";
 import rsgbJson from "./src/test/questions.json";
 import hamtrainJson from "./src/test/questions-hamtrain.json";
-import { buildRun, grade, migratePaper, type Question, type Settings } from "./src/test/quiz";
+import {
+    buildRun,
+    FREQUENCY_KEYS,
+    grade,
+    migratePaper,
+    type Question,
+    type Settings,
+} from "./src/test/quiz";
 
 const pool = [...(rsgbJson as Question[]), ...(hamtrainJson as Question[])];
 
@@ -145,5 +152,24 @@ describe("grade", () => {
         expect(g.passMark).toBe(190); // ceil(260 * 19/26)
         expect(g.pass).toBe(true);
         expect(g.percent).toBe(100);
+    });
+});
+
+describe("frequencies mode", () => {
+    const freqRe = /\d[\d.,]*\s?(?:GHz|MHz|kHz|Hz)\b/i;
+    const isFreqQ = (q: Question) => freqRe.test(q.question) || q.options.some((o) => freqRe.test(o));
+
+    test("every curated FREQUENCY_KEY exists in the pool", () => {
+        const keys = new Set(pool.map((q) => `${q.tag}-${q.paper}-${q.n}`));
+        for (const k of FREQUENCY_KEYS) expect(keys.has(k)).toBe(true);
+    });
+
+    test("buildRun selects exactly the frequency questions, in source order", () => {
+        const run = buildRun(pool, settings({ paper: "frequencies" }));
+        expect(run.length).toBe(FREQUENCY_KEYS.size);
+        // every selected question genuinely contains a frequency value
+        for (const q of run) expect(isFreqQ(q.source)).toBe(true);
+        // and the curated list misses no frequency question in the bank
+        expect(run.length).toBe(pool.filter(isFreqQ).length);
     });
 });
