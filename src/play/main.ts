@@ -40,6 +40,15 @@ let answerShown = false; // auto-reveal fired -> the answer letter is shown
 let playing: PlayHandle | null = null;
 let revealTimer: ReturnType<typeof setTimeout> | null = null;
 
+// Head-copy mode: play the whole target, then type it blind and press Enter to
+// check. No per-letter hints, reveal, or cheatsheet highlight.
+const headCopy = settings.headCopy;
+let buffer = ""; // what the operator has typed for the current target
+let checked = false; // the buffer has been graded and the answer revealed
+
+const esc = (s: string) =>
+  s.replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" })[c]!);
+
 // Start (or restart) the "beat the clock" countdown for the current letter.
 // When it expires the answer is revealed; the player still types it to advance.
 function startRevealTimer() {
@@ -135,13 +144,52 @@ function highlightTarget() {
 }
 
 function reveal() {
+  if (headCopy) return; // no hints in head-copy mode
   revealed = true;
   render();
+}
+
+// Head-copy display: the typed-so-far buffer while listening, then the graded
+// answer (your guess struck through next to the correct target) once checked.
+function renderHeadCopy() {
+  morseEl.innerHTML = "";
+  if (checked) {
+    const ok = buffer.toUpperCase() === target;
+    outputEl.innerHTML = ok
+      ? `<span class="challenge hc-ok">${target}</span>`
+      : `<span class="challenge"><span class="hc-bad">${esc(buffer) || "—"}</span> <span class="hc-ans">${target}</span></span>`;
+  } else {
+    outputEl.innerHTML = `<span class="challenge">${esc(buffer)}<span class="hc-cursor">▌</span></span>`;
+  }
+}
+
+// Grade the typed buffer against the target, record per-character stats, reveal
+// the answer. Correct → auto-advance; wrong → wait for Enter to move on.
+function checkBuffer() {
+  checked = true;
+  clearRevealTimer();
+  const guessU = buffer.toUpperCase();
+  const ok = guessU === target;
+  for (let i = 0; i < target.length; i++) {
+    Stats.record(target[i]!, guessU[i] === target[i]);
+  }
+  renderStats();
+  if (ok) {
+    history += target + " ";
+    if (history.length > HISTORY_MAX) history = history.slice(-HISTORY_MAX);
+    renderHistory();
+    renderHeadCopy();
+    setTimeout(newTarget, 600);
+  } else {
+    sidetone.error();
+    renderHeadCopy();
+  }
 }
 
 // The "/" action (key or button): first press shows the code, a second reveals
 // the next expected key on the cheatsheet.
 function revealStep() {
+  if (headCopy) return; // no hints in head-copy mode
   if (!showMorse) {
     showMorse = true;
     render();
@@ -163,10 +211,14 @@ function newTarget() {
   showMorse = false;
   revealed = false;
   answerShown = false;
-  render();
+  buffer = "";
+  checked = false;
+  outputEl.classList.remove("ok", "bad");
+  if (headCopy) renderHeadCopy();
+  else render();
   renderHistory();
   playTarget();
-  startRevealTimer();
+  if (!headCopy) startRevealTimer();
 }
 
 function splashKey(char: string) {
@@ -210,6 +262,30 @@ function guess(char: string) {
 
 window.addEventListener("keydown", (e) => {
   if (e.repeat || e.ctrlKey || e.metaKey || e.altKey) return;
+  if (headCopy) {
+    if (e.key === " ") {
+      e.preventDefault();
+      playTarget();
+    } else if (e.key === "Enter") {
+      e.preventDefault();
+      if (checked) newTarget();
+      else checkBuffer();
+    } else if (e.key === "Backspace") {
+      e.preventDefault();
+      if (!checked && buffer) {
+        buffer = buffer.slice(0, -1);
+        renderHeadCopy();
+      }
+    } else if (e.key.length === 1) {
+      e.preventDefault();
+      sidetone.ensure();
+      if (!checked) {
+        buffer += e.key.toUpperCase();
+        renderHeadCopy();
+      }
+    }
+    return;
+  }
   if (e.key === " ") {
     e.preventDefault();
     playTarget();
@@ -252,7 +328,14 @@ cheatsheetEl.querySelectorAll<HTMLElement>(".cheat-key").forEach((el) => {
     const char = el.dataset.char;
     if (!char) return;
     sidetone.ensure(); // first tap unlocks audio
-    guess(char);
+    if (headCopy) {
+      if (!checked) {
+        buffer += char;
+        renderHeadCopy();
+      }
+    } else {
+      guess(char);
+    }
   });
 });
 renderStats();

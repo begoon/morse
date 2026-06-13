@@ -216,6 +216,21 @@ h1 {
   min-height: 1.2em;
 }
 
+/* Head-copy result colours. */
+.hc-ok {
+  color: var(--ok);
+}
+.hc-bad {
+  color: #cf222e;
+  text-decoration: line-through;
+}
+.hc-ans {
+  color: var(--accent);
+}
+.hc-cursor {
+  color: var(--accent-dim);
+}
+
 /* Play-mode per-character accuracy panel. */
 #statsBody {
   display: flex;

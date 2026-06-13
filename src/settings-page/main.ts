@@ -11,6 +11,7 @@ const $ = <T extends HTMLElement>(id: string) =>
 
 const languageEl = $<HTMLSelectElement>("language");
 const practiceModeEl = $<HTMLSelectElement>("practiceMode");
+const headCopyEl = $<HTMLInputElement>("headCopy");
 const wordLengthEl = $<HTMLInputElement>("wordLength");
 const wordLengthValEl = $("wordLengthVal");
 const wpmEl = $<HTMLInputElement>("wpm");
@@ -50,6 +51,7 @@ const wordLengthLabel = (n: number) => (n <= 1 ? "1 letter" : `up to ${n}`);
 
 languageEl.value = settings.language;
 practiceModeEl.value = settings.practiceMode;
+headCopyEl.checked = settings.headCopy;
 wordLengthEl.value = String(settings.wordLength);
 wordLengthValEl.textContent = wordLengthLabel(settings.wordLength);
 wpmEl.value = String(settings.wpm);
@@ -80,6 +82,11 @@ languageEl.addEventListener("change", () => {
 
 practiceModeEl.addEventListener("change", () => {
   settings.practiceMode = practiceModeEl.value as Settings.PracticeMode;
+  persist();
+});
+
+headCopyEl.addEventListener("change", () => {
+  settings.headCopy = headCopyEl.checked;
   persist();
 });
 

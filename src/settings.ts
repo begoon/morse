@@ -19,6 +19,9 @@ export type Settings = {
   wordLength: number;
   /** Play mode: what to drill (words, letters, code groups, callsigns, numbers). */
   practiceMode: PracticeMode;
+  /** Play mode: head-copy — play the whole target, then type it blind and press
+   * Enter to check (no per-letter hints, reveal, or cheatsheet highlight). */
+  headCopy: boolean;
   wpm: number;
   /** Character (element) speed for playback. ≥ wpm gives Farnsworth timing
    * (fast characters, wide gaps); equal to wpm is standard PARIS spacing. */
@@ -56,6 +59,7 @@ export const DEFAULTS: Settings = {
   language: "en",
   wordLength: 1,
   practiceMode: "words",
+  headCopy: false,
   wpm: 10,
   charWpm: 20,
   autoRevealSec: 0,
