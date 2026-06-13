@@ -132,7 +132,14 @@ function revealStep() {
 }
 
 function newTarget() {
-  target = pickTarget(pools, settings.language, settings.wordLength, target);
+  target = pickTarget(
+    pools,
+    settings.language,
+    settings.wordLength,
+    target,
+    Math.random,
+    settings.practiceMode,
+  );
   pos = 0;
   showMorse = false;
   revealed = false;

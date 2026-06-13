@@ -72,6 +72,47 @@ describe("pickTarget", () => {
         expect(pools.cw).toContain(t);
     });
 
+    test("letters mode picks single characters", () => {
+        const pool = new Set(letterPool("en"));
+        const r = rng(5);
+        for (let i = 0; i < 50; i++) {
+            const t = pickTarget(pools, "en", 8, null, r, "letters");
+            expect(t.length).toBe(1);
+            expect(pool.has(t)).toBe(true);
+        }
+    });
+
+    test("numbers mode picks 5-digit groups", () => {
+        const r = rng(6);
+        for (let i = 0; i < 50; i++) {
+            expect(pickTarget(pools, "en", 1, null, r, "numbers")).toMatch(/^[0-9]{5}$/);
+        }
+    });
+
+    test("groups mode picks 5-char alphanumeric groups", () => {
+        const r = rng(7);
+        for (let i = 0; i < 50; i++) {
+            expect(pickTarget(pools, "en", 1, null, r, "groups")).toMatch(/^[A-Z0-9]{5}$/);
+        }
+    });
+
+    test("callsigns mode picks plausible callsigns", () => {
+        const r = rng(8);
+        for (let i = 0; i < 50; i++) {
+            expect(pickTarget(pools, "en", 1, null, r, "callsigns")).toMatch(/^[A-Z]{1,2}[0-9][A-Z]{1,3}$/);
+        }
+    });
+
+    test("ru falls back to single letters for callsign/group modes", () => {
+        const pool = new Set(letterPool("ru"));
+        const r = rng(9);
+        for (const mode of ["callsigns", "groups"] as const) {
+            const t = pickTarget(pools, "ru", 1, null, r, mode);
+            expect(t.length).toBe(1);
+            expect(pool.has(t)).toBe(true);
+        }
+    });
+
     test("avoids repeating the previous target", () => {
         const r = rng(4);
         let prev = pickTarget(pools, "en", 3, null, r);

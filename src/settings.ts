@@ -5,14 +5,20 @@ import type { IambicMode } from "./keyer-iambic";
 
 export type KeyType = "paddle" | "straight";
 
+/** Play-mode target source. */
+export type PracticeMode = "words" | "letters" | "groups" | "callsigns" | "numbers";
+
 export type Settings = {
   keyType: KeyType;
   /** Iambic keyer behaviour on squeeze release (Curtis Mode A or B). */
   iambicMode: IambicMode;
   language: Language;
   /** Play mode: max word length. 1 = single characters; 2+ = English words
-   * of 2..N letters (RU always plays single characters). */
+   * of 2..N letters (RU always plays single characters). Only used in the
+   * "words" practice mode. */
   wordLength: number;
+  /** Play mode: what to drill (words, letters, code groups, callsigns, numbers). */
+  practiceMode: PracticeMode;
   wpm: number;
   /** Character (element) speed for playback. ≥ wpm gives Farnsworth timing
    * (fast characters, wide gaps); equal to wpm is standard PARIS spacing. */
@@ -49,6 +55,7 @@ export const DEFAULTS: Settings = {
   iambicMode: "A",
   language: "en",
   wordLength: 1,
+  practiceMode: "words",
   wpm: 10,
   charWpm: 20,
   autoRevealSec: 0,

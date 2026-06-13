@@ -10,6 +10,7 @@ const $ = <T extends HTMLElement>(id: string) =>
   document.getElementById(id) as T;
 
 const languageEl = $<HTMLSelectElement>("language");
+const practiceModeEl = $<HTMLSelectElement>("practiceMode");
 const wordLengthEl = $<HTMLInputElement>("wordLength");
 const wordLengthValEl = $("wordLengthVal");
 const wpmEl = $<HTMLInputElement>("wpm");
@@ -48,6 +49,7 @@ const setModelSuggestions = (provider: Settings.AiProvider) => {
 const wordLengthLabel = (n: number) => (n <= 1 ? "1 letter" : `up to ${n}`);
 
 languageEl.value = settings.language;
+practiceModeEl.value = settings.practiceMode;
 wordLengthEl.value = String(settings.wordLength);
 wordLengthValEl.textContent = wordLengthLabel(settings.wordLength);
 wpmEl.value = String(settings.wpm);
@@ -73,6 +75,11 @@ const persist = () => Settings.save(settings);
 
 languageEl.addEventListener("change", () => {
   settings.language = languageEl.value as Language;
+  persist();
+});
+
+practiceModeEl.addEventListener("change", () => {
+  settings.practiceMode = practiceModeEl.value as Settings.PracticeMode;
   persist();
 });
 
