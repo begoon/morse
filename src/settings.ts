@@ -14,6 +14,9 @@ export type Settings = {
    * of 2..N letters (RU always plays single characters). */
   wordLength: number;
   wpm: number;
+  /** Character (element) speed for playback. ≥ wpm gives Farnsworth timing
+   * (fast characters, wide gaps); equal to wpm is standard PARIS spacing. */
+  charWpm: number;
   /** Play mode: auto-reveal the current letter after this many seconds (the
    * "beat the clock" challenge). 0 = off. */
   autoRevealSec: number;
@@ -47,6 +50,7 @@ export const DEFAULTS: Settings = {
   language: "en",
   wordLength: 1,
   wpm: 10,
+  charWpm: 20,
   autoRevealSec: 0,
   gapTolerance: 1.5,
   volume: 0.2,

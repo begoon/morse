@@ -1,21 +1,26 @@
 // Plays a dit/dah pattern through the sidetone as timed tones, so the play
 // mode can sound out a character or a word. A " " in the pattern separates
-// letters (standard three-dit letter gap). Returns a handle to cancel playback.
+// letters (the `letterGapMs` gap — wider than 3 dits under Farnsworth). Returns
+// a handle to cancel playback.
 
 import type { Sidetone } from "./audio";
+import type { Timing } from "./timing";
 
 export type PlayHandle = { cancel: () => void };
 
 export function playPattern(
   sidetone: Sidetone,
   pattern: string,
-  ditMs: number,
+  timing: Timing,
 ): PlayHandle {
+  const { ditMs, letterGapMs } = timing;
   const timers: ReturnType<typeof setTimeout>[] = [];
   let t = 0;
   for (const sym of pattern) {
     if (sym === " ") {
-      t += 2 * ditMs; // 1-dit intra gap already added -> 3-dit letter gap
+      // A 1-dit intra gap was already added after the previous element; top it
+      // up to the full (possibly Farnsworth-widened) inter-letter gap.
+      t += letterGapMs - ditMs;
       continue;
     }
     const dur = (sym === "." ? 1 : 3) * ditMs;

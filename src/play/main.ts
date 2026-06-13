@@ -7,7 +7,7 @@ import "../styles.css";
 import { Sidetone } from "../audio";
 import { renderCheatsheet, glyphs } from "../cheatsheet";
 import { playPattern, type PlayHandle } from "../player";
-import { ditMs } from "../timing";
+import { farnsworth } from "../timing";
 import { encodeWord } from "../morse";
 import * as Settings from "../settings";
 import { pickTarget, type WordPools } from "./words";
@@ -65,7 +65,8 @@ function playTarget() {
   if (!pattern) return;
   playing?.cancel();
   sidetone.ensure().then(() => {
-    if (target) playing = playPattern(sidetone, pattern, ditMs(settings.wpm));
+    if (target)
+      playing = playPattern(sidetone, pattern, farnsworth(settings.charWpm, settings.wpm));
   });
 }
 

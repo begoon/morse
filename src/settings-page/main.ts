@@ -13,6 +13,7 @@ const languageEl = $<HTMLSelectElement>("language");
 const wordLengthEl = $<HTMLInputElement>("wordLength");
 const wordLengthValEl = $("wordLengthVal");
 const wpmEl = $<HTMLInputElement>("wpm");
+const charWpmEl = $<HTMLInputElement>("charWpm");
 const gapEl = $<HTMLInputElement>("gap");
 const gapValEl = $("gapVal");
 const autoRevealEl = $<HTMLInputElement>("autoReveal");
@@ -50,6 +51,7 @@ languageEl.value = settings.language;
 wordLengthEl.value = String(settings.wordLength);
 wordLengthValEl.textContent = wordLengthLabel(settings.wordLength);
 wpmEl.value = String(settings.wpm);
+charWpmEl.value = String(settings.charWpm);
 gapEl.value = String(settings.gapTolerance);
 gapValEl.textContent = `${settings.gapTolerance.toFixed(1)}×`;
 const autoRevealLabel = (s: number) => (s <= 0 ? "Off" : `${s}s`);
@@ -97,6 +99,16 @@ wpmEl.addEventListener("input", () => {
 // Snap the field back to the persisted (clamped) value when editing ends.
 wpmEl.addEventListener("change", () => {
   wpmEl.value = String(settings.wpm);
+});
+
+charWpmEl.addEventListener("input", () => {
+  const n = Number(charWpmEl.value);
+  if (charWpmEl.value === "" || !Number.isInteger(n)) return; // partial input while typing
+  settings.charWpm = Math.min(60, Math.max(5, n));
+  persist();
+});
+charWpmEl.addEventListener("change", () => {
+  charWpmEl.value = String(settings.charWpm);
 });
 
 gapEl.addEventListener("input", () => {

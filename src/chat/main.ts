@@ -10,7 +10,7 @@ import { Decoder } from "../decoder";
 import { Sidetone } from "../audio";
 import { IambicKeyer } from "../keyer-iambic";
 import { StraightKeyer } from "../keyer-straight";
-import { ditMs, thresholds } from "../timing";
+import { ditMs, thresholds, farnsworth } from "../timing";
 import { encode } from "../morse";
 import * as Settings from "../settings";
 import { complete, SYSTEM_PROMPT, type ChatMessage } from "./ai";
@@ -330,12 +330,12 @@ function stopPlayback() {
 // Schedule the reply as CW: each element keys the tone on/off and toggles its
 // span's highlight at the same instant, so the dit/dah lights up exactly as it
 // sounds; the current letter stays highlighted for its whole duration. Timing
-// is PARIS standard (1-dit intra gap, 3-dit letter gap, 7-dit word gap).
+// follows Farnsworth (fast characters, gaps widened to the effective speed).
 async function playReply(text: string, bubble: HTMLElement | null) {
   stopPlayback();
   await sidetone.ensure();
   playingBubble = bubble;
-  const dit = ditMs(settings.wpm);
+  const { ditMs: dit, letterGapMs, wordGapMs } = farnsworth(settings.charWpm, settings.wpm);
   const at = (ms: number, fn: () => void) => playTimers.push(setTimeout(fn, ms));
   const model = buildModel(text);
   let t = 0;
@@ -355,9 +355,9 @@ async function playReply(text: string, bubble: HTMLElement | null) {
         });
         t += on + dit; // element + 1-dit intra-element gap
       });
-      if (k < word.length - 1) t += 2 * dit; // → 3-dit letter gap
+      if (k < word.length - 1) t += letterGapMs - dit; // top up to the letter gap
     });
-    if (wi < model.length - 1) t += 6 * dit; // → 7-dit word gap
+    if (wi < model.length - 1) t += wordGapMs - dit; // top up to the word gap
   });
   at(t, () => clearHighlights(bubble));
 }
