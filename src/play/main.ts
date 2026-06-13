@@ -11,6 +11,7 @@ import { farnsworth } from "../timing";
 import { encodeWord } from "../morse";
 import * as Settings from "../settings";
 import { pickTarget, type WordPools } from "./words";
+import * as Stats from "./stats";
 import poolsJson from "./words.json";
 
 const pools = poolsJson as WordPools;
@@ -25,6 +26,8 @@ const historyEl = document.getElementById("history")!;
 const cheatsheetEl = document.getElementById("cheatsheet")!;
 const replayBtn = document.getElementById("replay") as HTMLButtonElement;
 const revealBtn = document.getElementById("reveal") as HTMLButtonElement;
+const statsBodyEl = document.getElementById("statsBody")!;
+const statsResetEl = document.getElementById("statsReset") as HTMLButtonElement;
 
 const HISTORY_MAX = 40; // like keying's decoder maxChars
 let history = ""; // running line of guessed letters, targets separated by spaces
@@ -104,6 +107,22 @@ function renderHistory() {
   }
 }
 
+// Per-character accuracy, worst-first, so the weakest characters are obvious.
+function renderStats() {
+  const stats = Stats.load();
+  const rows = Object.entries(stats)
+    .map(([c, e]) => ({ c, e, acc: e.seen ? e.correct / e.seen : 0 }))
+    .sort((a, b) => a.acc - b.acc || b.e.seen - a.e.seen);
+  statsBodyEl.innerHTML = rows.length
+    ? rows
+        .map(
+          (r) =>
+            `<span class="stat"><b>${r.c}</b> ${Math.round(r.acc * 100)}% <small>${r.e.correct}/${r.e.seen}</small></span>`,
+        )
+        .join("")
+    : `<span class="stat-empty">No data yet — start copying.</span>`;
+}
+
 function highlightTarget() {
   const expected = target[pos] ?? "";
   cheatsheetEl.querySelectorAll<HTMLElement>(".cheat-key").forEach((el) => {
@@ -163,7 +182,10 @@ function splashKey(char: string) {
 function guess(char: string) {
   const expected = target[pos];
   if (!expected) return;
-  if (char.toUpperCase() === expected) {
+  const ok = char.toUpperCase() === expected;
+  Stats.record(expected, ok);
+  renderStats();
+  if (ok) {
     clearRevealTimer(); // this letter was answered — stop its clock
     splashKey(expected); // short splash on the correct key
     pos++;
@@ -213,6 +235,11 @@ revealBtn.addEventListener("click", () => {
   revealStep();
   revealBtn.blur();
 });
+statsResetEl.addEventListener("click", () => {
+  Stats.reset();
+  renderStats();
+  statsResetEl.blur();
+});
 
 // --- Init --------------------------------------------------------------------
 renderCheatsheet(cheatsheetEl, settings.language, { showPatterns: false });
@@ -228,4 +255,5 @@ cheatsheetEl.querySelectorAll<HTMLElement>(".cheat-key").forEach((el) => {
     guess(char);
   });
 });
+renderStats();
 newTarget();
