@@ -38,8 +38,8 @@ of settings:
   letters (≈⅓ of the time from CW jargon / Q-codes). A running line shows the
   letters you've guessed. Russian always plays single characters.
 - **Keying** (`docs/keying/`) — key Morse yourself with an iambic paddle
-  (Curtis Mode A/B) or a straight key; it decodes to text live. `Space` clears
-  the output (unless it's bound as the straight key).
+  (Curtis Mode A/B), an Ultimatic paddle, or a straight key; it decodes to text
+  live. `Space` clears the output (unless it's bound as the straight key).
 - **Test** (`docs/test/`) — Foundation mock exam runner (see below).
 - **Settings** (`docs/settings/`) — alphabet, word length, speed, gap
   tolerance, key type, keyer mode, volume, and tone, persisted in
@@ -47,21 +47,26 @@ of settings:
 
 ## Keying
 
-- **Iambic paddle** (default): `,` = dit, `.` = dah. Hold for repeats, squeeze
-  both for di-dah alternation.
+- **Paddle** (default): `[` = dit, `]` = dah. Hold for repeats, squeeze both
+  for di-dah alternation (iambic) or last-pressed-wins (Ultimatic). On the
+  on-screen keypad hold both buttons, or use a mouse — left button = dit, right
+  button = dah.
 - **Straight key**: hold `Space` — short press = dit, long press = dah.
 
-The iambic keyer supports **Curtis Mode A** (default) and **Mode B**,
-switchable in Settings. They differ only when you release both paddles
-mid-element while squeezing:
+The paddle keyer has three modes, switchable in Settings:
 
-- **Mode A** finishes the current element and stops.
-- **Mode B** finishes the current element, then sends one extra opposite
-  element.
+- **Iambic — Mode A** (default) — squeeze both paddles to alternate di-dah;
+  releasing both mid-element finishes the current element and stops.
+- **Iambic — Mode B** — like Mode A, but releasing both mid-element finishes
+  the current element and then sends one extra opposite element.
+- **Ultimatic** — a squeeze does not alternate: the most-recently-pressed
+  paddle dominates and repeats (press dit then dah → continuous dahs).
+  Releasing the dominant paddle falls back to the other one if it is still
+  held.
 
 ## Exam runner
 
-Nine Foundation mock papers (26 single-choice questions each), tagged by
+Ten Foundation mock papers (26 single-choice questions each), tagged by
 source:
 
 - **rsgb** — Mock 1–3, extracted from the RSGB mock PDFs.
@@ -79,13 +84,14 @@ review.
 ## Features
 
 - Listening trainer (characters and words) and a free keying mode
-- Switchable iambic (Curtis Mode A/B) paddle keyer and straight-key keyer
+- Switchable paddle keyer (iambic Curtis Mode A/B and Ultimatic) and
+  straight-key keyer
 - Web Audio sidetone with adjustable tone (400–1000 Hz) and volume
 - Live decode to text
 - English and Russian Morse tables
 - Adjustable speed (PARIS standard: `dit = 1200 / wpm` ms)
 - QWERTY / ЙЦУКЕН cheatsheet keyboard
-- Nine RSGB Foundation mock exams with images and explanations
+- Ten Foundation mock exams (RSGB + hamtrain) with images and explanations
 - All settings persisted in `localStorage`
 
 ## Layout
@@ -100,7 +106,7 @@ src/morse.ts               EN/RU tables + lookup/encode
 src/timing.ts              PARIS timing + straight-key thresholds
 src/audio.ts               Web Audio sidetone + error buzz
 src/player.ts              plays a pattern as audio
-src/keyer-iambic.ts        iambic Curtis Mode A/B keyer
+src/keyer-iambic.ts        paddle keyer (iambic Curtis Mode A/B + Ultimatic)
 src/keyer-straight.ts      straight-key keyer + press classifier
 src/decoder.ts             element stream -> decoded text
 src/cheatsheet.ts          QWERTY / ЙЦУКЕН keyboard

@@ -10,8 +10,8 @@ landing menu at `docs/index.html`:
   1 = single characters; 2+ = an English word of 2..N letters drawn from
   `src/play/words.json` (≈1/3 of the time from CW jargon/Q-codes — see
   `CW_CHANCE` in `src/play/words.ts`). Russian always plays single characters.
-- **Keying** (`docs/keying/`): iambic paddle (Curtis Mode A/B) or straight key
-  → live decode.
+- **Keying** (`docs/keying/`): iambic paddle (Curtis Mode A/B), Ultimatic
+  paddle, or straight key → live decode.
 - **Test** (`docs/test/`): Foundation mock exam runner (see below).
 - **Settings** (`docs/settings/`): all settings (alphabet, word length, wpm,
   gap tolerance, key type, iambic mode, volume, tone), persisted under the
@@ -41,7 +41,10 @@ Each route is a single self-contained HTML file for GitHub Pages.
   letter patterns with `" "` = letter gap).
 - `src/keyer-iambic.ts` / `keyer-straight.ts` — keyers. The iambic keyer samples
   paddle state at element boundaries (no press buffering); Mode A/B differ only
-  on squeeze release.
+  on squeeze release. The same class also serves Ultimatic mode
+  (`IambicMode = "A" | "B" | "ultimatic"`): on a squeeze the most-recently-pressed
+  paddle dominates (no alternation, no element memory), and releasing it falls
+  back to the still-held paddle.
 - `src/decoder.ts` — silence-timed decode. `src/timing.ts` — PARIS timing from
   wpm.
 - `src/cheatsheet.ts` — QWERTY/ЙЦУКЕН keyboard; `. , ?` shown to its right;
