@@ -18,8 +18,13 @@
 //   - Mode B: finish the current element, then send one extra opposite element.
 // The difference is whether the opposite paddle is sampled live at the end of
 // the element (A) or remembered if it was held at any point during it (B).
+//
+// Ultimatic is a non-iambic squeeze behaviour: instead of alternating, the
+// most-recently-pressed paddle dominates and repeats (squeeze dit-then-dah ->
+// continuous dahs). Releasing the dominant paddle falls back to the other one
+// if it is still held. Pure live sampling — no element memory.
 
-export type IambicMode = "A" | "B";
+export type IambicMode = "A" | "B" | "ultimatic";
 
 export type KeyerHooks = {
   /** Current dit duration in ms (re-read each element so WPM changes apply). */
@@ -40,6 +45,8 @@ export class IambicKeyer {
   private ditMemory = false;
   private dahMemory = false;
   private last: "." | "-" | null = null;
+  /** Ultimatic: the paddle pressed most recently (the dominant one). */
+  private lastPressed: "." | "-" | null = null;
   private running = false;
   private timer: ReturnType<typeof setTimeout> | null = null;
   private mode: IambicMode = "A";
@@ -59,6 +66,7 @@ export class IambicKeyer {
   setDit(down: boolean) {
     this.paddle.dit = down;
     if (down) {
+      this.lastPressed = ".";
       if (this.currentEl === "-") this.oppositeSeen = true;
       this.start();
     }
@@ -67,6 +75,7 @@ export class IambicKeyer {
   setDah(down: boolean) {
     this.paddle.dah = down;
     if (down) {
+      this.lastPressed = "-";
       if (this.currentEl === ".") this.oppositeSeen = true;
       this.start();
     }
@@ -80,6 +89,7 @@ export class IambicKeyer {
     this.paddle.dit = this.paddle.dah = false;
     this.ditMemory = this.dahMemory = false;
     this.last = null;
+    this.lastPressed = null;
     this.currentEl = null;
     this.oppositeSeen = false;
     this.hooks.toneOff();
@@ -102,7 +112,13 @@ export class IambicKeyer {
 
     let el: "." | "-";
     if (wantDit && wantDah) {
-      el = this.last === "." ? "-" : ".";
+      // Ultimatic: the most-recently-pressed paddle dominates. Iambic: alternate.
+      el =
+        this.mode === "ultimatic"
+          ? (this.lastPressed ?? ".")
+          : this.last === "."
+            ? "-"
+            : ".";
     } else if (wantDit) {
       el = ".";
     } else if (wantDah) {
@@ -136,8 +152,15 @@ export class IambicKeyer {
       // Latch the opposite paddle so it (or the squeeze alternation) is sent
       // next. Mode A samples it live; Mode B remembers if it was held during
       // the element, producing the trailing extra element on a squeeze release.
+      // Ultimatic samples paddles live each element (no memory), so its squeeze
+      // resolves purely in nextElement; iambic latches the opposite paddle here.
       const oppositeDown = el === "." ? this.paddle.dah : this.paddle.dit;
-      const latch = this.mode === "B" ? oppositeDown || this.oppositeSeen : oppositeDown;
+      const latch =
+        this.mode === "ultimatic"
+          ? false
+          : this.mode === "B"
+            ? oppositeDown || this.oppositeSeen
+            : oppositeDown;
       if (latch) {
         if (el === ".") this.dahMemory = true;
         else this.ditMemory = true;

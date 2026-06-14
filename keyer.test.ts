@@ -12,7 +12,7 @@ test("straight key classifies short press as dit", () => {
 });
 
 // Drive the iambic keyer with real timers but a fast WPM so tests are quick.
-function makeIambic(mode: "A" | "B" = "A") {
+function makeIambic(mode: "A" | "B" | "ultimatic" = "A") {
   const elements: string[] = [];
   const wpm = 60; // dit = 20ms
   const keyer = new IambicKeyer({
@@ -87,6 +87,35 @@ test("Mode B sends one extra opposite element on squeeze release", async () => {
   keyer.setDah(false);
   await sleep(dit * 8);
   expect(elements).toEqual([".", "-", "."]);
+});
+
+// Ultimatic: squeezing does not alternate — the most-recently-pressed paddle
+// dominates and repeats. Pressing dit then dah => continuous dahs.
+test("ultimatic squeeze sends the most-recently-pressed paddle", async () => {
+  const { keyer, elements, dit } = makeIambic("ultimatic");
+  keyer.setDit(true);
+  keyer.setDah(true); // dah pressed last -> dominant
+  await sleep(dit * 12);
+  keyer.setDit(false);
+  keyer.setDah(false);
+  await sleep(dit * 8);
+  expect(elements.length).toBeGreaterThanOrEqual(2);
+  // First element may be the in-flight dit; every element from then on is a dah.
+  expect(elements.slice(1).every((e) => e === "-")).toBe(true);
+});
+
+// Releasing the dominant paddle falls back to the other one if still held.
+test("ultimatic falls back to the held paddle on release of the dominant", async () => {
+  const { keyer, elements, dit } = makeIambic("ultimatic");
+  keyer.setDit(true);
+  keyer.setDah(true); // dah dominant
+  await sleep(dit * 6);
+  keyer.setDah(false); // release dominant; dit still held
+  await sleep(dit * 8);
+  keyer.setDit(false);
+  await sleep(dit * 4);
+  expect(elements).toContain("-"); // some dahs while squeezed
+  expect(elements[elements.length - 1]).toBe("."); // ends on dits after fallback
 });
 
 // Paddle state is read at element boundaries, not buffered mid-tone: a stroke
