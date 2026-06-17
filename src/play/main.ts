@@ -1,7 +1,8 @@
 // Play mode: sounds out a target (a character, or a word when the word-length
 // setting allows) and the user types it back. Space replays, "/" shows the
-// code, a second "/" (or clicking the output) reveals the next expected key on
-// the cheatsheet.
+// code, a second "/" (or clicking the output, or the auto-reveal timer) reveals
+// the whole answer — after which the action becomes "Next" and "/" / a click
+// advances to the next target (no need to type the revealed answer).
 
 import "../styles.css";
 import { Sidetone } from "../audio";
@@ -10,11 +11,14 @@ import { playPattern, type PlayHandle } from "../player";
 import { farnsworth } from "../timing";
 import { encodeWord } from "../morse";
 import * as Settings from "../settings";
+import { speechFor, speak } from "../speech";
 import { pickTarget, type WordPools } from "./words";
 import * as Stats from "./stats";
 import poolsJson from "./words.json";
 
 const pools = poolsJson as WordPools;
+// O(1) lookup for "is this a real word?" (vs CW jargon / random groups).
+const commonSet = new Set(pools.common);
 const settings = Settings.load();
 const sidetone = new Sidetone();
 sidetone.setTone(settings.toneHz);
@@ -29,6 +33,7 @@ const revealBtn = document.getElementById("reveal") as HTMLButtonElement;
 const statsBodyEl = document.getElementById("statsBody")!;
 const statsResetEl = document.getElementById("statsReset") as HTMLButtonElement;
 const headCopyEl = document.getElementById("headCopy") as HTMLInputElement;
+const speakRevealEl = document.getElementById("speakReveal") as HTMLInputElement;
 
 const HISTORY_MAX = 40; // like keying's decoder maxChars
 let history = ""; // running line of guessed letters, targets separated by spaces
@@ -40,6 +45,7 @@ let revealed = false; // second "/" -> next expected key shown on the keyboard
 let answerShown = false; // auto-reveal fired -> the answer letter is shown
 let playing: PlayHandle | null = null;
 let revealTimer: ReturnType<typeof setTimeout> | null = null;
+let spoken = false; // the answer has been read aloud for this target
 
 // Head-copy mode: play the whole target, then type it blind and press Enter to
 // check. No per-letter hints, reveal, or cheatsheet highlight. Toggleable live
@@ -52,7 +58,8 @@ const esc = (s: string) =>
   s.replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" })[c]!);
 
 // Start (or restart) the "beat the clock" countdown for the current letter.
-// When it expires the answer is revealed; the player still types it to advance.
+// When it expires the whole remaining answer is revealed at once (and spoken);
+// the player still types it out to advance.
 function startRevealTimer() {
   clearRevealTimer();
   if (settings.autoRevealSec > 0 && pos < target.length) {
@@ -67,10 +74,7 @@ function clearRevealTimer() {
 
 function autoReveal() {
   revealTimer = null;
-  answerShown = true; // preview the answer letter in the history pane
-  revealed = true; // and highlight its key on the cheatsheet
-  render();
-  renderHistory();
+  fullReveal();
 }
 
 function playTarget() {
@@ -85,16 +89,18 @@ function playTarget() {
 }
 
 function render() {
-  const slots =
-    target.length === 1
-      ? `<span class="slot">?</span>`
-      : [...target]
-          .map((c, i) =>
-            i < pos
-              ? `<span class="slot done">${c}</span>`
-              : `<span class="slot">_</span>`,
-          )
-          .join("");
+  // Typed letters are shown solid; once the timer reveals the answer, the
+  // remaining letters appear all at once; otherwise they stay placeholders.
+  const placeholder = target.length === 1 ? "?" : "_";
+  const slots = [...target]
+    .map((c, i) =>
+      i < pos
+        ? `<span class="slot done">${c}</span>`
+        : answerShown
+          ? `<span class="slot revealed">${c}</span>`
+          : `<span class="slot">${placeholder}</span>`,
+    )
+    .join("");
   outputEl.innerHTML = `<span class="challenge" title="Click to reveal">${slots}</span>`;
   // The reveal line below the output shows the morse code on "/", one letter
   // pattern per cell so long words wrap.
@@ -107,12 +113,12 @@ function render() {
   highlightTarget();
 }
 
-// The running line of previous letters. When the timer auto-reveals the current
-// letter, it's previewed highlighted at the end here (the player still types it
-// to commit); only this latest auto-revealed letter is highlighted.
+// The running line of previous letters. When the timer auto-reveals the answer,
+// the whole remaining target is previewed highlighted at the end here (the
+// player still types it out to commit).
 function renderHistory() {
   if (answerShown && pos < target.length) {
-    historyEl.innerHTML = `${history}<span class="revealed">${target[pos]}</span>`;
+    historyEl.innerHTML = `${esc(history)}<span class="revealed">${esc(target.slice(pos))}</span>`;
   } else {
     historyEl.textContent = history;
   }
@@ -145,10 +151,38 @@ function highlightTarget() {
   });
 }
 
-function reveal() {
-  if (headCopy) return; // no hints in head-copy mode
-  revealed = true;
+// Read the answer aloud (once per target). Real English words are pronounced;
+// abbreviations, numbers, callsigns, code groups, single letters and all Russian
+// are spelled out character by character.
+function maybeSpeak() {
+  if (!settings.speakOnReveal || spoken) return;
+  spoken = true;
+  const isWord =
+    settings.language === "en" && target.length > 1 && commonSet.has(target);
+  const u = speechFor(target, isWord, settings.language);
+  speak(u.text, u.lang);
+}
+
+// Give up on the current target: show the whole answer at once (all letters +
+// spoken), stop the clock, count the un-typed letters as missed, and flip the
+// action to "Next" — there's nothing left to type. Idempotent per target.
+function fullReveal() {
+  if (headCopy || answerShown) return; // no hints in head-copy; reveal once
+  clearRevealTimer();
+  answerShown = true;
+  revealed = true; // highlight the next key on the cheatsheet
+  showMorse = true; // and show the code under the word
+  for (let i = pos; i < target.length; i++) Stats.record(target[i]!, false);
+  renderStats();
+  maybeSpeak();
   render();
+  renderHistory();
+  updateRevealBtn();
+}
+
+// The reveal/next button reads "Next" once the answer is shown, else "Reveal".
+function updateRevealBtn() {
+  revealBtn.textContent = answerShown ? "Next" : 'Reveal ("/")';
 }
 
 // Head-copy display: the typed-so-far buffer while listening, then the graded
@@ -170,6 +204,7 @@ function renderHeadCopy() {
 function checkBuffer() {
   checked = true;
   clearRevealTimer();
+  maybeSpeak(); // read the correct target aloud, right or wrong
   const guessU = buffer.toUpperCase();
   const ok = guessU === target;
   for (let i = 0; i < target.length; i++) {
@@ -189,14 +224,17 @@ function checkBuffer() {
 }
 
 // The "/" action (key or button): first press shows the code, a second reveals
-// the next expected key on the cheatsheet.
+// the whole answer. Once revealed, "/" advances to the next target (the button
+// reads "Next") — the answer is shown, so there's nothing to type.
 function revealStep() {
   if (headCopy) return; // no hints in head-copy mode
-  if (!showMorse) {
+  if (answerShown) {
+    newTarget();
+  } else if (!showMorse) {
     showMorse = true;
     render();
   } else {
-    reveal();
+    fullReveal();
   }
 }
 
@@ -213,9 +251,11 @@ function newTarget() {
   showMorse = false;
   revealed = false;
   answerShown = false;
+  spoken = false;
   buffer = "";
   checked = false;
   outputEl.classList.remove("ok", "bad");
+  updateRevealBtn();
   if (headCopy) renderHeadCopy();
   else render();
   renderHistory();
@@ -234,6 +274,7 @@ function splashKey(char: string) {
 }
 
 function guess(char: string) {
+  if (answerShown) return; // already revealed — use "/" (Next) to advance
   const expected = target[pos];
   if (!expected) return;
   const ok = char.toUpperCase() === expected;
@@ -244,7 +285,6 @@ function guess(char: string) {
     splashKey(expected); // short splash on the correct key
     pos++;
     revealed = false; // each letter must be revealed anew
-    answerShown = false;
     history += expected;
     if (pos >= target.length) history += " ";
     if (history.length > HISTORY_MAX) history = history.slice(-HISTORY_MAX);
@@ -301,7 +341,12 @@ window.addEventListener("keydown", (e) => {
   }
 });
 
-outputEl.addEventListener("click", reveal);
+// Clicking the output reveals the whole answer (then click it / press "/" to
+// move on, same as the button).
+outputEl.addEventListener("click", () => {
+  if (answerShown) newTarget();
+  else fullReveal();
+});
 
 // On-screen equivalents of Space (replay) and "/" (show code / reveal). blur()
 // keeps a subsequent Space keypress from re-triggering the focused button.
@@ -327,6 +372,14 @@ headCopyEl.addEventListener("change", () => {
   settings.headCopy = headCopy;
   Settings.save(settings);
   newTarget();
+});
+
+// Speak-the-answer toggle: persist live. No restart needed — it only affects
+// what happens at the next reveal, not the input flow.
+speakRevealEl.checked = settings.speakOnReveal;
+speakRevealEl.addEventListener("change", () => {
+  settings.speakOnReveal = speakRevealEl.checked;
+  Settings.save(settings);
 });
 
 // --- Init --------------------------------------------------------------------

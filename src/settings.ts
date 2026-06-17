@@ -22,6 +22,9 @@ export type Settings = {
   /** Play mode: head-copy — play the whole target, then type it blind and press
    * Enter to check (no per-letter hints, reveal, or cheatsheet highlight). */
   headCopy: boolean;
+  /** Play mode: speak the answer aloud when it's revealed (real words are
+   * pronounced; abbreviations/numbers/letters are spelled out). */
+  speakOnReveal: boolean;
   wpm: number;
   /** Character (element) speed for playback. ≥ wpm gives Farnsworth timing
    * (fast characters, wide gaps); equal to wpm is standard PARIS spacing. */
@@ -60,6 +63,7 @@ export const DEFAULTS: Settings = {
   wordLength: 1,
   practiceMode: "words",
   headCopy: false,
+  speakOnReveal: false,
   wpm: 10,
   charWpm: 20,
   autoRevealSec: 0,

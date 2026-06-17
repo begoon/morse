@@ -154,6 +154,11 @@ h1 {
 .challenge .slot.done {
   color: var(--fg);
 }
+/* Letters the timer revealed but the player hasn't typed yet. */
+.challenge .slot.revealed {
+  color: var(--accent);
+  font-weight: 700;
+}
 /* Revealed code: its own wrappable row under the output pane. */
 #morse {
   display: flex;

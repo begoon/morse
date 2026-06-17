@@ -20,6 +20,7 @@ const gapEl = $<HTMLInputElement>("gap");
 const gapValEl = $("gapVal");
 const autoRevealEl = $<HTMLInputElement>("autoReveal");
 const autoRevealValEl = $("autoRevealVal");
+const speakRevealEl = $<HTMLInputElement>("speakReveal");
 const keyTypeEl = $<HTMLSelectElement>("keyType");
 const iambicModeEl = $<HTMLSelectElement>("iambicMode");
 const volumeEl = $<HTMLInputElement>("volume");
@@ -61,6 +62,7 @@ gapValEl.textContent = `${settings.gapTolerance.toFixed(1)}×`;
 const autoRevealLabel = (s: number) => (s <= 0 ? "Off" : `${s}s`);
 autoRevealEl.value = String(settings.autoRevealSec);
 autoRevealValEl.textContent = autoRevealLabel(settings.autoRevealSec);
+speakRevealEl.checked = settings.speakOnReveal;
 keyTypeEl.value = settings.keyType;
 iambicModeEl.value = settings.iambicMode;
 volumeEl.value = String(settings.volume);
@@ -142,6 +144,11 @@ autoRevealEl.addEventListener("input", () => {
 // Snap the field back to the persisted (clamped) value when editing ends.
 autoRevealEl.addEventListener("change", () => {
   autoRevealEl.value = String(settings.autoRevealSec);
+});
+
+speakRevealEl.addEventListener("change", () => {
+  settings.speakOnReveal = speakRevealEl.checked;
+  persist();
 });
 
 keyTypeEl.addEventListener("change", () => {
