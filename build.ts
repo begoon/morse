@@ -2,7 +2,7 @@
 //
 // Bun's bundler emits index.html plus hashed .js/.css assets. For GitHub Pages
 // we want one file per page, so we build in memory and inline the assets into
-// the HTML. Pages: landing (docs/index.html), play, keying, settings, and the
+// the HTML. Pages: landing (docs/index.html), listen, keying, settings, and the
 // Foundation mock exam runner (docs/test/index.html).
 
 import { $ } from "bun";
@@ -64,7 +64,7 @@ async function buildPage(entrypoint: string, outPath: string): Promise<void> {
 
 await $`rm -rf docs`;
 await buildPage("./index.html", "docs/index.html");
-await buildPage("./src/play/index.html", "docs/play/index.html");
+await buildPage("./src/listen/index.html", "docs/listen/index.html");
 await buildPage("./src/keying/index.html", "docs/keying/index.html");
 await buildPage("./src/chat/index.html", "docs/chat/index.html");
 await buildPage("./src/paddle/index.html", "docs/paddle/index.html");

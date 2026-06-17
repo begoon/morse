@@ -1,4 +1,4 @@
-// One-off fetcher: common English words + CW jargon -> src/play/words.json.
+// One-off fetcher: common English words + CW jargon -> src/listen/words.json.
 //
 // Pulls the google-10000-english frequency list, keeps short clean words, and
 // pairs them with a curated list of CW abbreviations, Q-codes and prosigns.
@@ -38,6 +38,6 @@ for (let len = 2; len <= 8; len++) {
     if (!common.some((w) => w.length === len)) throw new Error(`no common words of length ${len}`);
 }
 
-const out = `${import.meta.dir}/../src/play/words.json`;
+const out = `${import.meta.dir}/../src/listen/words.json`;
 await Bun.write(out, JSON.stringify({ common, cw: CW }, null, 2) + "\n");
-console.log(`wrote ${common.length} common + ${CW.length} CW words to src/play/words.json`);
+console.log(`wrote ${common.length} common + ${CW.length} CW words to src/listen/words.json`);

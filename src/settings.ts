@@ -19,10 +19,7 @@ export type Settings = {
   wordLength: number;
   /** Play mode: what to drill (words, letters, code groups, callsigns, numbers). */
   practiceMode: PracticeMode;
-  /** Play mode: head-copy — play the whole target, then type it blind and press
-   * Enter to check (no per-letter hints, reveal, or cheatsheet highlight). */
-  headCopy: boolean;
-  /** Play mode: speak the answer aloud when it's revealed (real words are
+  /** Listen mode: speak the answer aloud when it's revealed (real words are
    * pronounced; abbreviations/numbers/letters are spelled out). */
   speakOnReveal: boolean;
   wpm: number;
@@ -62,7 +59,6 @@ export const DEFAULTS: Settings = {
   language: "en",
   wordLength: 1,
   practiceMode: "words",
-  headCopy: false,
   speakOnReveal: false,
   wpm: 10,
   charWpm: 20,

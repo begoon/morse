@@ -1,4 +1,4 @@
-// Target selection for the play mode: single characters, or real words when
+// Target selection for the listen mode: single characters, or real words when
 // the word-length cap allows (English only; RU has no embedded word list).
 
 import { tableFor, type Language } from "../morse";

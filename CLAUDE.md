@@ -3,13 +3,18 @@
 A browser-based Morse trainer, shipped as separate GitHub Pages routes with a
 landing menu at `docs/index.html`:
 
-- **Play** (`docs/play/`): plays a target and the user types it back (correct →
-  splash on the key + advance; wrong → error buzz). `Space` replays, `/` shows
-  the code and a second `/` reveals the next expected key on the cheatsheet
-  (clicking the output also reveals). The Word length setting caps the target:
-  1 = single characters; 2+ = an English word of 2..N letters drawn from
-  `src/play/words.json` (≈1/3 of the time from CW jargon/Q-codes — see
-  `CW_CHANCE` in `src/play/words.ts`). Russian always plays single characters.
+- **Listen** (`docs/listen/`): a pure listening drill — plays a target, you copy
+  it in your head and say it aloud, then reveal to check. **No typing.** `Space`
+  is the one eyes-free key: a short tap replays, a hold (>400 ms) reveals the
+  whole answer (code + letters), optionally spoken (`speakOnReveal` — real words
+  pronounced, abbreviations/numbers/etc. spelled). After a reveal the answer
+  lingers `POST_REVEAL_MS` (3 s) then the next target plays automatically (a tap
+  / `/` / output-click skips the wait). `/`, clicking the output, and the
+  auto-reveal "beat the clock" timer reveal too — so with auto-reveal on the
+  whole loop runs hands-free. The Word length caps the
+  target: 1 = single characters; 2+ = an English word of 2..N letters drawn from
+  `src/listen/words.json` (≈1/3 of the time from CW jargon/Q-codes — see
+  `CW_CHANCE` in `src/listen/words.ts`). Russian always plays single characters.
 - **Keying** (`docs/keying/`): iambic paddle (Curtis Mode A/B), Ultimatic
   paddle, or straight key → live decode.
 - **Test** (`docs/test/`): Foundation mock exam runner (see below).
@@ -22,7 +27,7 @@ landing menu at `docs/index.html`:
 Each route is a single self-contained HTML file for GitHub Pages.
 
 - `just build` — runs `build.ts`, which bundles each entry (`index.html`,
-  `src/play/`, `src/keying/`, `src/settings-page/`, `src/test/`) via
+  `src/listen/`, `src/keying/`, `src/settings-page/`, `src/test/`) via
   `Bun.build` and inlines all JS/CSS. **Rebuild after any `src/` change** and
   commit `docs/` (GitHub Pages serves it from `main` / `docs`).
 - `just serve` — build, then `python3 -m http.server -d docs 3000`.
@@ -31,9 +36,9 @@ Each route is a single self-contained HTML file for GitHub Pages.
 
 ## Layout
 
-- `src/play/main.ts` / `src/keying/main.ts` / `src/settings-page/main.ts` —
+- `src/listen/main.ts` / `src/keying/main.ts` / `src/settings-page/main.ts` —
   per-page wiring; each page's `index.html` sits beside its `main.ts`.
-- `src/play/words.ts` — target picking (`pickTarget`, rng-injectable);
+- `src/listen/words.ts` — target picking (`pickTarget`, rng-injectable);
   `words.json` — committed word bank (`{common, cw}`, uppercase), regenerated
   by `tools/fetch-words.ts` (fetches the google-10000-english list; the CW
   jargon list is curated in the tool).
@@ -47,8 +52,8 @@ Each route is a single self-contained HTML file for GitHub Pages.
   back to the still-held paddle.
 - `src/decoder.ts` — silence-timed decode. `src/timing.ts` — PARIS timing from
   wpm.
-- `src/cheatsheet.ts` — QWERTY/ЙЦУКЕН keyboard; `. , ?` shown to its right;
-  patterns hidden in play mode and revealed per key.
+- `src/cheatsheet.ts` — QWERTY/ЙЦУКЕН keyboard with `. , ?` to its right; used
+  by the Keying page as a reference (full patterns shown).
 - `src/player.ts` — plays a pattern as audio; `" "` in the pattern inserts a
   3-dit letter gap. `src/audio.ts` — Web Audio sidetone + `error()` buzz.
   `src/settings.ts` — persisted settings (localStorage).

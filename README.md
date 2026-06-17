@@ -30,13 +30,17 @@ primary path.
 The landing menu (`docs/index.html`) links to four pages, all sharing one set
 of settings:
 
-- **Play** (`docs/play/`) — a target is played as Morse and you type it back
-  (correct → the key splashes and it advances; wrong → an error buzz). `Space`
-  replays, `/` shows the code, a second `/` (or clicking the output) reveals
-  the next expected key on the cheatsheet. The **Word length** setting caps the
-  target: `1` = single characters; `2+` = an English word of up to that many
-  letters (≈⅓ of the time from CW jargon / Q-codes). A running line shows the
-  letters you've guessed. Russian always plays single characters.
+- **Listen** (`docs/listen/`) — a pure listening drill: a target is played as
+  Morse, you copy it in your head and say it aloud, then reveal to check (no
+  typing). `Space` is the one eyes-free key: a short **tap** replays, a **hold**
+  reveals the whole answer (code + letters, optionally spoken). After a reveal the
+  answer lingers ~3 s, then the next target plays automatically (tap / `/` / click
+  to skip the wait) — so a single finger on the spacebar runs the whole drill
+  without looking, and with the auto-reveal timer on it's fully hands-free. The
+  **Word length** setting
+  caps the target: `1` = single characters; `2+` = an English word of up to that
+  many letters (≈⅓ of the time from CW jargon / Q-codes). A running line logs the
+  targets you've revealed. Russian always plays single characters.
 - **Keying** (`docs/keying/`) — key Morse yourself with an iambic paddle
   (Curtis Mode A/B), an Ultimatic paddle, or a straight key; it decodes to text
   live. `Space` clears the output (unless it's bound as the straight key).
@@ -98,7 +102,7 @@ review.
 
 ```
 index.html                landing menu
-src/play/                  Play route (main.ts + index.html + word bank)
+src/listen/                  Listen route (main.ts + index.html + word bank)
 src/keying/                Keying route
 src/settings-page/         Settings route
 src/test/                  Exam runner (quiz.ts logic, question banks, images)

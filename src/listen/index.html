@@ -3,12 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Morse Trainer — Play</title>
+    <title>Morse Trainer — Listen</title>
   </head>
   <body>
     <nav class="topnav">
       <a href="../">Morse Trainer</a>
-      <a href="../play/" class="current" aria-current="page">Play</a>
+      <a href="../listen/" class="current" aria-current="page">Listen</a>
       <a href="../keying/">Keying</a>
       <a href="../chat/">Chat</a>
       <a href="../test/">Test</a>
@@ -20,28 +20,13 @@
     <div id="history"> </div>
 
     <div class="actions">
-      <button id="replay" class="action-btn">Replay (" ")</button>
-      <button id="reveal" class="action-btn">Reveal ("/")</button>
+      <button id="replay" class="action-btn">Replay (tap " ")</button>
+      <button id="reveal" class="action-btn">Reveal (hold " " or "/")</button>
     </div>
-
-    <label class="play-toggle">
-      <input type="checkbox" id="headCopy" /> Head copy — type the whole word, then Enter
-    </label>
 
     <label class="play-toggle">
       <input type="checkbox" id="speakReveal" /> Speak the answer when revealed
     </label>
-
-    <details class="cheatsheet" open>
-      <summary>Cheatsheet</summary>
-      <div id="cheatsheet"></div>
-    </details>
-
-    <details class="cheatsheet" id="statsBox">
-      <summary>Accuracy</summary>
-      <div id="statsBody"></div>
-      <button id="statsReset" class="action-btn">Reset stats</button>
-    </details>
 
     <script type="module" src="./main.ts"></script>
   </body>

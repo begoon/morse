@@ -1,8 +1,8 @@
-// Word bank shape and target-picking logic for the play mode.
+// Word bank shape and target-picking logic for the listen mode.
 
 import { describe, expect, test } from "bun:test";
-import poolsJson from "./src/play/words.json";
-import { CW_CHANCE, letterPool, pickTarget, type WordPools } from "./src/play/words";
+import poolsJson from "./src/listen/words.json";
+import { CW_CHANCE, letterPool, pickTarget, type WordPools } from "./src/listen/words";
 
 const pools = poolsJson as WordPools;
 
