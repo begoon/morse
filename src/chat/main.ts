@@ -3,7 +3,8 @@
 // letters and/or Morse (per two checkboxes) and sounded out as CW (right).
 //
 // Input wiring (keyboard / on-screen buttons / USB mouse-paddle) mirrors the
-// Keying page; the AI call lives in ./ai and the send-trigger in ./trigger.
+// Keying page; the AI call lives in ./ai, the send-trigger in ./trigger, and the
+// HH error-prosign highlighting in ./errors.
 
 import "../styles.css";
 import { Decoder } from "../decoder";
@@ -15,6 +16,7 @@ import { encode } from "../morse";
 import * as Settings from "../settings";
 import { complete, SYSTEM_PROMPT, type ChatMessage } from "./ai";
 import { detectSend } from "./trigger";
+import { esc, markErrors } from "./errors";
 
 const settings = Settings.load();
 const sidetone = new Sidetone();
@@ -44,7 +46,8 @@ const decoder = new Decoder({
   wordGapMs: th.gapWord * settings.gapTolerance,
   maxChars: 120,
   onChange: (s) => {
-    liveEl.textContent = (s.text + (s.pattern ? " " + s.pattern : "")) || " ";
+    const html = markErrors(s.text) + (s.pattern ? " " + esc(s.pattern) : "");
+    liveEl.innerHTML = html || " ";
   },
   onChar: () => {
     if (awaiting) return; // ignore input while a reply is in flight
@@ -184,10 +187,11 @@ window.addEventListener("contextmenu", (e) => {
 });
 
 // --- Conversation ------------------------------------------------------------
-function addBubble(log: HTMLElement, text: string, cls: string): HTMLElement {
+function addBubble(log: HTMLElement, text: string, cls: string, html = false): HTMLElement {
   const el = document.createElement("div");
   el.className = "chat-msg " + cls;
-  el.textContent = text;
+  if (html) el.innerHTML = markErrors(text);
+  else el.textContent = text;
   log.appendChild(el);
   log.scrollTop = log.scrollHeight;
   return el;
@@ -262,7 +266,7 @@ function renderAiBubble(el: HTMLElement) {
 
 function sendMessage(body: string) {
   stopPlayback();
-  addBubble(youLogEl, body, "you");
+  addBubble(youLogEl, body, "you", true); // flag HH (error prosign) in red
   decoder.reset();
   messages.push({ role: "user", content: body });
 

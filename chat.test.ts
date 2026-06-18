@@ -1,6 +1,26 @@
 import { test, expect } from "bun:test";
 import { detectSend } from "./src/chat/trigger";
 import { buildRequest, parseReply } from "./src/chat/ai";
+import { markErrors } from "./src/chat/errors";
+
+// --- error prosign (HH) highlighting -----------------------------------------
+
+test("HH (the error prosign) is wrapped in a red span", () => {
+  expect(markErrors("HH")).toBe('<span class="cw-err">HH</span>');
+});
+
+test("HH is flagged within a sentence, surrounding text untouched", () => {
+  expect(markErrors("PARIS HH PARIS")).toBe('PARIS <span class="cw-err">HH</span> PARIS');
+});
+
+test("a lone H is not flagged", () => {
+  expect(markErrors("THE")).toBe("THE");
+  expect(markErrors("H")).toBe("H");
+});
+
+test("markErrors escapes html-special characters", () => {
+  expect(markErrors("A<B&C")).toBe("A&lt;B&amp;C");
+});
 
 // --- send-trigger detection --------------------------------------------------
 
