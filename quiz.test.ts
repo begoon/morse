@@ -3,6 +3,7 @@
 import { describe, expect, test } from "bun:test";
 import rsgbJson from "./src/test/questions.json";
 import hamtrainJson from "./src/test/questions-hamtrain.json";
+import extraJson from "./src/test/questions-extra.json";
 import {
     buildRun,
     FREQUENCY_KEYS,
@@ -113,6 +114,7 @@ describe("migratePaper", () => {
         expect(migratePaper("combined")).toBe("combined");
         expect(migratePaper("everything")).toBe("everything");
         expect(migratePaper({ tag: "hamtrain", n: 5 })).toEqual({ tag: "hamtrain", n: 5 });
+        expect(migratePaper({ tag: "extra", n: 1 })).toEqual({ tag: "extra", n: 1 });
     });
     test("garbage falls back to the default", () => {
         expect(migratePaper(undefined)).toEqual({ tag: "rsgb", n: 1 });
@@ -152,6 +154,36 @@ describe("grade", () => {
         expect(g.passMark).toBe(190); // ceil(260 * 19/26)
         expect(g.pass).toBe(true);
         expect(g.percent).toBe(100);
+    });
+});
+
+describe("extra mock", () => {
+    const extra = extraJson as Question[];
+    const withExtra = [...pool, ...extra];
+
+    test("the bank is tagged extra/paper 1 with sequential n and valid answers", () => {
+        expect(extra.length).toBeGreaterThan(0);
+        extra.forEach((q, i) => {
+            expect(q.tag).toBe("extra");
+            expect(q.paper).toBe(1);
+            expect(q.n).toBe(i + 1);
+            expect(q.options).toHaveLength(4);
+            expect(q.answer).toBeGreaterThanOrEqual(0);
+            expect(q.answer).toBeLessThan(4);
+        });
+    });
+
+    test("selecting the Extra paper returns the whole extra set, in order", () => {
+        const run = buildRun(withExtra, settings({ paper: { tag: "extra", n: 1 } }));
+        expect(run.length).toBe(extra.length);
+        expect(run.map((q) => q.source.tag)).toEqual(Array(extra.length).fill("extra"));
+        expect(run.map((q) => q.source.n)).toEqual(extra.map((q) => q.n));
+    });
+
+    test("combined excludes extra even when it's in the pool", () => {
+        const run = buildRun(withExtra, settings({ paper: "combined" }), rng(5));
+        expect(run.length).toBe(26);
+        expect(run.some((q) => q.source.tag === "extra")).toBe(false);
     });
 });
 

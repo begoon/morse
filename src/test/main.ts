@@ -6,6 +6,7 @@
 
 import rsgbJson from "./questions.json";
 import hamtrainJson from "./questions-hamtrain.json";
+import extraJson from "./questions-extra.json";
 import "./styles.css";
 import { imageFor } from "./images";
 import { h, mount, type Child, type Children, type Props } from "./dom";
@@ -23,7 +24,11 @@ import {
     type Tag,
 } from "./quiz";
 
-const POOL = [...(rsgbJson as Question[]), ...(hamtrainJson as Question[])];
+const POOL = [
+    ...(rsgbJson as Question[]),
+    ...(hamtrainJson as Question[]),
+    ...(extraJson as Question[]),
+];
 /** Mock paper numbers per source tag, in display order. */
 const PAPERS: [Tag, number[]][] = [
     ["rsgb", [1, 2, 3]],
@@ -99,6 +104,7 @@ function recordAnswer(i: number): void {
 // --- Shared question pieces ------------------------------------------------
 
 function origin(q: RunQuestion): string {
+    if (q.source.tag === "extra") return `Extra · Q${q.source.n}`;
     return `${q.source.tag} Mock ${q.source.paper} · Q${q.source.n}`;
 }
 
@@ -167,6 +173,10 @@ function StartScreen(): HTMLElement {
             ["frequencies", `Frequencies (${freqCount})`],
         ] as const
     ).map(([mode, label]) => Choice(label, settings.paper === mode, () => select(mode), { "data-paper": mode }));
+    // The "extra" RSGB-addon set: one big mock of every added question.
+    const extraCount = POOL.filter((q) => q.tag === "extra").length;
+    mixed.push(Choice(`Extra (${extraCount})`, isPaper("extra", 1),
+        () => select({ tag: "extra", n: 1 }), { "data-paper": "extra-1" }));
     if (mistakes.size > 0) {
         mixed.push(Choice(`Mistakes (${mistakes.size})`, settings.paper === "mistakes",
             () => select("mistakes"), { "data-paper": "mistakes" }));

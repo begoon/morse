@@ -1,0 +1,1490 @@
+[
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 1,
+    "question": "An amateur radio licence may be used for:",
+    "options": [
+      "Advertising a retailer of amateur radio equipment",
+      "Controlling a fleet of taxis",
+      "Testing propagation between two amateurs in different countries",
+      "Providing radio communications for a commercial fairground operator"
+    ],
+    "answer": 2
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 2,
+    "question": "HF propagation is NOT affected by the",
+    "options": [
+      "sun.",
+      "time of day.",
+      "day of the week.",
+      "frequency used."
+    ],
+    "answer": 2
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 3,
+    "question": "Which of the following is a foundation licence holder NOT allowed to do?",
+    "options": [
+      "Operate a radio transmitter that the licence holder has designed themselves.",
+      "Design and operate a radio receiver.",
+      "Assemble and operate a transmitter designed by an intermediate licence holder",
+      "Assemble and operate a radio deigned by a commercial company"
+    ],
+    "answer": 0
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 4,
+    "question": "An amateur radio licence holder must, when changing the main station address, immediately notify",
+    "options": [
+      "the local police.",
+      "the local council.",
+      "the RSGB.",
+      "Ofcom."
+    ],
+    "answer": 3
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 5,
+    "question": "When transmitting, you must give your call sign",
+    "options": [
+      "When establishing contact and at least every 5 minutes",
+      "When establishing contact and as frequently as is practicable.",
+      "During CQ calls and at the beginning and end of the contact",
+      "At the beginning and end of the contact."
+    ],
+    "answer": 1
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 6,
+    "question": "A Foundation licence holder, operating under the supervision of a Full licence holder and using the Full licence holders callsign, must:",
+    "options": [
+      "operate subject to the restrictions of the Foundation licence.",
+      "operate in accordance with the supervisor's licence.",
+      "ensure that any contacts are recorded in the log.",
+      "reduce the transmitter's power to 10 watts."
+    ],
+    "answer": 1
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 7,
+    "question": "You are talking to M3ABC by amateur radio and some friends enter his room. You may also address remarks to these friends",
+    "options": [
+      "if they are family members.",
+      "if M3ABC gives permission.",
+      "if they are also licenced radio amateurs.",
+      "but only on the calling channel."
+    ],
+    "answer": 2
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 8,
+    "question": "Which of the following may NOT be used in an amateur radio transmission?",
+    "options": [
+      "A message sent in Morse code",
+      "A message sent containing Q codes.",
+      "A message using secret codes known only to the sender and recipient.",
+      "A message containing data."
+    ],
+    "answer": 2
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 9,
+    "question": "When must you carry out tests on your station to ensure that it is not causing undue interference to other radio users?",
+    "options": [
+      "If you receive a complaint from a neighbour.",
+      "From time to time.",
+      "Every week.",
+      "When the warranty expires on your transceiver."
+    ],
+    "answer": 1
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 10,
+    "question": "Who may require a radio amateur to keep a log of transmissions to assist in identifying interference?",
+    "options": [
+      "The local police.",
+      "A person authorised by Ofcom.",
+      "A person authorised by the RSGB.",
+      "A county councillor."
+    ],
+    "answer": 1
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 11,
+    "question": "A Foundation licence holder may operate in a foreign country if",
+    "options": [
+      "this is within the European Union.",
+      "operating in that countries coastal waters",
+      "the country recognises UK amateur radio licences",
+      "given permission by the appropriate authority of that country"
+    ],
+    "answer": 3
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 12,
+    "question": "Which part of an amateur band is not permitted within 100km of Charing Cross, London?",
+    "options": [
+      "1·810-1·830MHz",
+      "51·00-52·00MHz",
+      "431·0-432·0MHz",
+      "438·0-440·0MHz"
+    ],
+    "answer": 2
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 13,
+    "question": "To whom do EMF restrictions apply?",
+    "options": [
+      "Members of the general public.",
+      "Foundation licence holders.",
+      "Intermediate licence holders.",
+      "Full licence holders"
+    ],
+    "answer": 0
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 14,
+    "question": "Which of the following is a good conductor of an electric current?",
+    "options": [
+      "Rubber",
+      "Plastic",
+      "Glass",
+      "Aluminium"
+    ],
+    "answer": 3
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 15,
+    "question": "In a circuit of resistors in series that are connected to a battery, the current flowing each resistor will",
+    "options": [
+      "be the same as the battery voltage.",
+      "be different depending on the voltage of the battery.",
+      "be different depending on the value of the resistor.",
+      "be same in each resistor."
+    ],
+    "answer": 3
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 16,
+    "question": "A 12V mobile transceiver consumes 10W on receive and 100W on transmit. The highest current drawn will be",
+    "options": [
+      "0.83A",
+      "0.83Ω",
+      "8.3A",
+      "8.3Ω"
+    ],
+    "answer": 2
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 17,
+    "question": "The correct formula relating the voltage, V,  the current, I, and the resistance R is",
+    "options": [
+      "R = V - I",
+      "R = V × I",
+      "R = I / V",
+      "R = V / I"
+    ],
+    "answer": 3
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 18,
+    "question": "The voltage across three resistors connected in series is 5 volts, 10 volts and 20 volts respectively. The total voltage across all three resistors is",
+    "options": [
+      "5 volts",
+      "10 volts.",
+      "20 volts.",
+      "35 volts."
+    ],
+    "answer": 3
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 19,
+    "question": "Which of the following will work normally when connected to a battery of the correct voltage regardless of battery polarity?",
+    "options": [
+      "Incandescent lamp",
+      "Radio receiver",
+      "LED lamp",
+      "Pocket Calculator"
+    ],
+    "answer": 0
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 20,
+    "question": "What is the significant difference between AC and DC?",
+    "options": [
+      "Direct currents are always greater than alternating currents.",
+      "Direct currents take a long time to change direction.",
+      "Alternating currents are continually changing direction.",
+      "Alternating currents have a fixed polarity"
+    ],
+    "answer": 2
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 21,
+    "question": "The frequency 50MHz is",
+    "options": [
+      "LF",
+      "HF",
+      "VHF",
+      "UHF"
+    ],
+    "answer": 2
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 22,
+    "question": "A frequency of 100 MHz has a wavelength of",
+    "options": [
+      "3 metres.",
+      "30 metres.",
+      "0.3 metres.",
+      "300 metres."
+    ],
+    "answer": 0
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 23,
+    "question": "Digital signals are",
+    "options": [
+      "constantly changing in amplitude, frequency or both.",
+      "astream of finite values at a specific sampling interval.",
+      "totally immune to interference.",
+      "created by a Digital to Analogue converter."
+    ],
+    "answer": 1
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 24,
+    "question": "An Analogue to Digital Converter (ADC)",
+    "options": [
+      "represents a digitial signal in analogue format",
+      "samples an analogue signal and creates a digital representation of it",
+      "changes audio signals to RF",
+      "is an optional component in a Software defined radio"
+    ],
+    "answer": 1
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 25,
+    "question": "A secondary battery",
+    "options": [
+      "cannot be  recharged.",
+      "may be recharged.",
+      "undergoes a chemical process that cannot be reversed.",
+      "consists of a single cell."
+    ],
+    "answer": 1
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 26,
+    "question": "Adding information to a radio frequency carrier is known as",
+    "options": [
+      "transmission.",
+      "tuning.",
+      "amplification.",
+      "modulation."
+    ],
+    "answer": 3
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 27,
+    "question": "Audio or data information is combined with  a radio frequency carrier in which stage of a transmitter?",
+    "options": [
+      "Microphone Amplifier.",
+      "Modulator.",
+      "RF Power amplifier.",
+      "AF power amplifier."
+    ],
+    "answer": 1
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 28,
+    "question": "When radio frequencies are mixed with audio frequencies, the new frequencies that are generated are called",
+    "options": [
+      "fundamentals",
+      "harmonics",
+      "sidebands",
+      "carriers"
+    ],
+    "answer": 2
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 29,
+    "question": "The bottom waveform in the diagram shows",
+    "options": [
+      "an audio wave.",
+      "acarrier wave.",
+      "an amplitude modulated wave.",
+      "a frequency modulated wave."
+    ],
+    "answer": 3,
+    "image": "q30.png"
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 30,
+    "question": "What is the function of the box marked 2 in the diagram?",
+    "options": [
+      "RF power amplifier",
+      "Oscilator",
+      "Modulator.",
+      "AF Amplifier"
+    ],
+    "answer": 2,
+    "image": "q31.png"
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 31,
+    "question": "Incorrect setting of the oscillator in a transmitter may cause",
+    "options": [
+      "damage to the power supply.",
+      "distortion to the transmitted signal.",
+      "damage to the antenna.",
+      "transmitting on the wrong frequency."
+    ],
+    "answer": 3
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 32,
+    "question": "If the microphone gain is set too high on a transmitter",
+    "options": [
+      "the antenna could be damaged.",
+      "interference could be caused on adjacent channels.",
+      "the supply fuse will fail",
+      "the operator could get an electric shock from the microphone"
+    ],
+    "answer": 1
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 33,
+    "question": "The RF power amplifier",
+    "options": [
+      "takes the signal from the microphone and amplifies it to a suitable level",
+      "amplifies the low power modulated radio signal to suitable level to feed the antenna",
+      "converts the mains supply to a suitable voltage to be used by the transmitter",
+      "ensures the transmitter is radiating on the correct frequency."
+    ],
+    "answer": 1
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 34,
+    "question": "If the transmitter's RF power amplifier output is not connected to a correctly matched antenna",
+    "options": [
+      "the antenna can be damaged.",
+      "SWR will be too low.",
+      "interference will be caused on adjacent channels.",
+      "the transmitter can be damaged."
+    ],
+    "answer": 3
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 35,
+    "question": "Too much audio gain is likely to cause a transmitter to",
+    "options": [
+      "stop working.",
+      "Increase the SWR.",
+      "interfere with other bands.",
+      "interfere with adjacent frequencies."
+    ],
+    "answer": 3
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 36,
+    "question": "Recovering the original information from a received radio signal is called",
+    "options": [
+      "demodulation.",
+      "modulation.",
+      "filtering.",
+      "oscilating."
+    ],
+    "answer": 0
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 37,
+    "question": "In the diagram shown, which block recovers the audio signal from the RF carrier",
+    "options": [
+      "Block 1",
+      "Block 2",
+      "Block 3",
+      "Block 4"
+    ],
+    "answer": 1,
+    "image": "q38.png"
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 38,
+    "question": "In a receiver, the demodulator",
+    "options": [
+      "recovers the original information from the received signal.",
+      "amplifies the received signal so that it can be heard through the loudspeaker.",
+      "mixes the audio signal with the frequency from the local oscilator.",
+      "matches the antenna to the transmitter."
+    ],
+    "answer": 0
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 39,
+    "question": "In a Software Defined Radio, demodulation is carried our by",
+    "options": [
+      "a diode detector",
+      "the RF amplified",
+      "the local oscilator",
+      "mathematical processes"
+    ],
+    "answer": 3
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 40,
+    "question": "A twin feeder cable",
+    "options": [
+      "can be burried underground to prevent interference.",
+      "is balanced having equal and opposite signals in each wire.",
+      "is unbalanced with one wire at ground and the other carrying the signal.",
+      "has greater loss than a coaxial cable."
+    ],
+    "answer": 1
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 41,
+    "question": "Loss in feeders increases with",
+    "options": [
+      "the modulation used",
+      "length of the feeder cable",
+      "lower transmit frequencies",
+      "higher gain antennas"
+    ],
+    "answer": 1
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 42,
+    "question": "A balun is primarily used to",
+    "options": [
+      "increase the power fed to the antenna",
+      "decrease the power fed to the antenna",
+      "connect an unbalanced feeder to a balanced antenna",
+      "protect against damage caused by static electricity"
+    ],
+    "answer": 2
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 43,
+    "question": "A vertical half wave dipole will radiate",
+    "options": [
+      "equally in all horizontal directions.",
+      "a maximum signal in a vertical direction.",
+      "a minimum signal at right-angles to the antenna.",
+      "a maximum signal oﬀ the ends of the antenna."
+    ],
+    "answer": 0
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 44,
+    "question": "The polar diagram shown is from",
+    "options": [
+      "a Yagi antenna",
+      "a half wave dipole antenna",
+      "a quarter wave vertical antenna",
+      "a 5/8 vertical dipole antenna"
+    ],
+    "answer": 0,
+    "image": "q45.png"
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 45,
+    "question": "The gain of an antenna is measured in",
+    "options": [
+      "Watts.",
+      "Volts.",
+      "Amps.",
+      "dB."
+    ],
+    "answer": 3
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 46,
+    "question": "6.1W ERP is equivalent to",
+    "options": [
+      "6W.",
+      "6W EIRP.",
+      "10W EIRP.",
+      "10W."
+    ],
+    "answer": 2
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 47,
+    "question": "For best reception of UHF or VHF signals the antennas of both receiver and transmitter should both be:",
+    "options": [
+      "vertical.",
+      "horizontal.",
+      "in the same orientation.",
+      "in any orientation."
+    ],
+    "answer": 2
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 48,
+    "question": "The feed point impedance of an antenna is related to",
+    "options": [
+      "the cable used to connect to the antenna.",
+      "the mode of transmission.",
+      "the output power of the transmitter.",
+      "the dimensions of the antenna and the wavelength of the applied signal."
+    ],
+    "answer": 3
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 49,
+    "question": "The antenna shown in the diagram is",
+    "options": [
+      "a Yagi.",
+      "a half wave dipole.",
+      "a 5/8 dipole.",
+      "an end fed antenna."
+    ],
+    "answer": 0,
+    "image": "q50.png"
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 50,
+    "question": "An amateur changes band of operation but does not check the antenna is still matched. This might cause",
+    "options": [
+      "high levels of Standing Waves in the feeder.",
+      "distortion of the transmitted signal.",
+      "antenna overloading.",
+      "interference to be caused on other bands."
+    ],
+    "answer": 0
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 51,
+    "question": "In a well designed and matched antenna system, measured SWR at the transceiver will be",
+    "options": [
+      "> 5:1",
+      "> 3:1",
+      "2:1",
+      "< 1.5:1"
+    ],
+    "answer": 3
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 52,
+    "question": "If an antenna is being used on a frequency for which it has not been designed",
+    "options": [
+      "measured SWR will be very low.",
+      "antenna matching will be required.",
+      "interference may be caused to adjacent channels",
+      "the antenna could be damaged."
+    ],
+    "answer": 1
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 53,
+    "question": "A dummy load is",
+    "options": [
+      "a weight used to obtain the correct tension on a long wire antenna",
+      "a screened resistor that may be connected to the transmitter output without radiating",
+      "a suitable resistor to connect to the power supply when the transmitter is disconnected",
+      "used instead of the microphone when using a transceiver to receive only"
+    ],
+    "answer": 1
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 54,
+    "question": "The connector shown is a",
+    "options": [
+      "jack plug.",
+      "PL259.",
+      "SO238.",
+      "BNC."
+    ],
+    "answer": 3,
+    "image": "q55.png"
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 55,
+    "question": "Radio waves",
+    "options": [
+      "maintain their power as they propagate.",
+      "normally travel in straight lines.",
+      "always pass through the ionosphere.",
+      "never pass through the ionosphere."
+    ],
+    "answer": 1
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 56,
+    "question": "Propagation of VHF and UHF frequencies is normally",
+    "options": [
+      "decreased with sporadic E",
+      "refracted back to earth by the troposphere.",
+      "not much beyond the  line of sight.",
+      "not possible beyond the ionosphere."
+    ],
+    "answer": 2
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 57,
+    "question": "The lowest layer of the ionosphere is at a height of about",
+    "options": [
+      "800km",
+      "700m",
+      "70km",
+      "10km"
+    ],
+    "answer": 2
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 58,
+    "question": "HF propagation is NOT affected by the",
+    "options": [
+      "sun.",
+      "time of day.",
+      "day of the week.",
+      "frequency used."
+    ],
+    "answer": 2
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 59,
+    "question": "VHF/UHF signals",
+    "options": [
+      "are unaffected by buildings",
+      "become weaker as they pass through buildings.",
+      "become stronger at higher frequencies",
+      "are unaffected by atmospheric conditions."
+    ],
+    "answer": 1
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 60,
+    "question": "Snow, ice and rain have the most detrimental effect on which frequency range?",
+    "options": [
+      "LF",
+      "HF",
+      "VHF",
+      "UHF"
+    ],
+    "answer": 3
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 61,
+    "question": "A VHF transmitting antenna should be located",
+    "options": [
+      "indoors, protected from the rain, wind and sun.",
+      "outdoors, as high as practicable to avoid obstruction.",
+      "close to the transmitter so you can easily adjust it to the correct length.",
+      "at ground level to minimise interference."
+    ],
+    "answer": 1
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 62,
+    "question": "Electromagnetic compatibility (EMC) means:",
+    "options": [
+      "the antenna is properly matched to the transmitter.",
+      "the avoidance of interference between electronic equipment.",
+      "ensuring electronic equipment generates small electromagnetic fields.",
+      "amicrophone will work correctly when connected to a transmitter."
+    ],
+    "answer": 1
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 63,
+    "question": "A radio amateur’s transmission is LEAST likely to cause interference to",
+    "options": [
+      "other amateurs.",
+      "other radio users.",
+      "an electric drill.",
+      "an electronic security alarm."
+    ],
+    "answer": 2
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 64,
+    "question": "An amateur radio transmitter can cause electromagnetic interference to",
+    "options": [
+      "electric drills.",
+      "vacuum cleaners.",
+      "lawn mowers.",
+      "electronic equipment"
+    ],
+    "answer": 3
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 65,
+    "question": "Which of the following will NOT cause interference with the operation of a radio receiver?",
+    "options": [
+      "A lawn mower.",
+      "An electric drill.",
+      "Central heating controls.",
+      "A SWR meter."
+    ],
+    "answer": 3
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 66,
+    "question": "Which of the following will NOT  lead to an increase in risk of causing electromagnetic interference?",
+    "options": [
+      "Changing from SSB to FM transmission.",
+      "Increasing the transmit power.",
+      "Changing from PSK to Morse code transmission.",
+      "Increasing the microphone gain."
+    ],
+    "answer": 0
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 67,
+    "question": "Which of the following is least likely to provide a route of entry of interference into domestic TV equipment.",
+    "options": [
+      "Feeder from the antenna to the transmitter.",
+      "Electronic components inside the TV.",
+      "Audio speaker leads.",
+      "RF earth rod."
+    ],
+    "answer": 3
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 68,
+    "question": "Immunity to interference from most sources can be increased by",
+    "options": [
+      "Fitting chokes and filters in mains or antenna leads.",
+      "Using longer mains leads to the TV.",
+      "Fitting a preamplifier to the TV antenna input.",
+      "Fitting a higher rated fuse to the TV plug."
+    ],
+    "answer": 0
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 69,
+    "question": "A dummy load is used",
+    "options": [
+      "to test if RF signals are being conducted out of a transmitter through its power cables.",
+      "to test the power being sent to the headphones in a receiver",
+      "to match an aerial to a feeder",
+      "to test the setting of the microphone gain on the transmitter."
+    ],
+    "answer": 0
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 70,
+    "question": "EMC problems can be minimised by",
+    "options": [
+      "using end fed long wire antennas.",
+      "locating antennas as close as possible to houses.",
+      "siting antennas as high and as far away from houses as possible.",
+      "using loft antennas."
+    ],
+    "answer": 2
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 71,
+    "question": "An RF earth terminal of a transmitter should be connected to",
+    "options": [
+      "the metal pipework in the central heating system.",
+      "the earth pin of the mains plug.",
+      "the mains earth at the fuse box .",
+      "a long copper rod buried in damp ground."
+    ],
+    "answer": 3
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 72,
+    "question": "When fitting a transceiver in a vehicle, whose reasonability is it to ensure that the installation is in accordance with  vehicles electrical and management systems?",
+    "options": [
+      "The vehicle owner.",
+      "The police.",
+      "The driver's insurance company.",
+      "The transceiver manufacturer."
+    ],
+    "answer": 0
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 73,
+    "question": "After fitting a transceiver in a vehicle, testing of the installation",
+    "options": [
+      "should be done with the vehicle stationary and all vehicles electrical systems running.",
+      "should be done with the vehicle moving on the road and with all vehicle electrical systems running.",
+      "is not required.",
+      "is only required if specified by the vehicles insurers."
+    ],
+    "answer": 0
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 74,
+    "question": "Which of the following is most likely to cause problems to an amateur radio receiver in a vehicle?",
+    "options": [
+      "Ignition Systems.",
+      "Headlights control.",
+      "Brake Lights.",
+      "Automatic gearbox."
+    ],
+    "answer": 0
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 75,
+    "question": "Your neighbour comes to your door and complains that the interference he is getting on his TV is being caused by your radio transmissions. You should",
+    "options": [
+      "offer to carry out test transmissions with his co-operation to verify his allegation.",
+      "explain that it cannot be your radio transmissions as your equipment is 'CE' approved",
+      "advice him to contact Ofcom for advice",
+      "request that he comes to you with proof of his allegation."
+    ],
+    "answer": 0
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 76,
+    "question": "A good reason for keeping a log of all transmission is because",
+    "options": [
+      "It will make it easier to check allegations of interference.",
+      "it is required by Ofcom.",
+      "it is a requirement of the amateur radio licence.",
+      "it will help support an application for planning permission for an antenna."
+    ],
+    "answer": 0
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 77,
+    "question": "Before transmitting you should first listen on a frequency and then ask if the frequency is clear because",
+    "options": [
+      "the frequency may be in use but one of the stations may be in a location where you can't receive their signal.",
+      "it is a requirement of the amateur radio licence.",
+      "this lets other amateur radio operators know that you are about to commence a QSO.",
+      "it is considered to be polite to commence all new QSO's in this way."
+    ],
+    "answer": 0
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 78,
+    "question": "When calling \"CQ, this is M7ABC calling CQ on 20 meters\" you should",
+    "options": [
+      "repeat the sequence several times in quick succession over a period of 20 - 30 seconds, then listen for several seconds",
+      "call the sequence once and then listen for several seconds in between each",
+      "repeat the sequence several times in quick succession, moving the transmit frequency up a few kHz each time.",
+      "repeat the sequence several times in quick succession, moving the transmit frequency down a few kHz each time"
+    ],
+    "answer": 0
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 79,
+    "question": "Once you have contacted another station on a VHF FM calling channel you should",
+    "options": [
+      "remain on the frequency until another station wishes to use it.",
+      "remain on the frequency as long as the contact takes.",
+      "ask if the frequency is clear.",
+      "change frequency to a suitable clear channel."
+    ],
+    "answer": 3
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 80,
+    "question": "The correct phonetic spelling of ‘SIGNAL’ is",
+    "options": [
+      "SIERRA ITALY GOLF NOVEMBER APPLE LIMA",
+      "SIERRA ITALY GOLF NORWAY ALPHA LIMA",
+      "SIERRA INDIA GOLF NOVEMBER ALPHA LIMA",
+      "SUGAR INDIA GOLF NOVEMBER ALPHA LIMA"
+    ],
+    "answer": 2
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 81,
+    "question": "If a log is recorded for obtaining a QSL or contest confirmation it should contain at least",
+    "options": [
+      "date, time (UTC), mode, callsign of station worked.",
+      "date, time (UTC), mode, radio model, antenna type",
+      "date, time (Local Time), mode, callsign of station worked.",
+      "date, time (Local Time), mode, radio model, antenna type"
+    ],
+    "answer": 0
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 82,
+    "question": "If hearing bad language or inappropriate behaviour on air you should",
+    "options": [
+      "ignore it without comment and do not refer to it on air.",
+      "ignore it and warn people on air on other frequencies to avoid it.",
+      "reprimand the person responsible over the air.",
+      "complain to the local council."
+    ],
+    "answer": 0
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 83,
+    "question": "Band plans are used because",
+    "options": [
+      "using them is a condition of the licence.",
+      "they help prevent on-air abuse.",
+      "they enable efficient use of the band for diﬀerent modes.",
+      "they are required for radio competitions"
+    ],
+    "answer": 2
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 84,
+    "question": "A badly setup transmitter operating on 50.1 MHz is also radiating on 150.3MHz. Which service might be affected?",
+    "options": [
+      "Broadcast Radio",
+      "Aeronautical mobile",
+      "Radio Astronomy",
+      "Maritime Mobile"
+    ],
+    "answer": 2
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 85,
+    "question": "A 2m repeater transmits on 145.600MHz. To which frequency should you tune your transmitter in order to use this repeater?",
+    "options": [
+      "146.200MHz",
+      "145.600MHz",
+      "145.000MHz",
+      "144.000MHz"
+    ],
+    "answer": 2
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 86,
+    "question": "If using a microphone, other than the one supplied with the transceiver you should",
+    "options": [
+      "ensure that the PTT and audio levels are correct.",
+      "use a separate PTT switch.",
+      "use a separate microphone pre-amplifier.",
+      "re-check the SWR."
+    ],
+    "answer": 0
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 87,
+    "question": "You are having a contact (QSO) with another amateur and he reports your signal as ‘5 and 5’. This means that he is reading your transmission:",
+    "options": [
+      "Excellent audio and very strong signal strength",
+      "Average audio and a very strong signal strength",
+      "Excellent Audio with an average signal strength",
+      "Average Audio with an average signal strength"
+    ],
+    "answer": 2
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 88,
+    "question": "Digital Voice (DV) radios",
+    "options": [
+      "may have the owners callsign embedded in the configuration.",
+      "are interoperable across all systems.",
+      "automatically check to see if a channel is in use.",
+      "cause more interference than SSB radios"
+    ],
+    "answer": 0
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 89,
+    "question": "When using FM or DV at 145.550 MHz you should first",
+    "options": [
+      "check if the repeater is being used for other modes.",
+      "open the receiver squelch and check for other modes.",
+      "ask if the frequency is in use and listen for a reply.",
+      "wait till you hear the repeater’s callsign and then call with your callsign."
+    ],
+    "answer": 1
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 90,
+    "question": "Terrestrial contacts on the portion of the amateur bands shown as allocated to satellites",
+    "options": [
+      "are strongly discouraged.",
+      "should be used with vertical polarisation.",
+      "must be used with horizontal polarisation.",
+      "cannot be used during daylight."
+    ],
+    "answer": 0
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 91,
+    "question": "A linear amplifier has a high voltage section running at 1200 volts at 500mA the potential danger through misuse is",
+    "options": [
+      "Electrocution.",
+      "Fire.",
+      "Lightning.",
+      "Interference."
+    ],
+    "answer": 0
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 92,
+    "question": "When using mains powered equipment",
+    "options": [
+      "it should be connected to a safety earth",
+      "the safety earth must be connected to the RF earth.",
+      "the safety earth becomes unnecessary",
+      "the RF earth becomes unnecessary."
+    ],
+    "answer": 0
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 93,
+    "question": "The correct way to wire a UK 3-pin plug is",
+    "options": [
+      "Green/Yellow to Earth, Brown to Live, Blue to Neutral",
+      "Brown to Earth, Red to Live, Blue to Neutral",
+      "Brown to Earth, Green/Yellow to Live, Blue to Neutral",
+      "Green/Yellow to Earth, Brown to Neutral, Red to Live"
+    ],
+    "answer": 0
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 94,
+    "question": "In the event that a fuse blows you should",
+    "options": [
+      "find out the cause of the problem.",
+      "replace the fuse with one of a higher rating.",
+      "measure the voltage across the fuse.",
+      "return the affected equipment to the place of purchase."
+    ],
+    "answer": 0
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 95,
+    "question": "A Residual Current Circuit Breaker with Overcurrent Protection (RCBO) will stop mains power in a circuit:",
+    "options": [
+      "Only when there is a current leakage to earth above its leakage threshold.",
+      "Only when there is an excessive current in the circuit above the current threshold.",
+      "When there is both earth leakage and excessive current above the device threshold.",
+      "When there is either earth leakage or excessive current above the device threshold."
+    ],
+    "answer": 3
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 96,
+    "question": "When carrying out maintenance or repair work on electronic equipment you should",
+    "options": [
+      "follow the manufacturers guidelines for servicing the equipment.",
+      "ensure that the correct fuse is fitted to the mains plug.",
+      "ensure that part of you is in contact with the metal chassis.",
+      "have someone else present with you in the room."
+    ],
+    "answer": 0
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 97,
+    "question": "The mains power switch to the radio shack should be",
+    "options": [
+      "difficult to reach.",
+      "key operated to prevent use by non-licensed persons.",
+      "switched oﬀ at all times.",
+      "in a clearly marked position"
+    ],
+    "answer": 3
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 98,
+    "question": "One feature of Nicad (NiCad), Nickel Metal Hydride (NIMH) and Lithium batteries is that",
+    "options": [
+      "they all have different charging requirements and must only be used with the recommended charger.",
+      "the terminal voltages are all the same allowing almost any charger to be safely used.",
+      "they may be safely discarded in the household waste or a litter bin in the street.",
+      "they must be kept fully charged at all times to ensure a long life."
+    ],
+    "answer": 0
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 99,
+    "question": "When using power tools it is",
+    "options": [
+      "advisable to wear eye protection.",
+      "advisable to wear ear protection.",
+      "essential to wear breathing protection.",
+      "essential to wear gloves."
+    ],
+    "answer": 0
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 100,
+    "question": "What safety considerations should you bear in mind when using power tools rather than hand tools?",
+    "options": [
+      "Power tools can do more damage and don’t stop instantly.",
+      "Power tools can produce a neater and more accurate job.",
+      "It is a lot less effort when using power tools.",
+      "The job can be completed much more quickly."
+    ],
+    "answer": 0
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 101,
+    "question": "Soldering work stations:",
+    "options": [
+      "Require an emergency cut oﬀ switch in case the soldering tip comes into contact with the skin.",
+      "Should be well ventilated to avoid inhaling fumes.",
+      "Must be on an anti-static surface.",
+      "Must be earthed."
+    ],
+    "answer": 1
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 102,
+    "question": "Why should two people be present during antenna erection?",
+    "options": [
+      "Because working at heights is risky and someone my be needed to fetch help.",
+      "Because there needs to be someone on the ground who can see what needs doing.",
+      "Because it saves constantly going up and down the ladder to read the SWR meter.",
+      "Because the person doing the work will often need a hand."
+    ],
+    "answer": 0
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 103,
+    "question": "Overreaching when on a ladder may cause",
+    "options": [
+      "concern to passers by",
+      "the person to fall off the ladder",
+      "a hard hat to give less protection",
+      "a poorly constructed or loose fitting job"
+    ],
+    "answer": 1
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 104,
+    "question": "The main purpose of wearing a tool belt when up a ladder is to",
+    "options": [
+      "prevent the tools being damaged",
+      "provide a strong belt to tie to the ladder for safety",
+      "avoid having to repeatedly climb the ladder",
+      "reduce the risk of dropping tools"
+    ],
+    "answer": 3
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 105,
+    "question": "Which part of the body is MOST susceptible to the effect of exposure to electromagnetic radiation?",
+    "options": [
+      "The arms.",
+      "The torso.",
+      "The head.",
+      "The eyes."
+    ],
+    "answer": 3
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 106,
+    "question": "The ICNIRP is of interest to amateurs because it",
+    "options": [
+      "oversees the preparation of the International Radio Regulations",
+      "produces guidance on the safe levels of RF exposure",
+      "co-ordinates the launch of amateur and other satellites",
+      "produces the International version of the Amateur Band Plans"
+    ],
+    "answer": 1
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 107,
+    "question": "The main risk when looking down waveguides is that",
+    "options": [
+      "microwave radiation could overheat your eye",
+      "waveguides have very sharp edges and can cut",
+      "you could be accidentally stabbed in the eye",
+      "dust and small particles could be blown into the eyes"
+    ],
+    "answer": 0
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 108,
+    "question": "Antennas connected to transmitting equipment",
+    "options": [
+      "should be mounted where they cannot accidentally be touched when in use.",
+      "should be placed where they can easily be manually adjusted.",
+      "must be connected with the shortest possible feeder.",
+      "always require an antenna matching unit."
+    ],
+    "answer": 0
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 109,
+    "question": "When installing antennas high above the ground or in areas of high elevation",
+    "options": [
+      "measures should be taken to protect against lightning.",
+      "warning lights should be fitted at the top to warn aircraft.",
+      "twin feeder should be used.",
+      "the mast should be insulated from the ground."
+    ],
+    "answer": 0
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 110,
+    "question": "When working a portable field station, feeder cables must be",
+    "options": [
+      "as long as possible.",
+      "located away from overhead power cables.",
+      "run along the ground to the antenna mast.",
+      "as short as possible"
+    ],
+    "answer": 1
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 111,
+    "question": "When operating a portable station",
+    "options": [
+      "care should be taken to avoid trailing wires.",
+      "asuitable amperage fuse should be installed at the generator to avoid electrocution.",
+      "the local council should be informed",
+      "Residual Current Circuit Breakers are not required."
+    ],
+    "answer": 0
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 112,
+    "question": "Using excessive volume when wearing headphones can result in",
+    "options": [
+      "complaints from neighbours about the noise",
+      "damage to your transmitter",
+      "overloading your receiver",
+      "damage to your hearing"
+    ],
+    "answer": 3
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 113,
+    "question": "What of the following features should you consider when demonstrating amateur radio to a group of scouts and guides at their church hall to maximise safety?",
+    "options": [
+      "The location of antenna feeders and power cables.",
+      "The seating arrangements so everybody has a good view.",
+      "Sufficient club members to watch the presentation.",
+      "The use of desk microphones rather than hand held."
+    ],
+    "answer": 0
+  },
+  {
+    "tag": "extra",
+    "paper": 1,
+    "n": 114,
+    "question": "Who at a radio club meeting is responsible for the general health and safety of the club members and any visitors?",
+    "options": [
+      "All club members present.",
+      "Each is responsible for themselves.",
+      "The club chairman.",
+      "The club safety officer"
+    ],
+    "answer": 0
+  }
+]

@@ -1,7 +1,7 @@
 // Pure quiz logic: building a run from settings, shuffling, grading.
 
 /** Which source a mock paper comes from. */
-export type Tag = "rsgb" | "hamtrain";
+export type Tag = "rsgb" | "hamtrain" | "extra";
 
 export type Question = {
     tag: Tag;
@@ -80,7 +80,7 @@ export function migratePaper(paper: unknown): Paper {
     if (typeof paper === "number") return { tag: "rsgb", n: paper };
     if (typeof paper === "object" && paper !== null) {
         const p = paper as { tag?: unknown; n?: unknown };
-        if ((p.tag === "rsgb" || p.tag === "hamtrain") && typeof p.n === "number")
+        if ((p.tag === "rsgb" || p.tag === "hamtrain" || p.tag === "extra") && typeof p.n === "number")
             return { tag: p.tag, n: p.n };
     }
     return DEFAULTS.paper;
@@ -135,9 +135,11 @@ export function buildRun(
     } else if (s.paper === "combined") {
         // One question per ordinal position 1..26 (= one per topic), each from
         // a randomly chosen paper. Built in position order.
+        // The mocks are topic-ordered, so position N is the same topic across
+        // papers; the "extra" set isn't topic-aligned, so it's left out here.
         picked = [];
         for (let n = 1; n <= EXAM_LENGTH; n++) {
-            const candidates = pool.filter((q) => q.n === n);
+            const candidates = pool.filter((q) => q.tag !== "extra" && q.n === n);
             if (candidates.length) picked.push(candidates[Math.floor(rng() * candidates.length)]!);
         }
     } else {
