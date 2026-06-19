@@ -108,14 +108,14 @@ window.addEventListener("keydown", (e) => {
       return;
     }
   }
-  // Space or "c" clears the in-progress input.
-  if (e.code === "Space" || e.code === "KeyC") {
+  // "c" clears the in-progress input.
+  if (e.code === "KeyC") {
     e.preventDefault();
     decoder.reset();
     return;
   }
-  // "r" replays the last AI answer as CW.
-  if (e.code === "KeyR") {
+  // Space or "r" replays the last AI answer as CW.
+  if (e.code === "Space" || e.code === "KeyR") {
     e.preventDefault();
     if (lastReply) void playReply(lastReply, lastBubble);
   }
